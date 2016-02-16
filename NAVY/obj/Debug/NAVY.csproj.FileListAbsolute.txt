@@ -1,0 +1,11 @@
+V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\NAVY.exe.config
+V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\NAVY.exe
+V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\NAVY.pdb
+V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\Neural.dll
+V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\Neural.pdb
+V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.csprojResolveAssemblyReference.cache
+V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.Form1.resources
+V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.Properties.Resources.resources
+V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.csproj.GenerateResource.Cache
+V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.exe
+V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.pdb
