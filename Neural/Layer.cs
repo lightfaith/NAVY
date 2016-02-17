@@ -10,16 +10,11 @@ namespace Neural
 	{
 		List<Neuron> neurons;
 
-		public Layer(int neuroncount, Function f)
+		public Layer(int index, int neuroncount, Function f, double slope, double intercept)
 		{
 			neurons = new List<Neuron>();
 			for (int i = 0; i < neuroncount; i++)
-				neurons.Add(new Neuron(f));
-		}
-
-		public void UpdateWeights(List<double> weights)
-		{
-
+				neurons.Add(new Neuron(index, i, f, slope, intercept));
 		}
 
 		public List<double> Think(List<double> inputs)
@@ -28,6 +23,22 @@ namespace Neural
 			foreach (Neuron n in neurons)
 				results.Add(n.Think(inputs));
 			return results;
+		}
+
+		public String GetSynapsesStr()
+		{
+			StringBuilder sb = new StringBuilder();
+			foreach (Neuron n in neurons)
+				sb.Append(String.Format("{0}", n.GetSynapsesStr()));
+			return sb.ToString();
+		}
+
+		public void UpdateSynapses(List<Tuple<int, Synapse>> synapses)
+		{
+			foreach (Neuron n in neurons)
+			{
+				n.UpdateSynapses((from syntuple in synapses where syntuple.Item1 == n.Index select syntuple.Item2).ToList());
+			}
 		}
 	}
 }

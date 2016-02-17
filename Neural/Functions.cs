@@ -8,16 +8,17 @@ namespace Neural
 {
 	public abstract class Function
 	{
-		public abstract double Compute(double input);
+		public abstract double Compute(double input, double slope, double intercept);
 
 	}
 
 	public class Linear : Function
 	{
-		override public double Compute(double input)
+		override public double Compute(double input, double slope, double intercept)
 		{
-			return input;
+			return slope*input+intercept;
 		}
+
 		public override string ToString()
 		{
 			return "Linear";
@@ -26,7 +27,7 @@ namespace Neural
 
 	public class BinaryUnipolar : Function
 	{
-		override public double Compute(double input)
+		override public double Compute(double input, double slope, double intercept)
 		{
 			if (input < 0)
 				return 0;
@@ -40,7 +41,7 @@ namespace Neural
 
 	public class BinaryBipolar : Function
 	{
-		override public double Compute(double input)
+		override public double Compute(double input, double slope, double intercept)
 		{
 			if (input == 0)
 				return 1;
@@ -54,10 +55,9 @@ namespace Neural
 
 	public class Logistic : Function
 	{
-		override public double Compute(double input)
+		override public double Compute(double input, double slope, double intercept)
 		{
-			//TODO implement
-			return 0;
+			return 1 / (1+ Math.Pow(Math.E, -slope*input)) + intercept;
 		}
 		public override string ToString()
 		{
@@ -67,10 +67,9 @@ namespace Neural
 
 	public class HyperbolicTangent : Function
 	{
-		override public double Compute(double input)
+		override public double Compute(double input, double slope, double intercept)
 		{
-			//TODO implement
-			return 0;
+			return (Math.Pow(Math.E, slope*input)-Math.Pow(Math.E, -slope * input))/(Math.Pow(Math.E, slope * input) + Math.Pow(Math.E, -slope * input)) +intercept;
 		}
 		public override string ToString()
 		{
