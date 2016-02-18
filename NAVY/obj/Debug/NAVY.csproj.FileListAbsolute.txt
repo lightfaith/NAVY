@@ -9,3 +9,4 @@ V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.Properties.Resources.re
 V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.csproj.GenerateResource.Cache
 V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.exe
 V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.pdb
+V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.NeuralSchema.resources

@@ -16,7 +16,9 @@ namespace Neural
 	{
 		override public double Compute(double input, double slope, double intercept)
 		{
-			return slope*input+intercept;
+			if(input>0)
+				return slope*input+intercept;
+			return 0;
 		}
 
 		public override string ToString()

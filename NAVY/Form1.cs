@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Neural;
+using System.IO;
 
 namespace NAVY
 {
@@ -47,7 +48,7 @@ namespace NAVY
 			{
 				gridNeural.Rows[e.RowIndex].Cells["columnLayer"].Value = gridNeural.RowCount;
 				gridNeural.Rows[e.RowIndex].Cells["columnNeurons"].Value = 1;
-				gridNeural.Rows[e.RowIndex].Cells["columnFunction"].Value = functionlist.Keys.ElementAt(2);
+				gridNeural.Rows[e.RowIndex].Cells["columnFunction"].Value = functionlist.Keys.ElementAt(4);
 				gridNeural.Rows[e.RowIndex].Cells["columnSlope"].Value = 1;
 				gridNeural.Rows[e.RowIndex].Cells["columnIntercept"].Value = 0;
 			}
@@ -78,7 +79,7 @@ namespace NAVY
 		private void btnNeuralRun_Click(object sender, EventArgs e)
 		{
 			txtNeuralOutput.Text = "";
-			
+			Update();
 
 			//for every line of input
 			foreach (String line in txtNeuralInput.Lines)
@@ -133,11 +134,12 @@ namespace NAVY
 					for (int j = 0; j < outputnum; j++)
 					{
 						double value;
-						value = (double.TryParse(cmbNeuralInitValue.Text, out value) && value >= 0 && value<=1) ? value : r.NextDouble();
+						//TODO from file
+						value = (double.TryParse(cmbNeuralInitValue.Text, out value)) ? value : r.NextDouble()*2-1;
 						if (activelayer == -1) //inputs
-							sb.Append(string.Format("i{0}-n{1}_{2}:   {3:0.000}\r\n", i, activelayer + 1, j, value));
+							sb.Append(string.Format("i{0}>n{1}_{2}:   {3:0.000}\r\n", i, activelayer + 1, j, value));
 						else
-							sb.Append(string.Format("n{0}_{1}-n{2}_{3}: {4:0.000}\r\n", activelayer, i, activelayer + 1, j, value));
+							sb.Append(string.Format("n{0}_{1}>n{2}_{3}: {4:0.000}\r\n", activelayer, i, activelayer + 1, j, value));
 					}
 				}
 				activelayer++;
@@ -148,6 +150,13 @@ namespace NAVY
 
 		private void btnNeuralUpdate_Click(object sender, EventArgs e)
 		{
+			
+		}
+
+		private new void Update()
+		{
+			if (txtNeuralSynapses.Text.Length == 0)
+				btnNeuralSynapsesInit_Click(null, null);
 			// set layers also!
 			List<Layer> layers = new List<Layer>();
 			int layercount = 0;
@@ -168,7 +177,46 @@ namespace NAVY
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			pictureBox1.Image = brain.GetSchema();
+			
+		}
+
+		private void btnNeuralInputLoad_Click(object sender, EventArgs e)
+		{
+			if(openFileDialog1.ShowDialog() == DialogResult.OK)
+				using (StreamReader sr = new StreamReader(openFileDialog1.FileName))
+					txtNeuralInput.Text = sr.ReadToEnd();
+		}
+
+		private void btnNeuralExpectedLoad_Click(object sender, EventArgs e)
+		{
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+				using (StreamReader sr = new StreamReader(openFileDialog1.FileName))
+					txtNeuralExpected.Text = sr.ReadToEnd();
+		}
+
+		private void btnNeuralSchema_Click(object sender, EventArgs e)
+		{
+			Update();
+			Bitmap b = brain.GetSchema();
+			txtNeuralSynapses.Text = brain.GetSynapsesStr();
+			NeuralSchema schema = new NeuralSchema(b);
+			schema.ShowDialog();
+		}
+
+		private void btnNeuralOutputSave_Click(object sender, EventArgs e)
+		{
+			saveFileDialog1.FileName = "output.txt";
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+				using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
+					sw.Write(txtNeuralOutput.Text);
+		}
+
+		private void btnNeuralSynapsesSave_Click(object sender, EventArgs e)
+		{
+			saveFileDialog1.FileName = "synapses.txt";
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+				using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
+					sw.Write(txtNeuralSynapses.Text);
 		}
 	}
 }
