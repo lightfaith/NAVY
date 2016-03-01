@@ -1,5 +1,7 @@
 V:\syncthing\share\navy\project\NAVY\Neural\bin\Debug\Neural.dll
 V:\syncthing\share\navy\project\NAVY\Neural\bin\Debug\Neural.pdb
-V:\syncthing\share\navy\project\NAVY\Neural\obj\Debug\Neural.csprojResolveAssemblyReference.cache
 V:\syncthing\share\navy\project\NAVY\Neural\obj\Debug\Neural.dll
 V:\syncthing\share\navy\project\NAVY\Neural\obj\Debug\Neural.pdb
+V:\syncthing\share\navy\project\NAVY\Neural\obj\Debug\Neural.csprojResolveAssemblyReference.cache
+V:\syncthing\share\navy\project\NAVY\Neural\bin\Debug\Bio.dll
+V:\syncthing\share\navy\project\NAVY\Neural\bin\Debug\Bio.pdb

@@ -17,8 +17,10 @@ namespace NAVY
 		public Form1()
 		{
 			InitializeComponent();
-			GroupBoxRenderer.RenderMatchingApplicationState = false;
-			grpNeuralInterval.ForeColor = Color.Silver;
+			//GroupBoxRenderer.RenderMatchingApplicationState = false;
+			//grpNeuralInterval.ForeColor = Color.Silver;
+
+
 		}
 
 		// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
@@ -49,8 +51,8 @@ namespace NAVY
 				gridNeural.Rows[e.RowIndex].Cells["columnLayer"].Value = gridNeural.RowCount;
 				gridNeural.Rows[e.RowIndex].Cells["columnNeurons"].Value = 1;
 				gridNeural.Rows[e.RowIndex].Cells["columnFunction"].Value = functionlist.Keys.ElementAt(4);
-				gridNeural.Rows[e.RowIndex].Cells["columnSlope"].Value = 1;
-				gridNeural.Rows[e.RowIndex].Cells["columnIntercept"].Value = 0;
+				//gridNeural.Rows[e.RowIndex].Cells["columnSlope"].Value = 1;
+				//gridNeural.Rows[e.RowIndex].Cells["columnIntercept"].Value = 0;
 			}
 
 		}
@@ -93,7 +95,8 @@ namespace NAVY
 					inputs.Add(Convert.ToDouble(value));
 
 				//do the magic
-				txtNeuralOutput.Text += brain.Think(inputs, (int)numNeuralEpoch.Value);
+				brain.Think(inputs, (int)numNeuralEpoch.Value);
+				txtNeuralOutput.Text += brain.GatherResultsStr();
 
 			} //end for each initial input line
 
@@ -102,7 +105,6 @@ namespace NAVY
 
 		private void btnNeuralSynapsesInit_Click(object sender, EventArgs e)
 		{
-			Random r = new Random();
 			cmbNeuralInitValue.Text = cmbNeuralInitValue.Text.Replace(".", ",");
 			// check input correctness, count number of inputs
 			String[] inputlines = txtNeuralInput.Text.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -134,8 +136,7 @@ namespace NAVY
 					for (int j = 0; j < outputnum; j++)
 					{
 						double value;
-						//TODO from file
-						value = (double.TryParse(cmbNeuralInitValue.Text, out value)) ? value : r.NextDouble()*2-1;
+						value = (double.TryParse(cmbNeuralInitValue.Text, out value)) ? value : Lib.r.NextDouble()*2-1;
 						if (activelayer == -1) //inputs
 							sb.Append(string.Format("i{0}>n{1}_{2}:   {3:0.000}\r\n", i, activelayer + 1, j, value));
 						else
@@ -158,21 +159,27 @@ namespace NAVY
 			if (txtNeuralSynapses.Text.Length == 0)
 				btnNeuralSynapsesInit_Click(null, null);
 			// set layers also!
-			List<Layer> layers = new List<Layer>();
+			Dictionary<int, List<Neuron>> neurons = new Dictionary<int, List<Neuron>>();
 			int layercount = 0;
 			foreach (DataGridViewRow row in gridNeural.Rows)
 			{
-				Layer layer = new Layer(layercount,
-					Convert.ToInt32(row.Cells["columnNeurons"].Value),
-					functionlist[(String)row.Cells["columnFunction"].Value],
-					Convert.ToDouble(row.Cells["columnSlope"].Value.ToString().Replace(".", ",")),
-					Convert.ToDouble(row.Cells["columnIntercept"].Value.ToString().Replace(".", ",")));
-				layers.Add(layer);
+				List<Neuron> layer = new List<Neuron>();
+				for (int i = 0; i < Convert.ToInt32(row.Cells["columnNeurons"].Value); i++)
+				{
+					layer.Add(
+						new Neuron(
+							layercount,                                               //layer
+							i,                                                        //index
+							functionlist[(String)row.Cells["columnFunction"].Value],  //function
+							1,                                                        //slope
+							0							                              //intercept
+							)
+					);
+				}
+				neurons.Add(layercount, layer);
 				layercount++;
 			}
-
-			//TODO check synapse integrity
-			brain.Update(layers, txtNeuralSynapses.Text);
+			brain.Update(neurons, txtNeuralSynapses.Text, txtNeuralInput.Text.Substring(0, txtNeuralInput.Text.IndexOf('\r')).Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Count());
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -197,7 +204,7 @@ namespace NAVY
 		private void btnNeuralSchema_Click(object sender, EventArgs e)
 		{
 			Update();
-			Bitmap b = brain.GetSchema();
+			Bitmap b = Schema.GetSchema(brain);
 			txtNeuralSynapses.Text = brain.GetSynapsesStr();
 			NeuralSchema schema = new NeuralSchema(b);
 			schema.ShowDialog();

@@ -32,13 +32,12 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabNeural = new System.Windows.Forms.TabPage();
+			this.checkNeuralAugmented = new System.Windows.Forms.CheckBox();
+			this.cmbNeuralAlgorithm = new System.Windows.Forms.ComboBox();
 			this.btnNeuralSchema = new System.Windows.Forms.Button();
 			this.btnNeuralSynapsesSave = new System.Windows.Forms.Button();
 			this.numNeuralEpoch = new System.Windows.Forms.NumericUpDown();
 			this.lblNeuralEpoch = new System.Windows.Forms.Label();
-			this.grpNeuralInterval = new System.Windows.Forms.GroupBox();
-			this.radioNeuralIntervalBipolar = new System.Windows.Forms.RadioButton();
-			this.radioNeuralIntervalUnipolar = new System.Windows.Forms.RadioButton();
 			this.btnNeuralSynapsesInit = new System.Windows.Forms.Button();
 			this.cmbNeuralInitValue = new System.Windows.Forms.ComboBox();
 			this.lblNeuralSynapses = new System.Windows.Forms.Label();
@@ -52,11 +51,6 @@
 			this.btnNeuralRun = new System.Windows.Forms.Button();
 			this.btnNeuralAddLayer = new System.Windows.Forms.Button();
 			this.gridNeural = new System.Windows.Forms.DataGridView();
-			this.columnLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.columnNeurons = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.columnFunction = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.columnSlope = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.columnIntercept = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.lblNeuralOutput = new System.Windows.Forms.Label();
 			this.lblNeuralInput = new System.Windows.Forms.Label();
 			this.txtNeuralOutput = new System.Windows.Forms.TextBox();
@@ -64,10 +58,12 @@
 			this.txtLog = new System.Windows.Forms.TextBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+			this.columnLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.columnNeurons = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.columnFunction = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.tabControl.SuspendLayout();
 			this.tabNeural.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numNeuralEpoch)).BeginInit();
-			this.grpNeuralInterval.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridNeural)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -86,11 +82,12 @@
 			// tabNeural
 			// 
 			this.tabNeural.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			this.tabNeural.Controls.Add(this.checkNeuralAugmented);
+			this.tabNeural.Controls.Add(this.cmbNeuralAlgorithm);
 			this.tabNeural.Controls.Add(this.btnNeuralSchema);
 			this.tabNeural.Controls.Add(this.btnNeuralSynapsesSave);
 			this.tabNeural.Controls.Add(this.numNeuralEpoch);
 			this.tabNeural.Controls.Add(this.lblNeuralEpoch);
-			this.tabNeural.Controls.Add(this.grpNeuralInterval);
 			this.tabNeural.Controls.Add(this.btnNeuralSynapsesInit);
 			this.tabNeural.Controls.Add(this.cmbNeuralInitValue);
 			this.tabNeural.Controls.Add(this.lblNeuralSynapses);
@@ -115,11 +112,37 @@
 			this.tabNeural.TabIndex = 0;
 			this.tabNeural.Text = "Neural";
 			// 
+			// checkNeuralAugmented
+			// 
+			this.checkNeuralAugmented.AutoSize = true;
+			this.checkNeuralAugmented.Location = new System.Drawing.Point(500, 52);
+			this.checkNeuralAugmented.Name = "checkNeuralAugmented";
+			this.checkNeuralAugmented.Size = new System.Drawing.Size(176, 21);
+			this.checkNeuralAugmented.TabIndex = 32;
+			this.checkNeuralAugmented.Text = "Add Augmented Vector";
+			this.checkNeuralAugmented.UseVisualStyleBackColor = true;
+			// 
+			// cmbNeuralAlgorithm
+			// 
+			this.cmbNeuralAlgorithm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmbNeuralAlgorithm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			this.cmbNeuralAlgorithm.ForeColor = System.Drawing.Color.Silver;
+			this.cmbNeuralAlgorithm.FormattingEnabled = true;
+			this.cmbNeuralAlgorithm.Items.AddRange(new object[] {
+            "SOMA",
+            "Iterative",
+            "Back Propagation"});
+			this.cmbNeuralAlgorithm.Location = new System.Drawing.Point(500, 79);
+			this.cmbNeuralAlgorithm.Name = "cmbNeuralAlgorithm";
+			this.cmbNeuralAlgorithm.Size = new System.Drawing.Size(170, 24);
+			this.cmbNeuralAlgorithm.TabIndex = 31;
+			this.cmbNeuralAlgorithm.Text = "SOMA";
+			// 
 			// btnNeuralSchema
 			// 
 			this.btnNeuralSchema.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnNeuralSchema.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralSchema.Location = new System.Drawing.Point(500, 133);
+			this.btnNeuralSchema.Location = new System.Drawing.Point(500, 150);
 			this.btnNeuralSchema.Name = "btnNeuralSchema";
 			this.btnNeuralSchema.Size = new System.Drawing.Size(170, 35);
 			this.btnNeuralSchema.TabIndex = 30;
@@ -144,7 +167,7 @@
 			this.numNeuralEpoch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.numNeuralEpoch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
 			this.numNeuralEpoch.ForeColor = System.Drawing.Color.Silver;
-			this.numNeuralEpoch.Location = new System.Drawing.Point(590, 64);
+			this.numNeuralEpoch.Location = new System.Drawing.Point(590, 20);
 			this.numNeuralEpoch.Minimum = new decimal(new int[] {
             1,
             0,
@@ -163,45 +186,11 @@
 			// 
 			this.lblNeuralEpoch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblNeuralEpoch.AutoSize = true;
-			this.lblNeuralEpoch.Location = new System.Drawing.Point(500, 66);
+			this.lblNeuralEpoch.Location = new System.Drawing.Point(497, 22);
 			this.lblNeuralEpoch.Name = "lblNeuralEpoch";
-			this.lblNeuralEpoch.Size = new System.Drawing.Size(48, 17);
+			this.lblNeuralEpoch.Size = new System.Drawing.Size(55, 17);
 			this.lblNeuralEpoch.TabIndex = 26;
-			this.lblNeuralEpoch.Text = "Epoch";
-			// 
-			// grpNeuralInterval
-			// 
-			this.grpNeuralInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.grpNeuralInterval.Controls.Add(this.radioNeuralIntervalBipolar);
-			this.grpNeuralInterval.Controls.Add(this.radioNeuralIntervalUnipolar);
-			this.grpNeuralInterval.Location = new System.Drawing.Point(500, 3);
-			this.grpNeuralInterval.Name = "grpNeuralInterval";
-			this.grpNeuralInterval.Size = new System.Drawing.Size(170, 55);
-			this.grpNeuralInterval.TabIndex = 25;
-			this.grpNeuralInterval.TabStop = false;
-			this.grpNeuralInterval.Text = "Interval";
-			// 
-			// radioNeuralIntervalBipolar
-			// 
-			this.radioNeuralIntervalBipolar.AutoSize = true;
-			this.radioNeuralIntervalBipolar.Location = new System.Drawing.Point(90, 21);
-			this.radioNeuralIntervalBipolar.Name = "radioNeuralIntervalBipolar";
-			this.radioNeuralIntervalBipolar.Size = new System.Drawing.Size(74, 21);
-			this.radioNeuralIntervalBipolar.TabIndex = 1;
-			this.radioNeuralIntervalBipolar.Text = "<-1; 1>";
-			this.radioNeuralIntervalBipolar.UseVisualStyleBackColor = true;
-			// 
-			// radioNeuralIntervalUnipolar
-			// 
-			this.radioNeuralIntervalUnipolar.AutoSize = true;
-			this.radioNeuralIntervalUnipolar.Checked = true;
-			this.radioNeuralIntervalUnipolar.Location = new System.Drawing.Point(6, 21);
-			this.radioNeuralIntervalUnipolar.Name = "radioNeuralIntervalUnipolar";
-			this.radioNeuralIntervalUnipolar.Size = new System.Drawing.Size(69, 21);
-			this.radioNeuralIntervalUnipolar.TabIndex = 0;
-			this.radioNeuralIntervalUnipolar.TabStop = true;
-			this.radioNeuralIntervalUnipolar.Text = "<0; 1>";
-			this.radioNeuralIntervalUnipolar.UseVisualStyleBackColor = true;
+			this.lblNeuralEpoch.Text = "Epochs";
 			// 
 			// btnNeuralSynapsesInit
 			// 
@@ -223,7 +212,6 @@
 			this.cmbNeuralInitValue.FormattingEnabled = true;
 			this.cmbNeuralInitValue.Items.AddRange(new object[] {
             "Random",
-            "File",
             "-1",
             "-0.5",
             "0",
@@ -264,9 +252,9 @@
 			// 
 			this.btnNeuralOutputSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnNeuralOutputSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralOutputSave.Location = new System.Drawing.Point(850, 298);
+			this.btnNeuralOutputSave.Location = new System.Drawing.Point(792, 298);
 			this.btnNeuralOutputSave.Name = "btnNeuralOutputSave";
-			this.btnNeuralOutputSave.Size = new System.Drawing.Size(110, 35);
+			this.btnNeuralOutputSave.Size = new System.Drawing.Size(168, 35);
 			this.btnNeuralOutputSave.TabIndex = 19;
 			this.btnNeuralOutputSave.Text = "Save";
 			this.btnNeuralOutputSave.UseVisualStyleBackColor = true;
@@ -288,7 +276,7 @@
 			// 
 			this.btnNeuralInputLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnNeuralInputLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralInputLoad.Location = new System.Drawing.Point(734, 298);
+			this.btnNeuralInputLoad.Location = new System.Drawing.Point(676, 298);
 			this.btnNeuralInputLoad.Name = "btnNeuralInputLoad";
 			this.btnNeuralInputLoad.Size = new System.Drawing.Size(110, 35);
 			this.btnNeuralInputLoad.TabIndex = 17;
@@ -329,7 +317,6 @@
 			this.txtNeuralExpected.Location = new System.Drawing.Point(969, 19);
 			this.txtNeuralExpected.Multiline = true;
 			this.txtNeuralExpected.Name = "txtNeuralExpected";
-			this.txtNeuralExpected.ReadOnly = true;
 			this.txtNeuralExpected.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.txtNeuralExpected.Size = new System.Drawing.Size(110, 274);
 			this.txtNeuralExpected.TabIndex = 14;
@@ -339,7 +326,7 @@
 			// 
 			this.btnNeuralRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnNeuralRun.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralRun.Location = new System.Drawing.Point(500, 92);
+			this.btnNeuralRun.Location = new System.Drawing.Point(500, 109);
 			this.btnNeuralRun.Name = "btnNeuralRun";
 			this.btnNeuralRun.Size = new System.Drawing.Size(170, 35);
 			this.btnNeuralRun.TabIndex = 13;
@@ -381,9 +368,7 @@
 			this.gridNeural.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columnLayer,
             this.columnNeurons,
-            this.columnFunction,
-            this.columnSlope,
-            this.columnIntercept});
+            this.columnFunction});
 			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
 			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -401,48 +386,12 @@
 			this.gridNeural.TabIndex = 10;
 			this.gridNeural.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.gridNeural_RowsAdded);
 			// 
-			// columnLayer
-			// 
-			this.columnLayer.HeaderText = "Layer";
-			this.columnLayer.MinimumWidth = 45;
-			this.columnLayer.Name = "columnLayer";
-			this.columnLayer.ReadOnly = true;
-			this.columnLayer.Width = 45;
-			// 
-			// columnNeurons
-			// 
-			this.columnNeurons.HeaderText = "Neurons";
-			this.columnNeurons.MinimumWidth = 55;
-			this.columnNeurons.Name = "columnNeurons";
-			this.columnNeurons.Width = 55;
-			// 
-			// columnFunction
-			// 
-			this.columnFunction.HeaderText = "Function";
-			this.columnFunction.MinimumWidth = 120;
-			this.columnFunction.Name = "columnFunction";
-			this.columnFunction.Width = 120;
-			// 
-			// columnSlope
-			// 
-			this.columnSlope.HeaderText = "Slope";
-			this.columnSlope.MinimumWidth = 40;
-			this.columnSlope.Name = "columnSlope";
-			this.columnSlope.Width = 40;
-			// 
-			// columnIntercept
-			// 
-			this.columnIntercept.HeaderText = "Intercept";
-			this.columnIntercept.MinimumWidth = 60;
-			this.columnIntercept.Name = "columnIntercept";
-			this.columnIntercept.Width = 60;
-			// 
 			// lblNeuralOutput
 			// 
 			this.lblNeuralOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblNeuralOutput.AutoSize = true;
-			this.lblNeuralOutput.Location = new System.Drawing.Point(847, 3);
+			this.lblNeuralOutput.Location = new System.Drawing.Point(789, 3);
 			this.lblNeuralOutput.Name = "lblNeuralOutput";
 			this.lblNeuralOutput.Size = new System.Drawing.Size(51, 17);
 			this.lblNeuralOutput.TabIndex = 9;
@@ -453,7 +402,7 @@
 			this.lblNeuralInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblNeuralInput.AutoSize = true;
-			this.lblNeuralInput.Location = new System.Drawing.Point(731, 3);
+			this.lblNeuralInput.Location = new System.Drawing.Point(673, 3);
 			this.lblNeuralInput.Name = "lblNeuralInput";
 			this.lblNeuralInput.Size = new System.Drawing.Size(39, 17);
 			this.lblNeuralInput.TabIndex = 8;
@@ -466,12 +415,12 @@
 			this.txtNeuralOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
 			this.txtNeuralOutput.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.txtNeuralOutput.ForeColor = System.Drawing.Color.Silver;
-			this.txtNeuralOutput.Location = new System.Drawing.Point(850, 19);
+			this.txtNeuralOutput.Location = new System.Drawing.Point(792, 19);
 			this.txtNeuralOutput.Multiline = true;
 			this.txtNeuralOutput.Name = "txtNeuralOutput";
 			this.txtNeuralOutput.ReadOnly = true;
 			this.txtNeuralOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtNeuralOutput.Size = new System.Drawing.Size(110, 274);
+			this.txtNeuralOutput.Size = new System.Drawing.Size(168, 274);
 			this.txtNeuralOutput.TabIndex = 7;
 			// 
 			// txtNeuralInput
@@ -481,7 +430,7 @@
 			this.txtNeuralInput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
 			this.txtNeuralInput.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.txtNeuralInput.ForeColor = System.Drawing.Color.Silver;
-			this.txtNeuralInput.Location = new System.Drawing.Point(734, 19);
+			this.txtNeuralInput.Location = new System.Drawing.Point(676, 19);
 			this.txtNeuralInput.Multiline = true;
 			this.txtNeuralInput.Name = "txtNeuralInput";
 			this.txtNeuralInput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -512,6 +461,28 @@
 			// 
 			this.saveFileDialog1.DefaultExt = "txt";
 			// 
+			// columnLayer
+			// 
+			this.columnLayer.HeaderText = "Layer";
+			this.columnLayer.MinimumWidth = 45;
+			this.columnLayer.Name = "columnLayer";
+			this.columnLayer.ReadOnly = true;
+			this.columnLayer.Width = 45;
+			// 
+			// columnNeurons
+			// 
+			this.columnNeurons.HeaderText = "Neurons";
+			this.columnNeurons.MinimumWidth = 55;
+			this.columnNeurons.Name = "columnNeurons";
+			this.columnNeurons.Width = 55;
+			// 
+			// columnFunction
+			// 
+			this.columnFunction.HeaderText = "Function";
+			this.columnFunction.MinimumWidth = 120;
+			this.columnFunction.Name = "columnFunction";
+			this.columnFunction.Width = 120;
+			// 
 			// Form1
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -526,8 +497,6 @@
 			this.tabNeural.ResumeLayout(false);
 			this.tabNeural.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numNeuralEpoch)).EndInit();
-			this.grpNeuralInterval.ResumeLayout(false);
-			this.grpNeuralInterval.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridNeural)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -555,21 +524,18 @@
 		private System.Windows.Forms.Label lblNeuralSynapses;
 		private System.Windows.Forms.TextBox txtNeuralSynapses;
 		private System.Windows.Forms.Button btnNeuralSynapsesInit;
-		private System.Windows.Forms.GroupBox grpNeuralInterval;
-		private System.Windows.Forms.RadioButton radioNeuralIntervalBipolar;
-		private System.Windows.Forms.RadioButton radioNeuralIntervalUnipolar;
 		private System.Windows.Forms.NumericUpDown numNeuralEpoch;
 		private System.Windows.Forms.Label lblNeuralEpoch;
-		private System.Windows.Forms.DataGridViewTextBoxColumn columnLayer;
-		private System.Windows.Forms.DataGridViewTextBoxColumn columnNeurons;
-		private System.Windows.Forms.DataGridViewComboBoxColumn columnFunction;
-		private System.Windows.Forms.DataGridViewTextBoxColumn columnSlope;
-		private System.Windows.Forms.DataGridViewTextBoxColumn columnIntercept;
 		private System.Windows.Forms.ComboBox cmbNeuralInitValue;
 		private System.Windows.Forms.Button btnNeuralSynapsesSave;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.Button btnNeuralSchema;
+		private System.Windows.Forms.CheckBox checkNeuralAugmented;
+		private System.Windows.Forms.ComboBox cmbNeuralAlgorithm;
+		private System.Windows.Forms.DataGridViewTextBoxColumn columnLayer;
+		private System.Windows.Forms.DataGridViewTextBoxColumn columnNeurons;
+		private System.Windows.Forms.DataGridViewComboBoxColumn columnFunction;
 	}
 }
 

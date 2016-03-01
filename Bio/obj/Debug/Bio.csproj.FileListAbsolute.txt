@@ -1,0 +1,5 @@
+V:\syncthing\share\navy\project\NAVY\Bio\bin\Debug\Bio.dll
+V:\syncthing\share\navy\project\NAVY\Bio\bin\Debug\Bio.pdb
+V:\syncthing\share\navy\project\NAVY\Bio\obj\Debug\Bio.csprojResolveAssemblyReference.cache
+V:\syncthing\share\navy\project\NAVY\Bio\obj\Debug\Bio.dll
+V:\syncthing\share\navy\project\NAVY\Bio\obj\Debug\Bio.pdb

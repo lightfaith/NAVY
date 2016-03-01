@@ -31,7 +31,7 @@ namespace Neural
 	{
 		override public double Compute(double input, double slope, double intercept)
 		{
-			if (input < 0)
+			if (input <= 0)
 				return 0;
 			return 1;
 		}
