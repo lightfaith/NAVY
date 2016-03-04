@@ -6,51 +6,38 @@ using System.Threading.Tasks;
 
 namespace Neural
 {
+	[Serializable]
 	public class Neuron
 	{
 		public int Layer { get; private set; }
 		public int Index { get; private set; }
-		private Function f;
+		public Function f;
 		public double Slope { get; set; }
 		public double Intercept { get; set; }
+		public double Augment { get; set;}
 
 		public List<double> Inputs { get; set; }
 		public double Value { get; private set; }
 
-		public Neuron(int layer, int index, Function f, double? slope = null, double? intercept = null)
+		public Neuron(int layer, int index, Function f, double? slope = null, double? intercept = null, double? augment = null)
 		{
 			this.Layer = layer;
 			this.Index = index;
 			this.f = f;
-			this.Slope = (slope == null) ? Lib.r.NextDouble() * 20 : (double)slope;
-			this.Intercept = (intercept == null) ? Lib.r.NextDouble() * 20 - 10 : (double)intercept;
+			this.Slope = (slope == null) ? Neuron.GetRandomSlope() : (double)slope;
+			this.Intercept = (intercept == null) ? Neuron.GetRandomIntercept() : (double)intercept;
+			this.Augment = (augment == null) ? Neuron.GetRandomAugment() : (double)augment;
 			this.Value = 0;
 			this.Inputs = new List<double>();
 		}
 
-		/*public void UpdateSynapses(List<Synapse> synapses)
-		{
-			this.Synapses = synapses;
-		}*/
-
-		/*public double Think(List<double> inputs)
-		{
-			double result = 0;
-			for (int i = 0; i < inputs.Count; i++)
-			{
-				AddMissingSynapse(i);
-				result += inputs[i] * Synapses[i].Weight;
-			}
-			// use given function to interpret results
-			return f.Compute(result, slope, intercept);
-		}
-		*/
 		public double Think()
 		{
 			double result = 0;
 			foreach (double i in Inputs)
 				result += i;
 			Inputs.Clear();
+			result += Augment;
 			Value = f.Compute(result, Slope, Intercept);
 			return Value;
 		}
@@ -64,23 +51,34 @@ namespace Neural
 		{
 			Inputs.Add(input);
 		}
-		/*public String GetSynapsesStr()
-		{
-			StringBuilder sb = new StringBuilder();
-			foreach (Synapse s in Synapses)
-				sb.Append(String.Format("{0}>n{1}_{2}: {3}{4:0.000}\r\n", s.Source, Layer, Index, s.Source.Length<3?"  ":"", s.Weight));
-			return sb.ToString();
-		}*/
 
-		/*public void AddMissingSynapse(int i)
+		public static double GetDefaultSlope()
 		{
-			// missing synapse? add new random
-			if (i >= Synapses.Count)
-			{
-				String source = String.Format("{0}{1}", ((Layer > 0) ? String.Format("n{0}_", Layer - 1) : "i"), i);
-				Synapses.Add(new Synapse(source, Lib.r.NextDouble() * 2 - 1));
-			}
+			return 1;
+		}
 
-		}*/
+		public static double GetDefaultIntercept()
+		{
+			return 0;
+		}
+
+		public static double GetDefaultAugment()
+		{
+			return 0;
+		}
+		public static double GetRandomSlope()
+		{
+			return Lib.r.NextDouble() * 20;
+		}
+
+		public static double GetRandomIntercept()
+		{
+			return Lib.r.NextDouble() * 20 - 10;
+		}
+
+		public static double GetRandomAugment()
+		{
+			return Lib.r.NextDouble() * 2 - 1;
+		}
 	}
 }

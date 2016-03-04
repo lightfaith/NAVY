@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Neural
 {
+	[Serializable]
 	public abstract class Function
 	{
 		public abstract double Compute(double input, double slope, double intercept);
 
 	}
 
+	[Serializable]
 	public class Linear : Function
 	{
 		override public double Compute(double input, double slope, double intercept)
@@ -27,6 +29,7 @@ namespace Neural
 		}
 	}
 
+	[Serializable]
 	public class BinaryUnipolar : Function
 	{
 		override public double Compute(double input, double slope, double intercept)
@@ -41,6 +44,7 @@ namespace Neural
 		}
 	}
 
+	[Serializable]
 	public class BinaryBipolar : Function
 	{
 		override public double Compute(double input, double slope, double intercept)
@@ -55,6 +59,7 @@ namespace Neural
 		}
 	}
 
+	[Serializable]
 	public class Logistic : Function
 	{
 		override public double Compute(double input, double slope, double intercept)
@@ -67,11 +72,12 @@ namespace Neural
 		}
 	}
 
+	[Serializable]
 	public class HyperbolicTangent : Function
 	{
 		override public double Compute(double input, double slope, double intercept)
 		{
-			return (Math.Pow(Math.E, slope*input)-Math.Pow(Math.E, -slope * input))/(Math.Pow(Math.E, slope * input) + Math.Pow(Math.E, -slope * input)) +intercept;
+			return (Math.Pow(Math.E, slope*input)-Math.Pow(Math.E, -slope * input))/(Math.Pow(Math.E, slope * input) + Math.Pow(Math.E, -slope * input)) + intercept;
 		}
 		public override string ToString()
 		{

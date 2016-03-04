@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Neural
 {
+	[Serializable]
 	public class Synapse
 	{
 		public Neuron Source { get; private set; }
@@ -52,6 +53,11 @@ namespace Neural
 					return String.Format("i{0}>{1}", InputIndex, Target.GetName()); //input 
 			else
 				return "";
+		}
+
+		public static double GetRandomWeight()
+		{
+			return (Lib.r.NextDouble() * 2 - 1) * 5;
 		}
 	}
 }

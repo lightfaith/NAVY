@@ -54,7 +54,7 @@ namespace Neural
 			if ((neuronsize + 2) * 1.5 * max > width) // neurons too big for width
 				neuronsize = (int)(width / max / 1.8);
 
-			font = new Font(new FontFamily("Arial"), (neuronsize / 3 > 0) ? neuronsize / 3 : 1, FontStyle.Bold, GraphicsUnit.Pixel);
+			font = new Font(new FontFamily("Arial"), (neuronsize / 4 > 0) ? neuronsize / 4 : 1, FontStyle.Bold, GraphicsUnit.Pixel);
 			Bitmap b = new Bitmap(width, height);
 
 			// prepare points
@@ -62,7 +62,7 @@ namespace Neural
 			for (int i = 0; i < layernum; i++)
 				for (int j = 0; j < neuroncount[i]; j++)
 					coords.Add(String.Format("{0}_{1}", i, j),
-						new Point((int)(j * neuronsize * 1.5 + (width / 2) - ((neuronsize - 1) * 1.5 / 2 * neuroncount[i])),
+						new Point((int)(neuronsize/2 + j * neuronsize * 1.5 + (width / 2) - ((neuronsize - 1) * 1.5 / 2 * neuroncount[i])),
 						ycoords[layernum - 1 - i]));
 
 			// draw
@@ -104,27 +104,12 @@ namespace Neural
 							caption = String.Format("n{0}_{1}", i - 1, j);
 
 
-						/*// draw synapses
-						if (i != layernum - 1)
-						{
-							Pen p;
-							for (int k = 0; k < neuroncount[i + 1]; k++)
-							{
-								//float weight = brain.maxweight == 0 ? 0 : (float)(brain.Neurons[i].Neurons[k].Synapses[j].Weight / brain.maxweight * neuronsize / 6);
-								float weight = 1;
-								if (weight == 0)
-									continue;
-								if (weight > 0)
-									p = new Pen(Brushes.White, weight);
-								else
-									p = new Pen(Brushes.Red, -weight);
-
-								g.DrawLine(p, coords[String.Format("{0}_{1}", i + 1, k)], coords[key]);
-							}
-						}*/
 						// draw circles
-						g.FillEllipse(Brushes.Black, coords[key].X - neuronsize / 2, coords[key].Y - neuronsize / 2, neuronsize, neuronsize);
-						g.DrawEllipse(Pens.White, coords[key].X - neuronsize / 2, coords[key].Y - neuronsize / 2, neuronsize, neuronsize);
+						float neuronthickness = brain.maxaugment == 0 || i==0 ? 1 : Math.Abs((float)(brain.Neurons[i - 1][j].Augment/ brain.maxaugment * neuronsize / 12)); 
+						neuronthickness *=1.5f;
+						neuronthickness += 2;
+						g.FillEllipse((i==0 || brain.Neurons[i-1][j].Augment>=0)?Brushes.White:Brushes.Red, coords[key].X - neuronsize / 2, coords[key].Y - neuronsize / 2, neuronsize, neuronsize);
+						g.FillEllipse(Brushes.Black, coords[key].X - neuronsize / 2+neuronthickness/2, coords[key].Y - neuronsize / 2+neuronthickness/2, neuronsize- neuronthickness, neuronsize- neuronthickness);
 
 						// draw strings
 						SizeF stringsize = g.MeasureString(caption, font);

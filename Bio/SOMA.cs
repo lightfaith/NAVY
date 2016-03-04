@@ -15,7 +15,7 @@ namespace Bio
 			ps.Add("PathLength", 1.4f);
 			ps.Add("Step", 0.11f);
 			ps.Add("PRT", 0.8f);
-			ps.Add("Migrations", 10); //number of generations, per Step
+			//ps.Add("Migrations", 10); //number of generations, per Step
 			ps.Add("MinDiv", -1);     //minimal difference between best and worst, <0 => ignored
 			ps.Add("Migration", 10);
 		}
@@ -28,17 +28,18 @@ namespace Bio
 			return result;
 		}
 
-		public List<double> Run(List<Element> elements)
+		public List<double> Run(List<List<double>> elements)
 		{
-			return null;/*List<double> result = new List<double>();
+			return null;
+			/*List<double> result = new List<double>();
 
 			if (ps["Migration"] <= 0)
-				return eleme;
+				return elements;
 
-			Element leader = elements[0];
-			Element worst = elements[0];
+			List<double> leader = elements[0];
+			List<double> worst = elements[0];
 
-			foreach (Element e in elements)
+			foreach (List<double> e in elements)
 			{
 				if (e.GetGlobalError() < leader.GetGlobalError())
 					leader = e;

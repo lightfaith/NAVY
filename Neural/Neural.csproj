@@ -42,19 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Brain.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Functions.cs" />
-    <Compile Include="Layer.cs" />
     <Compile Include="Lib.cs" />
     <Compile Include="Neuron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schema.cs" />
+    <Compile Include="SOMA.cs" />
     <Compile Include="Synapse.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Bio\Bio.csproj">
-      <Project>{e69ca0c6-04ea-4a39-9168-7ff92979b00e}</Project>
-      <Name>Bio</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

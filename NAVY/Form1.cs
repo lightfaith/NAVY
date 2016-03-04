@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Neural;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace NAVY
 {
@@ -40,38 +42,29 @@ namespace NAVY
 			columnFunction.DataSource = functionlist.Keys.ToList<String>();
 
 			//add default row
-			gridNeural.Rows.Add();
+			AddNewLayer();
 		}
 
 		private void gridNeural_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
 		{
-			// default row settings
-			for (int i = 0; i < e.RowCount; i++)
-			{
-				gridNeural.Rows[e.RowIndex].Cells["columnLayer"].Value = gridNeural.RowCount;
-				gridNeural.Rows[e.RowIndex].Cells["columnNeurons"].Value = 1;
-				gridNeural.Rows[e.RowIndex].Cells["columnFunction"].Value = functionlist.Keys.ElementAt(4);
-				//gridNeural.Rows[e.RowIndex].Cells["columnSlope"].Value = 1;
-				//gridNeural.Rows[e.RowIndex].Cells["columnIntercept"].Value = 0;
-			}
 
 		}
 
 		private void btnNeuralAddLayer_Click(object sender, EventArgs e)
 		{
-			gridNeural.Rows.Add();
+			AddNewLayer();
 		}
 
 		private void btnNeuralDeleteLayer_Click(object sender, EventArgs e)
 		{
 			//delete all selected
-			foreach (DataGridViewCell oneCell in gridNeural.SelectedCells)
+			foreach (DataGridViewCell oneCell in gridNeuralLayers.SelectedCells)
 			{
 				if (oneCell.Selected)
-					gridNeural.Rows.RemoveAt(oneCell.RowIndex);
+					gridNeuralLayers.Rows.RemoveAt(oneCell.RowIndex);
 			}
 			//re-number layers
-			foreach (DataGridViewRow row in gridNeural.Rows)
+			foreach (DataGridViewRow row in gridNeuralLayers.Rows)
 			{
 				row.Cells["columnLayer"].Value = row.Index + 1;
 			}
@@ -80,33 +73,254 @@ namespace NAVY
 
 		private void btnNeuralRun_Click(object sender, EventArgs e)
 		{
+			barNeuralMatch.Value = 0;
+			if (txtNeuralInput.Lines.Count((s) => s.Trim() != "") != txtNeuralExpected.Lines.Count((s) => s.Trim() != ""))
+				return;
+
 			txtNeuralOutput.Text = "";
+
+			// update neuron
 			Update();
 
-			//for every line of input
-			foreach (String line in txtNeuralInput.Lines)
+
+
+			//do the magic
+			switch (cmbNeuralAlgorithm.Text)
 			{
-				if (line == "")
-					continue;
+				case "Compute": // basic computation
+					{
+						brain.Think();
+						break;
+					}
+				case "SOMA": // basic computation
+					{
+						List<Configuration> population = new List<Configuration>();
+						for (int i = 0; i < 300; i++)
+							population.Add(new Configuration(brain, true));
+						for (int i = 0; i < (int)numNeuralEpoch.Value; i++)
+						{
+							population = new SOMA().Run(population);
+							barNeuralProgress.Value = (i + 1) * 100 / (int)numNeuralEpoch.Value;
+						}
+						//use the best one
+						population.Sort((x, y) => x.GE.CompareTo(y.GE));
+						brain.UpdateConfiguration(population[0]);
+						brain.Think();
+						break;
+					}
+			}
 
-				List<double> inputs = new List<double>();
-				// get initial input values
-				foreach (string value in line.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
-					inputs.Add(Convert.ToDouble(value));
 
-				//do the magic
-				brain.Think(inputs, (int)numNeuralEpoch.Value);
-				txtNeuralOutput.Text += brain.GatherResultsStr();
-
-			} //end for each initial input line
-
+			txtNeuralOutput.Text += brain.GetDataStr(brain.Outputs);
+			int matchcount = 0;
+			int totalcount = 0;
+			if (brain.Outputs.Count == brain.Expected.Count)
+				for (int i = 0; i < brain.Outputs.Count; i++)
+					if (brain.Outputs[i].Count == brain.Expected[i].Count)
+						for (int j = 0; j < brain.Outputs[i].Count; j++)
+						{
+							totalcount++;
+							if (brain.Outputs[i][j] == brain.Expected[i][j])
+								matchcount++;
+						}
+			barNeuralMatch.Value = totalcount > 0 ? matchcount * 100 / totalcount : 0;
+			UpdateNeuronDataGrid();
 			txtNeuralSynapses.Text = brain.GetSynapsesStr();
 		}
 
-		private void btnNeuralSynapsesInit_Click(object sender, EventArgs e)
+
+		private new void Update()
 		{
-			cmbNeuralInitValue.Text = cmbNeuralInitValue.Text.Replace(".", ",");
-			// check input correctness, count number of inputs
+			if (txtNeuralSynapses.Text.Length == 0)
+				SynapseInit();
+
+			// set layers also!
+			Dictionary<int, List<Neuron>> neurons = new Dictionary<int, List<Neuron>>();
+			int layercount = 0;
+			foreach (DataGridViewRow row in gridNeuralLayers.Rows)
+			{
+				List<Neuron> layer = new List<Neuron>();
+				for (int i = 0; i < Convert.ToInt32(row.Cells["columnNeurons"].Value); i++)
+				{
+					// neuron configuration already in datagrid? use it!
+					var neuronrows = gridNeuralNeurons.Rows
+						.Cast<DataGridViewRow>()
+						.Where(r => r.Cells["columnNeuron"].Value.ToString().Equals(String.Format("n{0}_{1}", layercount, i)));
+					//int rowindex = 0;
+					int rowindex = neuronrows.Count() != 0 ? neuronrows.First().Index : -1;
+					if (rowindex != -1) // add original
+						layer.Add(
+						new Neuron(
+							layercount,                                                                         //layer
+							i,                                                                                  //index
+							functionlist[(String)row.Cells["columnFunction"].Value],                            //function //imho ok to get this from main gridview  
+							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnSlope"].Value),      //slope
+							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnIntercept"].Value),  //intercept
+							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnAugment"].Value)     //augment
+							));
+					else // add brand new
+						layer.Add(
+							new Neuron(
+								layercount,                                               //layer
+								i,                                                        //index
+								functionlist[(String)row.Cells["columnFunction"].Value],  //function
+								Neuron.GetDefaultSlope(),                                 //slope
+								Neuron.GetDefaultIntercept(),                             //intercept
+								Neuron.GetDefaultAugment()                                //augment
+								)
+						);
+				}
+				neurons.Add(layercount, layer);
+				layercount++;
+			}
+			brain.UpdateStructure(neurons, txtNeuralSynapses.Text, txtNeuralInput.Text.Substring(0, txtNeuralInput.Text.IndexOf('\r')).Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Count());
+
+
+
+			// prepare inputs and expected results
+			List<List<double>> inputs = new List<List<double>>();
+			List<List<double>> expected = new List<List<double>>();
+
+			//for every line of input
+			for (int i = 0; i < txtNeuralInput.Lines.Count((s) => s.Trim() != ""); i++)
+			{
+				String inputlinestr = txtNeuralInput.Lines[i];
+				String expectedlinestr = txtNeuralExpected.Lines[i];
+				List<double> inputline = new List<double>();
+				List<double> expectedline = new List<double>();
+
+				if (inputlinestr == "" || expectedlinestr == "")
+					continue;
+
+				// get initial input values
+				foreach (string value in inputlinestr.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+					inputline.Add(Convert.ToDouble(value));
+				inputs.Add(inputline);
+				// get expected values
+				foreach (string value in expectedlinestr.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+					expectedline.Add(Convert.ToDouble(value));
+				expected.Add(expectedline);
+			} //end for each initial input line
+
+
+			brain.Inputs = inputs;
+			brain.Expected = expected;
+
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnNeuralInputLoad_Click(object sender, EventArgs e)
+		{
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+				using (StreamReader sr = new StreamReader(openFileDialog1.FileName))
+					txtNeuralInput.Text = sr.ReadToEnd();
+		}
+
+		private void btnNeuralExpectedLoad_Click(object sender, EventArgs e)
+		{
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+				using (StreamReader sr = new StreamReader(openFileDialog1.FileName))
+					txtNeuralExpected.Text = sr.ReadToEnd();
+		}
+
+		private void btnNeuralSchema_Click(object sender, EventArgs e)
+		{
+			Update();
+			UpdateNeuronDataGrid();
+			Bitmap b = Schema.GetSchema(brain);
+			txtNeuralSynapses.Text = brain.GetSynapsesStr();
+			NeuralSchema schema = new NeuralSchema(b);
+			schema.ShowDialog();
+		}
+
+		private void btnNeuralOutputSave_Click(object sender, EventArgs e)
+		{
+			saveFileDialog1.FileName = "output.txt";
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+				using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
+					sw.Write(txtNeuralOutput.Text);
+		}
+
+		private void btnNeuralSynapsesSave_Click(object sender, EventArgs e)
+		{
+			/*saveFileDialog1.FileName = "synapses.txt";
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+				using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
+					sw.Write(txtNeuralSynapses.Text);*/
+		}
+
+		private void UpdateNeuronDataGrid()
+		{
+			gridNeuralNeurons.Rows.Clear();
+			foreach (List<Neuron> layer in brain.Neurons.Values)
+			{
+				foreach (Neuron n in layer)
+				{
+					gridNeuralNeurons.Rows.Add();
+					int rowindex = gridNeuralNeurons.Rows.Count - 1;
+					gridNeuralNeurons.Rows[rowindex].Cells["columnNeuron"].Value = n.GetName();
+					gridNeuralNeurons.Rows[rowindex].Cells["columnSlope"].Value = n.Slope;
+					gridNeuralNeurons.Rows[rowindex].Cells["columnIntercept"].Value = n.Intercept;
+					gridNeuralNeurons.Rows[rowindex].Cells["columnAugment"].Value = n.Augment;
+				}
+			}
+		}
+
+		private void btnNeuralSaveConfiguration_Click(object sender, EventArgs e)
+		{
+			Update();
+
+			saveFileDialog1.FileName = "network";
+			saveFileDialog1.DefaultExt = "ann";
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				IFormatter formatter = new BinaryFormatter();
+				Stream stream = new FileStream(saveFileDialog1.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
+				formatter.Serialize(stream, brain);
+				stream.Close();
+			}
+		}
+
+		private void btnNeuralLoadConfiguration_Click(object sender, EventArgs e)
+		{
+			openFileDialog1.FileName = "network.ann";
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				IFormatter formatter = new BinaryFormatter();
+				Stream stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+				brain = (Brain)formatter.Deserialize(stream);
+				stream.Close();
+
+				//show actual data
+				//txtNeuralOutput.Text = brain.GetDataStr(brain.Outputs);
+				txtNeuralInput.Text = brain.GetDataStr(brain.Inputs);
+				txtNeuralExpected.Text = brain.GetDataStr(brain.Expected);
+				gridNeuralLayers.Rows.Clear();
+				for (int i = 0; i < brain.Neurons.Count; i++)
+				{
+					AddNewLayer(brain.Neurons[i].Count, functionlist.FirstOrDefault(x => x.Value.ToString() == brain.Neurons[i][0].f.ToString()).Key);
+				}
+				barNeuralMatch.Value = 0;
+				UpdateNeuronDataGrid();
+				txtNeuralSynapses.Text = brain.GetSynapsesStr();
+			}
+		}
+
+		public void AddNewLayer(int neuroncount = 1, string function = "Binary Unipolar")
+		{
+			gridNeuralLayers.Rows.Add();
+			int index = gridNeuralLayers.RowCount - 1;
+			gridNeuralLayers.Rows[index].Cells["columnLayer"].Value = index + 1;
+			gridNeuralLayers.Rows[index].Cells["columnNeurons"].Value = neuroncount;
+			gridNeuralLayers.Rows[index].Cells["columnFunction"].Value = function;
+		}
+
+		public void SynapseInit(double? value = null)
+		{
 			String[] inputlines = txtNeuralInput.Text.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 			int inputnum = -1;
 			foreach (String line in inputlines)
@@ -126,7 +340,7 @@ namespace NAVY
 			int activelayer = -1;
 			StringBuilder sb = new StringBuilder();
 			// for every layer, write synapses with random weights
-			foreach (DataGridViewRow row in gridNeural.Rows)
+			foreach (DataGridViewRow row in gridNeuralLayers.Rows)
 			{
 				int outputnum = Convert.ToInt32(row.Cells["columnNeurons"].Value);
 				// for each source
@@ -135,12 +349,11 @@ namespace NAVY
 					// for each destination
 					for (int j = 0; j < outputnum; j++)
 					{
-						double value;
-						value = (double.TryParse(cmbNeuralInitValue.Text, out value)) ? value : Lib.r.NextDouble()*2-1;
+						double newvalue = (value != null) ? (double)value : Synapse.GetRandomWeight();
 						if (activelayer == -1) //inputs
-							sb.Append(string.Format("i{0}>n{1}_{2}:   {3:0.000}\r\n", i, activelayer + 1, j, value));
+							sb.Append(string.Format("i{0}>n{1}_{2}:   {3:0.000}\r\n", i, activelayer + 1, j, newvalue));
 						else
-							sb.Append(string.Format("n{0}_{1}>n{2}_{3}: {4:0.000}\r\n", activelayer, i, activelayer + 1, j, value));
+							sb.Append(string.Format("n{0}_{1}>n{2}_{3}: {4:0.000}\r\n", activelayer, i, activelayer + 1, j, newvalue));
 					}
 				}
 				activelayer++;
@@ -149,81 +362,41 @@ namespace NAVY
 			txtNeuralSynapses.Text = sb.ToString();
 		}
 
-		private void btnNeuralUpdate_Click(object sender, EventArgs e)
+		private void btnNeuralSynapseRandom_Click(object sender, EventArgs e)
 		{
-			
+			SynapseInit();
+		}
+		
+		private void btnNeuralSynapsesZero_Click(object sender, EventArgs e)
+		{
+			SynapseInit(0);
 		}
 
-		private new void Update()
-		{
-			if (txtNeuralSynapses.Text.Length == 0)
-				btnNeuralSynapsesInit_Click(null, null);
-			// set layers also!
-			Dictionary<int, List<Neuron>> neurons = new Dictionary<int, List<Neuron>>();
-			int layercount = 0;
-			foreach (DataGridViewRow row in gridNeural.Rows)
-			{
-				List<Neuron> layer = new List<Neuron>();
-				for (int i = 0; i < Convert.ToInt32(row.Cells["columnNeurons"].Value); i++)
-				{
-					layer.Add(
-						new Neuron(
-							layercount,                                               //layer
-							i,                                                        //index
-							functionlist[(String)row.Cells["columnFunction"].Value],  //function
-							1,                                                        //slope
-							0							                              //intercept
-							)
-					);
-				}
-				neurons.Add(layercount, layer);
-				layercount++;
-			}
-			brain.Update(neurons, txtNeuralSynapses.Text, txtNeuralInput.Text.Substring(0, txtNeuralInput.Text.IndexOf('\r')).Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Count());
-		}
-
-		private void button1_Click(object sender, EventArgs e)
-		{
-			
-		}
-
-		private void btnNeuralInputLoad_Click(object sender, EventArgs e)
-		{
-			if(openFileDialog1.ShowDialog() == DialogResult.OK)
-				using (StreamReader sr = new StreamReader(openFileDialog1.FileName))
-					txtNeuralInput.Text = sr.ReadToEnd();
-		}
-
-		private void btnNeuralExpectedLoad_Click(object sender, EventArgs e)
-		{
-			if (openFileDialog1.ShowDialog() == DialogResult.OK)
-				using (StreamReader sr = new StreamReader(openFileDialog1.FileName))
-					txtNeuralExpected.Text = sr.ReadToEnd();
-		}
-
-		private void btnNeuralSchema_Click(object sender, EventArgs e)
+		private void btnNeuralNeuronsRandom_Click(object sender, EventArgs e)
 		{
 			Update();
-			Bitmap b = Schema.GetSchema(brain);
-			txtNeuralSynapses.Text = brain.GetSynapsesStr();
-			NeuralSchema schema = new NeuralSchema(b);
-			schema.ShowDialog();
+			foreach (List<Neuron> layer in brain.Neurons.Values)
+				foreach (Neuron n in layer)
+				{
+					n.Slope = Neuron.GetRandomSlope();
+					n.Intercept = Neuron.GetRandomIntercept();
+					n.Augment = Neuron.GetRandomAugment();
+				}
+			UpdateNeuronDataGrid();
+
 		}
 
-		private void btnNeuralOutputSave_Click(object sender, EventArgs e)
+		private void btnNeuralNeuronsDefault_Click(object sender, EventArgs e)
 		{
-			saveFileDialog1.FileName = "output.txt";
-			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-				using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
-					sw.Write(txtNeuralOutput.Text);
-		}
-
-		private void btnNeuralSynapsesSave_Click(object sender, EventArgs e)
-		{
-			saveFileDialog1.FileName = "synapses.txt";
-			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-				using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
-					sw.Write(txtNeuralSynapses.Text);
+			Update();
+			foreach (List<Neuron> layer in brain.Neurons.Values)
+				foreach (Neuron n in layer)
+				{
+					n.Slope = Neuron.GetDefaultSlope();
+					n.Intercept = Neuron.GetDefaultIntercept();
+					n.Augment = Neuron.GetDefaultAugment();
+				}
+			UpdateNeuronDataGrid();
 		}
 	}
 }
