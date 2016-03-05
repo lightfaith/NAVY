@@ -34,6 +34,12 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabNeural = new System.Windows.Forms.TabPage();
+			this.btnNeuralNeuronsDefault = new System.Windows.Forms.Button();
+			this.btnNeuralNeuronsRandom = new System.Windows.Forms.Button();
+			this.btnNeuralSynapsesZero = new System.Windows.Forms.Button();
+			this.btnNeuralSynapseRandom = new System.Windows.Forms.Button();
+			this.btnNeuralLoadConfiguration = new System.Windows.Forms.Button();
+			this.btnNeuralSaveConfiguration = new System.Windows.Forms.Button();
 			this.barNeuralProgress = new System.Windows.Forms.ProgressBar();
 			this.barNeuralMatch = new System.Windows.Forms.ProgressBar();
 			this.cmbNeuralAlgorithm = new System.Windows.Forms.ComboBox();
@@ -65,12 +71,6 @@
 			this.txtLog = new System.Windows.Forms.TextBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-			this.btnNeuralSaveConfiguration = new System.Windows.Forms.Button();
-			this.btnNeuralLoadConfiguration = new System.Windows.Forms.Button();
-			this.btnNeuralSynapseRandom = new System.Windows.Forms.Button();
-			this.btnNeuralSynapsesZero = new System.Windows.Forms.Button();
-			this.btnNeuralNeuronsRandom = new System.Windows.Forms.Button();
-			this.btnNeuralNeuronsDefault = new System.Windows.Forms.Button();
 			this.tabControl.SuspendLayout();
 			this.tabNeural.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numNeuralEpoch)).BeginInit();
@@ -127,9 +127,81 @@
 			this.tabNeural.TabIndex = 0;
 			this.tabNeural.Text = "Neural";
 			// 
+			// btnNeuralNeuronsDefault
+			// 
+			this.btnNeuralNeuronsDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnNeuralNeuronsDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnNeuralNeuronsDefault.Location = new System.Drawing.Point(403, 299);
+			this.btnNeuralNeuronsDefault.Name = "btnNeuralNeuronsDefault";
+			this.btnNeuralNeuronsDefault.Size = new System.Drawing.Size(122, 35);
+			this.btnNeuralNeuronsDefault.TabIndex = 57;
+			this.btnNeuralNeuronsDefault.Text = "Default";
+			this.btnNeuralNeuronsDefault.UseVisualStyleBackColor = true;
+			this.btnNeuralNeuronsDefault.Click += new System.EventHandler(this.btnNeuralNeuronsDefault_Click);
+			// 
+			// btnNeuralNeuronsRandom
+			// 
+			this.btnNeuralNeuronsRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnNeuralNeuronsRandom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnNeuralNeuronsRandom.Location = new System.Drawing.Point(275, 299);
+			this.btnNeuralNeuronsRandom.Name = "btnNeuralNeuronsRandom";
+			this.btnNeuralNeuronsRandom.Size = new System.Drawing.Size(122, 35);
+			this.btnNeuralNeuronsRandom.TabIndex = 56;
+			this.btnNeuralNeuronsRandom.Text = "Random";
+			this.btnNeuralNeuronsRandom.UseVisualStyleBackColor = true;
+			this.btnNeuralNeuronsRandom.Click += new System.EventHandler(this.btnNeuralNeuronsRandom_Click);
+			// 
+			// btnNeuralSynapsesZero
+			// 
+			this.btnNeuralSynapsesZero.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnNeuralSynapsesZero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnNeuralSynapsesZero.Location = new System.Drawing.Point(628, 299);
+			this.btnNeuralSynapsesZero.Name = "btnNeuralSynapsesZero";
+			this.btnNeuralSynapsesZero.Size = new System.Drawing.Size(89, 35);
+			this.btnNeuralSynapsesZero.TabIndex = 55;
+			this.btnNeuralSynapsesZero.Text = "Zero";
+			this.btnNeuralSynapsesZero.UseVisualStyleBackColor = true;
+			this.btnNeuralSynapsesZero.Click += new System.EventHandler(this.btnNeuralSynapsesZero_Click);
+			// 
+			// btnNeuralSynapseRandom
+			// 
+			this.btnNeuralSynapseRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnNeuralSynapseRandom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnNeuralSynapseRandom.Location = new System.Drawing.Point(532, 299);
+			this.btnNeuralSynapseRandom.Name = "btnNeuralSynapseRandom";
+			this.btnNeuralSynapseRandom.Size = new System.Drawing.Size(89, 35);
+			this.btnNeuralSynapseRandom.TabIndex = 54;
+			this.btnNeuralSynapseRandom.Text = "Random";
+			this.btnNeuralSynapseRandom.UseVisualStyleBackColor = true;
+			this.btnNeuralSynapseRandom.Click += new System.EventHandler(this.btnNeuralSynapseRandom_Click);
+			// 
+			// btnNeuralLoadConfiguration
+			// 
+			this.btnNeuralLoadConfiguration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnNeuralLoadConfiguration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnNeuralLoadConfiguration.Location = new System.Drawing.Point(3, 6);
+			this.btnNeuralLoadConfiguration.Name = "btnNeuralLoadConfiguration";
+			this.btnNeuralLoadConfiguration.Size = new System.Drawing.Size(130, 35);
+			this.btnNeuralLoadConfiguration.TabIndex = 53;
+			this.btnNeuralLoadConfiguration.Text = "Load Config";
+			this.btnNeuralLoadConfiguration.UseVisualStyleBackColor = true;
+			this.btnNeuralLoadConfiguration.Click += new System.EventHandler(this.btnNeuralLoadConfiguration_Click);
+			// 
+			// btnNeuralSaveConfiguration
+			// 
+			this.btnNeuralSaveConfiguration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnNeuralSaveConfiguration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnNeuralSaveConfiguration.Location = new System.Drawing.Point(139, 6);
+			this.btnNeuralSaveConfiguration.Name = "btnNeuralSaveConfiguration";
+			this.btnNeuralSaveConfiguration.Size = new System.Drawing.Size(130, 35);
+			this.btnNeuralSaveConfiguration.TabIndex = 52;
+			this.btnNeuralSaveConfiguration.Text = "Save Config";
+			this.btnNeuralSaveConfiguration.UseVisualStyleBackColor = true;
+			this.btnNeuralSaveConfiguration.Click += new System.EventHandler(this.btnNeuralSaveConfiguration_Click);
+			// 
 			// barNeuralProgress
 			// 
-			this.barNeuralProgress.Location = new System.Drawing.Point(728, 118);
+			this.barNeuralProgress.Location = new System.Drawing.Point(728, 125);
 			this.barNeuralProgress.Name = "barNeuralProgress";
 			this.barNeuralProgress.Size = new System.Drawing.Size(170, 23);
 			this.barNeuralProgress.TabIndex = 51;
@@ -153,7 +225,7 @@
             "SOMA",
             "Iterative",
             "Back Propagation"});
-			this.cmbNeuralAlgorithm.Location = new System.Drawing.Point(728, 47);
+			this.cmbNeuralAlgorithm.Location = new System.Drawing.Point(728, 54);
 			this.cmbNeuralAlgorithm.Name = "cmbNeuralAlgorithm";
 			this.cmbNeuralAlgorithm.Size = new System.Drawing.Size(170, 24);
 			this.cmbNeuralAlgorithm.TabIndex = 49;
@@ -163,7 +235,7 @@
 			// 
 			this.btnNeuralSchema.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnNeuralSchema.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralSchema.Location = new System.Drawing.Point(728, 147);
+			this.btnNeuralSchema.Location = new System.Drawing.Point(728, 154);
 			this.btnNeuralSchema.Name = "btnNeuralSchema";
 			this.btnNeuralSchema.Size = new System.Drawing.Size(170, 35);
 			this.btnNeuralSchema.TabIndex = 48;
@@ -176,7 +248,7 @@
 			this.numNeuralEpoch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.numNeuralEpoch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
 			this.numNeuralEpoch.ForeColor = System.Drawing.Color.Silver;
-			this.numNeuralEpoch.Location = new System.Drawing.Point(818, 19);
+			this.numNeuralEpoch.Location = new System.Drawing.Point(818, 26);
 			this.numNeuralEpoch.Minimum = new decimal(new int[] {
             1,
             0,
@@ -195,7 +267,7 @@
 			// 
 			this.lblNeuralEpoch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblNeuralEpoch.AutoSize = true;
-			this.lblNeuralEpoch.Location = new System.Drawing.Point(725, 21);
+			this.lblNeuralEpoch.Location = new System.Drawing.Point(725, 28);
 			this.lblNeuralEpoch.Name = "lblNeuralEpoch";
 			this.lblNeuralEpoch.Size = new System.Drawing.Size(55, 17);
 			this.lblNeuralEpoch.TabIndex = 46;
@@ -230,7 +302,7 @@
 			this.lblNeuralExpected.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblNeuralExpected.AutoSize = true;
-			this.lblNeuralExpected.Location = new System.Drawing.Point(1017, 2);
+			this.lblNeuralExpected.Location = new System.Drawing.Point(1017, 6);
 			this.lblNeuralExpected.Name = "lblNeuralExpected";
 			this.lblNeuralExpected.Size = new System.Drawing.Size(66, 17);
 			this.lblNeuralExpected.TabIndex = 42;
@@ -243,11 +315,11 @@
 			this.txtNeuralExpected.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
 			this.txtNeuralExpected.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.txtNeuralExpected.ForeColor = System.Drawing.Color.Silver;
-			this.txtNeuralExpected.Location = new System.Drawing.Point(1020, 18);
+			this.txtNeuralExpected.Location = new System.Drawing.Point(1020, 26);
 			this.txtNeuralExpected.Multiline = true;
 			this.txtNeuralExpected.Name = "txtNeuralExpected";
 			this.txtNeuralExpected.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtNeuralExpected.Size = new System.Drawing.Size(110, 275);
+			this.txtNeuralExpected.Size = new System.Drawing.Size(110, 267);
 			this.txtNeuralExpected.TabIndex = 41;
 			this.txtNeuralExpected.Text = "1\r\n0\r\n1\r\n1";
 			// 
@@ -255,7 +327,7 @@
 			// 
 			this.btnNeuralRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnNeuralRun.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralRun.Location = new System.Drawing.Point(728, 77);
+			this.btnNeuralRun.Location = new System.Drawing.Point(728, 84);
 			this.btnNeuralRun.Name = "btnNeuralRun";
 			this.btnNeuralRun.Size = new System.Drawing.Size(170, 35);
 			this.btnNeuralRun.TabIndex = 40;
@@ -268,7 +340,7 @@
 			this.lblNeuralOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblNeuralOutput.AutoSize = true;
-			this.lblNeuralOutput.Location = new System.Drawing.Point(1133, 3);
+			this.lblNeuralOutput.Location = new System.Drawing.Point(1133, 6);
 			this.lblNeuralOutput.Name = "lblNeuralOutput";
 			this.lblNeuralOutput.Size = new System.Drawing.Size(51, 17);
 			this.lblNeuralOutput.TabIndex = 39;
@@ -279,7 +351,7 @@
 			this.lblNeuralInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblNeuralInput.AutoSize = true;
-			this.lblNeuralInput.Location = new System.Drawing.Point(901, 2);
+			this.lblNeuralInput.Location = new System.Drawing.Point(901, 6);
 			this.lblNeuralInput.Name = "lblNeuralInput";
 			this.lblNeuralInput.Size = new System.Drawing.Size(39, 17);
 			this.lblNeuralInput.TabIndex = 38;
@@ -292,12 +364,12 @@
 			this.txtNeuralOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
 			this.txtNeuralOutput.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.txtNeuralOutput.ForeColor = System.Drawing.Color.Silver;
-			this.txtNeuralOutput.Location = new System.Drawing.Point(1136, 19);
+			this.txtNeuralOutput.Location = new System.Drawing.Point(1136, 26);
 			this.txtNeuralOutput.Multiline = true;
 			this.txtNeuralOutput.Name = "txtNeuralOutput";
 			this.txtNeuralOutput.ReadOnly = true;
 			this.txtNeuralOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtNeuralOutput.Size = new System.Drawing.Size(168, 290);
+			this.txtNeuralOutput.Size = new System.Drawing.Size(168, 283);
 			this.txtNeuralOutput.TabIndex = 37;
 			// 
 			// txtNeuralInput
@@ -307,11 +379,11 @@
 			this.txtNeuralInput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
 			this.txtNeuralInput.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.txtNeuralInput.ForeColor = System.Drawing.Color.Silver;
-			this.txtNeuralInput.Location = new System.Drawing.Point(904, 18);
+			this.txtNeuralInput.Location = new System.Drawing.Point(904, 26);
 			this.txtNeuralInput.Multiline = true;
 			this.txtNeuralInput.Name = "txtNeuralInput";
 			this.txtNeuralInput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtNeuralInput.Size = new System.Drawing.Size(110, 275);
+			this.txtNeuralInput.Size = new System.Drawing.Size(110, 267);
 			this.txtNeuralInput.TabIndex = 36;
 			this.txtNeuralInput.Text = "0;0\r\n0;1\r\n1;0\r\n1;1";
 			// 
@@ -391,7 +463,7 @@
 			this.lblNeuralSynapses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblNeuralSynapses.AutoSize = true;
-			this.lblNeuralSynapses.Location = new System.Drawing.Point(529, 0);
+			this.lblNeuralSynapses.Location = new System.Drawing.Point(529, 6);
 			this.lblNeuralSynapses.Name = "lblNeuralSynapses";
 			this.lblNeuralSynapses.Size = new System.Drawing.Size(70, 17);
 			this.lblNeuralSynapses.TabIndex = 22;
@@ -404,11 +476,11 @@
 			this.txtNeuralSynapses.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
 			this.txtNeuralSynapses.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.txtNeuralSynapses.ForeColor = System.Drawing.Color.Silver;
-			this.txtNeuralSynapses.Location = new System.Drawing.Point(532, 20);
+			this.txtNeuralSynapses.Location = new System.Drawing.Point(532, 26);
 			this.txtNeuralSynapses.Multiline = true;
 			this.txtNeuralSynapses.Name = "txtNeuralSynapses";
 			this.txtNeuralSynapses.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtNeuralSynapses.Size = new System.Drawing.Size(185, 273);
+			this.txtNeuralSynapses.Size = new System.Drawing.Size(185, 267);
 			this.txtNeuralSynapses.TabIndex = 21;
 			// 
 			// btnNeuralDeleteLayer
@@ -519,78 +591,6 @@
 			// saveFileDialog1
 			// 
 			this.saveFileDialog1.DefaultExt = "txt";
-			// 
-			// btnNeuralSaveConfiguration
-			// 
-			this.btnNeuralSaveConfiguration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnNeuralSaveConfiguration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralSaveConfiguration.Location = new System.Drawing.Point(139, 6);
-			this.btnNeuralSaveConfiguration.Name = "btnNeuralSaveConfiguration";
-			this.btnNeuralSaveConfiguration.Size = new System.Drawing.Size(130, 35);
-			this.btnNeuralSaveConfiguration.TabIndex = 52;
-			this.btnNeuralSaveConfiguration.Text = "Save Config";
-			this.btnNeuralSaveConfiguration.UseVisualStyleBackColor = true;
-			this.btnNeuralSaveConfiguration.Click += new System.EventHandler(this.btnNeuralSaveConfiguration_Click);
-			// 
-			// btnNeuralLoadConfiguration
-			// 
-			this.btnNeuralLoadConfiguration.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnNeuralLoadConfiguration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralLoadConfiguration.Location = new System.Drawing.Point(3, 6);
-			this.btnNeuralLoadConfiguration.Name = "btnNeuralLoadConfiguration";
-			this.btnNeuralLoadConfiguration.Size = new System.Drawing.Size(130, 35);
-			this.btnNeuralLoadConfiguration.TabIndex = 53;
-			this.btnNeuralLoadConfiguration.Text = "Load Config";
-			this.btnNeuralLoadConfiguration.UseVisualStyleBackColor = true;
-			this.btnNeuralLoadConfiguration.Click += new System.EventHandler(this.btnNeuralLoadConfiguration_Click);
-			// 
-			// btnNeuralSynapseRandom
-			// 
-			this.btnNeuralSynapseRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnNeuralSynapseRandom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralSynapseRandom.Location = new System.Drawing.Point(532, 299);
-			this.btnNeuralSynapseRandom.Name = "btnNeuralSynapseRandom";
-			this.btnNeuralSynapseRandom.Size = new System.Drawing.Size(89, 35);
-			this.btnNeuralSynapseRandom.TabIndex = 54;
-			this.btnNeuralSynapseRandom.Text = "Random";
-			this.btnNeuralSynapseRandom.UseVisualStyleBackColor = true;
-			this.btnNeuralSynapseRandom.Click += new System.EventHandler(this.btnNeuralSynapseRandom_Click);
-			// 
-			// btnNeuralSynapsesZero
-			// 
-			this.btnNeuralSynapsesZero.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnNeuralSynapsesZero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralSynapsesZero.Location = new System.Drawing.Point(628, 299);
-			this.btnNeuralSynapsesZero.Name = "btnNeuralSynapsesZero";
-			this.btnNeuralSynapsesZero.Size = new System.Drawing.Size(89, 35);
-			this.btnNeuralSynapsesZero.TabIndex = 55;
-			this.btnNeuralSynapsesZero.Text = "Zero";
-			this.btnNeuralSynapsesZero.UseVisualStyleBackColor = true;
-			this.btnNeuralSynapsesZero.Click += new System.EventHandler(this.btnNeuralSynapsesZero_Click);
-			// 
-			// btnNeuralNeuronsRandom
-			// 
-			this.btnNeuralNeuronsRandom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnNeuralNeuronsRandom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralNeuronsRandom.Location = new System.Drawing.Point(275, 299);
-			this.btnNeuralNeuronsRandom.Name = "btnNeuralNeuronsRandom";
-			this.btnNeuralNeuronsRandom.Size = new System.Drawing.Size(122, 35);
-			this.btnNeuralNeuronsRandom.TabIndex = 56;
-			this.btnNeuralNeuronsRandom.Text = "Random";
-			this.btnNeuralNeuronsRandom.UseVisualStyleBackColor = true;
-			this.btnNeuralNeuronsRandom.Click += new System.EventHandler(this.btnNeuralNeuronsRandom_Click);
-			// 
-			// btnNeuralNeuronsDefault
-			// 
-			this.btnNeuralNeuronsDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnNeuralNeuronsDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnNeuralNeuronsDefault.Location = new System.Drawing.Point(403, 299);
-			this.btnNeuralNeuronsDefault.Name = "btnNeuralNeuronsDefault";
-			this.btnNeuralNeuronsDefault.Size = new System.Drawing.Size(122, 35);
-			this.btnNeuralNeuronsDefault.TabIndex = 57;
-			this.btnNeuralNeuronsDefault.Text = "Default";
-			this.btnNeuralNeuronsDefault.UseVisualStyleBackColor = true;
-			this.btnNeuralNeuronsDefault.Click += new System.EventHandler(this.btnNeuralNeuronsDefault_Click);
 			// 
 			// Form1
 			// 

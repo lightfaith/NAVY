@@ -62,6 +62,7 @@ namespace Neural
 			for (int i = 0; i < layernum; i++)
 				for (int j = 0; j < neuroncount[i]; j++)
 					coords.Add(String.Format("{0}_{1}", i, j),
+						//              left margin,   neuron spacing,                      from center
 						new Point((int)(neuronsize/2 + j * neuronsize * 1.5 + (width / 2) - ((neuronsize - 1) * 1.5 / 2 * neuroncount[i])),
 						ycoords[layernum - 1 - i]));
 
@@ -107,9 +108,12 @@ namespace Neural
 						// draw circles
 						float neuronthickness = brain.maxaugment == 0 || i==0 ? 1 : Math.Abs((float)(brain.Neurons[i - 1][j].Augment/ brain.maxaugment * neuronsize / 12)); 
 						neuronthickness *=1.5f;
-						neuronthickness += 2;
-						g.FillEllipse((i==0 || brain.Neurons[i-1][j].Augment>=0)?Brushes.White:Brushes.Red, coords[key].X - neuronsize / 2, coords[key].Y - neuronsize / 2, neuronsize, neuronsize);
-						g.FillEllipse(Brushes.Black, coords[key].X - neuronsize / 2+neuronthickness/2, coords[key].Y - neuronsize / 2+neuronthickness/2, neuronsize- neuronthickness, neuronsize- neuronthickness);
+						//neuronthickness += 2;
+						Pen neuronpen = new Pen((i == 0 || brain.Neurons[i - 1][j].Augment >= 0) ? Brushes.White : Brushes.Red, neuronthickness);
+						//g.FillEllipse((i==0 || brain.Neurons[i-1][j].Augment>=0)?Brushes.White:Brushes.Red, coords[key].X - neuronsize / 2, coords[key].Y - neuronsize / 2, neuronsize, neuronsize);
+						//g.FillEllipse(Brushes.Black, coords[key].X - neuronsize / 2+neuronthickness/2, coords[key].Y - neuronsize / 2+neuronthickness/2, neuronsize- neuronthickness, neuronsize- neuronthickness);
+						g.FillEllipse(Brushes.Black, coords[key].X - neuronsize / 2, coords[key].Y - neuronsize / 2, neuronsize, neuronsize);
+						g.DrawEllipse(neuronpen, coords[key].X - neuronsize / 2, coords[key].Y - neuronsize / 2, neuronsize, neuronsize);
 
 						// draw strings
 						SizeF stringsize = g.MeasureString(caption, font);

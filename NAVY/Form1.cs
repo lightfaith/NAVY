@@ -97,11 +97,15 @@ namespace NAVY
 						List<Configuration> population = new List<Configuration>();
 						for (int i = 0; i < 300; i++)
 							population.Add(new Configuration(brain, true));
+						// also use actual configuration
+						population.Add(new Configuration(brain));
+
 						for (int i = 0; i < (int)numNeuralEpoch.Value; i++)
 						{
 							population = new SOMA().Run(population);
 							barNeuralProgress.Value = (i + 1) * 100 / (int)numNeuralEpoch.Value;
 						}
+
 						//use the best one
 						population.Sort((x, y) => x.GE.CompareTo(y.GE));
 						brain.UpdateConfiguration(population[0]);
@@ -366,7 +370,7 @@ namespace NAVY
 		{
 			SynapseInit();
 		}
-		
+
 		private void btnNeuralSynapsesZero_Click(object sender, EventArgs e)
 		{
 			SynapseInit(0);
