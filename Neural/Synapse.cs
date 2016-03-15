@@ -12,9 +12,9 @@ namespace Neural
 		public Neuron Source { get; private set; }
 		public Neuron Target { get; private set; }
 		public int InputIndex { get; private set; } // an input-layer neuron index
+		public double LastInput { get; private set; }
 
 		public double Weight { get; set; }
-		//public double Value { get; set; }
 
 		public Synapse(Neuron source, Neuron target, double weight)
 		{
@@ -32,14 +32,14 @@ namespace Neural
 			this.InputIndex = inputindex;
 		}
 
-		public void DoMagic() // for not an input neuron
+		public void Transfer() // for not an input neuron
 		{
-			DoMagic(Source.Think());
+			Transfer(Source.Value);
 		}
 
-		public void DoMagic(double value) // for input neuron
+		public void Transfer(double value) // for input neuron
 		{
-			//Value = value;
+			LastInput = value;
 			if (Target != null)
 				Target.AddInput(value * Weight);
 		}

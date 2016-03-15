@@ -11,7 +11,7 @@ namespace Neural
 	{
 		public int Layer { get; private set; }
 		public int Index { get; private set; }
-		public Function f;
+		public TransferFunction f;
 		public double Slope { get; set; }
 		public double Intercept { get; set; }
 		public double Augment { get; set;}
@@ -19,7 +19,7 @@ namespace Neural
 		public List<double> Inputs { get; set; }
 		public double Value { get; private set; }
 
-		public Neuron(int layer, int index, Function f, double? slope = null, double? intercept = null, double? augment = null)
+		public Neuron(int layer, int index, TransferFunction f, double? slope = null, double? intercept = null, double? augment = null)
 		{
 			this.Layer = layer;
 			this.Index = index;
@@ -31,7 +31,7 @@ namespace Neural
 			this.Inputs = new List<double>();
 		}
 
-		public double Think()
+		/*public double Think()
 		{
 			double result = 0;
 			foreach (double i in Inputs)
@@ -40,6 +40,20 @@ namespace Neural
 			result += Augment;
 			Value = f.Compute(result, Slope, Intercept);
 			return Value;
+		}*/
+
+		public void StartThinking()
+		{
+			Value = 0;
+			foreach (double i in Inputs)
+				Value += i;
+			Inputs.Clear();
+			Value += Augment;
+		}
+
+		public void FinishThinking()
+		{
+			Value = f.Compute(Value, Slope, Intercept);
 		}
 
 		public String GetName()
@@ -64,7 +78,8 @@ namespace Neural
 
 		public static double GetDefaultAugment()
 		{
-			return 0;
+			//return 0;
+			return 1;
 		}
 		public static double GetRandomSlope()
 		{

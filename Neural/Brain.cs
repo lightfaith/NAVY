@@ -40,52 +40,74 @@ namespace Neural
 			Expected = model.Expected;
 		}
 
-		public void Think()
+		public void Think(NeuralNetworkAlgorithm algo = NeuralNetworkAlgorithm.None)
 		{
 			if (Inputs == null)
 				return;
 			Outputs = new List<List<double>>();
-			foreach (List<double> input in Inputs) // for every input set
+			for (int inputcounter = 0; inputcounter < Inputs.Count; inputcounter++) // for every input set
 			{
 				List<double> output = new List<double>();
-				for (int i = 0; i < input.Count; i++) // for every single input in input set
+				bool firstlayer = true;
+				foreach (int layer in Synapses.Keys)
 				{
-					bool firstlayer = true;
-					foreach (int layer in Synapses.Keys)
+					//transfer values through synapses
+					if (!firstlayer)
 					{
-						if (!firstlayer)
-							foreach (Synapse s in Synapses[layer])
-								s.DoMagic();
-						else
-							foreach (Synapse s in Synapses[layer])
-							{
-								s.DoMagic(input[s.InputIndex]);
-								firstlayer = false;
-							}
+						foreach (Synapse s in Synapses[layer])
+							s.Transfer();
+					}
+					else
+					{
+						List<Neuron> altered = new List<Neuron>();
+						//place inputs there
+						foreach (Synapse s in Synapses[layer])
+						{
+
+							s.Transfer(Inputs[inputcounter][s.InputIndex]);
+							firstlayer = false;
+						}
+
+					}
+					//make neurons think
+					foreach (Neuron n in Neurons[layer + 1])
+					{
+						n.StartThinking();
+						n.FinishThinking(); // really here? fixed increments agree
+											//any learning necessary? (only neuron-related)
+						switch (algo)
+						{
+							case NeuralNetworkAlgorithm.FixedIncrement:
+								{
+									// http://faculty.iiit.ac.in/~vikram/nn_intro.html
+									int c = 0;
+									int difference = (int)(n.Value - Expected[inputcounter][n.Index]);
+									if (difference > 0) // value is greater, weights should be lowered
+										c = -1;
+									else if (difference < 0) // expected is greater, weights should be uppered
+										c = 1;
+
+									List<Synapse> connected = (from s in Synapses[layer] where s.Target == n select s).ToList<Synapse>();
+									foreach (Synapse s in connected)
+										s.Weight += c * s.LastInput;
+									n.Augment += c;
+									break;
+								}
+						}
+						//n.FinishThinking();
 					}
 				}
-				// neurons in last layer did not participate, do that now
+				//gather results
 				if (Neurons.Count != 0)
 					foreach (Neuron n in Neurons[Neurons.Count - 1])
-					{
-						n.Think();
 						output.Add(n.Value);
-					}
 
 				//store the results
 				Outputs.Add(output);
 			}
 		}
-		/*public List<double> GatherResults()
-		{
-			List<double> result = new List<double>();
-			if (Neurons.Count != 0)
-				foreach (Neuron n in Neurons[Neurons.Count - 1])
-				{
-					result.Add(n.Value);
-				}
-			return result;
-		}*/
+
+
 		public string GetDataStr(List<List<double>> values)
 		{
 			if (values == null)
@@ -162,7 +184,7 @@ namespace Neural
 			foreach (List<Neuron> list in Neurons.Values)
 				foreach (Neuron n in list)
 					if (Math.Abs(n.Augment) > maxaugment)
-						maxaugment = Math.Abs(n.Augment); 
+						maxaugment = Math.Abs(n.Augment);
 
 			this.Synapses.Add(-1, synlayer);
 
@@ -232,6 +254,26 @@ namespace Neural
 				allsynapses[i].Weight = c.Weights[i];
 			}
 
+		}
+
+		public double ComputeMatch()
+		{
+			if (Outputs != null)
+			{
+				double matchcount = 0;
+				double totalcount = 0;
+				if (Outputs.Count == Expected.Count)
+					for (int i = 0; i < Outputs.Count; i++)
+						if (Outputs[i].Count == Expected[i].Count)
+							for (int j = 0; j < Outputs[i].Count; j++)
+							{
+								totalcount++;
+								if (Outputs[i][j] == Expected[i][j])
+									matchcount++;
+							}
+				return totalcount > 0 ? matchcount / totalcount : 0;
+			}
+			return 0;
 		}
 	}
 }

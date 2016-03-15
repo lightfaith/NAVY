@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace Neural
 {
 	[Serializable]
-	public abstract class Function
+	public abstract class TransferFunction
 	{
 		public abstract double Compute(double input, double slope, double intercept);
 
 	}
 
 	[Serializable]
-	public class Linear : Function
+	public class Linear : TransferFunction
 	{
 		override public double Compute(double input, double slope, double intercept)
 		{
@@ -30,7 +30,7 @@ namespace Neural
 	}
 
 	[Serializable]
-	public class BinaryUnipolar : Function
+	public class BinaryUnipolar : TransferFunction
 	{
 		override public double Compute(double input, double slope, double intercept)
 		{
@@ -45,7 +45,7 @@ namespace Neural
 	}
 
 	[Serializable]
-	public class BinaryBipolar : Function
+	public class BinaryBipolar : TransferFunction
 	{
 		override public double Compute(double input, double slope, double intercept)
 		{
@@ -60,7 +60,7 @@ namespace Neural
 	}
 
 	[Serializable]
-	public class Logistic : Function
+	public class Logistic : TransferFunction
 	{
 		override public double Compute(double input, double slope, double intercept)
 		{
@@ -73,7 +73,7 @@ namespace Neural
 	}
 
 	[Serializable]
-	public class HyperbolicTangent : Function
+	public class HyperbolicTangent : TransferFunction
 	{
 		override public double Compute(double input, double slope, double intercept)
 		{

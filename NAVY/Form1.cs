@@ -27,13 +27,13 @@ namespace NAVY
 
 		// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
-		Dictionary<String, Function> functionlist;
+		Dictionary<String, TransferFunction> functionlist;
 		Brain brain = new Brain();
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
 
-			functionlist = new Dictionary<String, Function>();
+			functionlist = new Dictionary<String, TransferFunction>();
 			functionlist.Add("Linear", new Linear());
 			functionlist.Add("Binary Unipolar", new BinaryUnipolar());
 			functionlist.Add("Binary Bipolar", new BinaryBipolar());
@@ -82,8 +82,6 @@ namespace NAVY
 			// update neuron
 			Update();
 
-
-
 			//do the magic
 			switch (cmbNeuralAlgorithm.Text)
 			{
@@ -112,22 +110,25 @@ namespace NAVY
 						brain.Think();
 						break;
 					}
+				case "Fixed Increments":
+					{
+						for (int i = 0; i < (int)numNeuralEpoch.Value; i++)
+						{
+							brain.Think(NeuralNetworkAlgorithm.FixedIncrement);
+						}
+						break;
+					}
+				default:
+					{
+						txtLog.AppendText(String.Format("'{0}' algorithm is not implemeneted.\r\n", cmbNeuralAlgorithm.Text));
+						break;
+					}
 			}
 
 
 			txtNeuralOutput.Text += brain.GetDataStr(brain.Outputs);
-			int matchcount = 0;
-			int totalcount = 0;
-			if (brain.Outputs.Count == brain.Expected.Count)
-				for (int i = 0; i < brain.Outputs.Count; i++)
-					if (brain.Outputs[i].Count == brain.Expected[i].Count)
-						for (int j = 0; j < brain.Outputs[i].Count; j++)
-						{
-							totalcount++;
-							if (brain.Outputs[i][j] == brain.Expected[i][j])
-								matchcount++;
-						}
-			barNeuralMatch.Value = totalcount > 0 ? matchcount * 100 / totalcount : 0;
+			barNeuralMatch.Value = (int)(brain.ComputeMatch() * 100);
+
 			UpdateNeuronDataGrid();
 			txtNeuralSynapses.Text = brain.GetSynapsesStr();
 		}
@@ -400,6 +401,16 @@ namespace NAVY
 					n.Intercept = Neuron.GetDefaultIntercept();
 					n.Augment = Neuron.GetDefaultAugment();
 				}
+			UpdateNeuronDataGrid();
+		}
+
+		private void btnNeuralNeuronsNoAugment_Click(object sender, EventArgs e)
+		{
+			Update();
+			foreach (List<Neuron> layer in brain.Neurons.Values)
+				foreach (Neuron n in layer)
+					n.Augment = 0;
+
 			UpdateNeuronDataGrid();
 		}
 	}
