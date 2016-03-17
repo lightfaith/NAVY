@@ -80,6 +80,8 @@ namespace Neural
 							case NeuralNetworkAlgorithm.FixedIncrement:
 								{
 									// http://faculty.iiit.ac.in/~vikram/nn_intro.html
+									if (layer + 1 != Neurons.Keys.Count - 1) // not in last layer?
+										break;
 									int c = 0;
 									int difference = (int)(n.Value - Expected[inputcounter][n.Index]);
 									if (difference > 0) // value is greater, weights should be lowered
@@ -241,13 +243,13 @@ namespace Neural
 				allsynapses.AddRange(slist);
 
 			// update data
-			if (c.SIs.Count != allneurons.Count || c.Weights.Count != allsynapses.Count)
+			if (c.SIAs.Count != allneurons.Count || c.Weights.Count != allsynapses.Count)
 				return;
 			for (int i = 0; i < allneurons.Count; i++)
 			{
-				allneurons[i].Slope = c.SIs[i].Item1;
-				allneurons[i].Intercept = c.SIs[i].Item2;
-				allneurons[i].Augment = c.SIs[i].Item3;
+				allneurons[i].Slope = c.SIAs[i].Item1;
+				allneurons[i].Intercept = c.SIAs[i].Item2;
+				allneurons[i].Augment = c.SIAs[i].Item3;
 			}
 			for (int i = 0; i < allsynapses.Count; i++)
 			{

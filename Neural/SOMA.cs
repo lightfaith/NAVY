@@ -31,8 +31,6 @@ namespace Neural
 		public List<Configuration> Run(List<Configuration> elements)
 		{
 			//Runs ONE iteration
-			//ps["Migrations"] = migrations;
-
 			// copy default configuration
 			List<Configuration> population = new List<Configuration>();
 			population.AddRange(elements);
@@ -49,8 +47,7 @@ namespace Neural
 			}
 			if (worst.GE - leader.GE < ps["MinDiv"]) //everyone too close
 				return population;
-
-			//Random r = new Random();
+			
 			List<Configuration> ng = new List<Configuration>();
 			for (int k = 0; k < population.Count; k++)
 			{
@@ -64,7 +61,7 @@ namespace Neural
 				List<Configuration> jumps = new List<Configuration>();
 				for (int i = 0; i < ps["PathLength"] / ps["Step"]; i++)
 				{
-					int prtsize = leader.SIs.Count * 3 + leader.Weights.Count;
+					int prtsize = leader.SIAs.Count * 3 + leader.Weights.Count;
 					List<int> prtv = GetPRTVector(prtsize);
 					Configuration leaderdiff = leader.GetDifference(c);
 					Configuration onejump = new Configuration(c);

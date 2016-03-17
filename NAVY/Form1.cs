@@ -11,6 +11,7 @@ using Neural;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace NAVY
 {
@@ -43,6 +44,10 @@ namespace NAVY
 
 			//add default row
 			AddNewLayer();
+
+			//clear chart
+			chart.ChartAreas.Clear();
+			chart.Series.Clear();
 		}
 
 		private void gridNeural_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -93,7 +98,7 @@ namespace NAVY
 				case "SOMA": // basic computation
 					{
 						List<Configuration> population = new List<Configuration>();
-						for (int i = 0; i < 300; i++)
+						for (int i = 0; i < 50; i++)
 							population.Add(new Configuration(brain, true));
 						// also use actual configuration
 						population.Add(new Configuration(brain));
@@ -131,6 +136,9 @@ namespace NAVY
 
 			UpdateNeuronDataGrid();
 			txtNeuralSynapses.Text = brain.GetSynapsesStr();
+
+			UpdateChart();
+
 		}
 
 
@@ -151,7 +159,7 @@ namespace NAVY
 					var neuronrows = gridNeuralNeurons.Rows
 						.Cast<DataGridViewRow>()
 						.Where(r => r.Cells["columnNeuron"].Value.ToString().Equals(String.Format("n{0}_{1}", layercount, i)));
-					//int rowindex = 0;
+
 					int rowindex = neuronrows.Count() != 0 ? neuronrows.First().Index : -1;
 					if (rowindex != -1) // add original
 						layer.Add(
@@ -199,7 +207,7 @@ namespace NAVY
 
 				// get initial input values
 				foreach (string value in inputlinestr.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
-					inputline.Add(Convert.ToDouble(value));
+					inputline.Add(Convert.ToDouble(value.Replace(".", ",")));
 				inputs.Add(inputline);
 				// get expected values
 				foreach (string value in expectedlinestr.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
@@ -412,6 +420,103 @@ namespace NAVY
 					n.Augment = 0;
 
 			UpdateNeuronDataGrid();
+		}
+
+		public void UpdateChart()
+		{
+
+			chart.ChartAreas.Clear();
+			chart.Series.Clear();
+
+			//not a 2D LSP with one expected output? don't do anything
+			if (brain.Synapses.Count != 1 || brain.Inputs[0].Count != 2 || brain.Expected[0].Count != 1)
+				return;
+			
+			// group inputs by expected result
+			double? min = null;
+			double? max = null;
+
+			Dictionary<string, Series> seriedict = new Dictionary<string, Series>();
+			for (int i = 0; i < brain.Inputs.Count; i++)
+			{
+				String group = String.Format("{0}", brain.Expected[i][0]);
+				if (!seriedict.Keys.Contains(group))
+					seriedict.Add(group, new Series(group));
+				if (min == null || brain.Inputs[i][0] < min)
+					min = brain.Inputs[i][0];
+				if (max == null || brain.Inputs[i][0] > max)
+					max = brain.Inputs[i][0];
+				seriedict[group].Points.AddXY(brain.Inputs[i][0], brain.Inputs[i][1]);
+			}
+
+			double gridinterval = (double)((max-min)/4);
+			foreach (Series s in seriedict.Values)
+			{
+				s.ChartType = SeriesChartType.Point;
+				s.MarkerSize = 10;
+				chart.Series.Add(s);
+			}
+			// prepare area
+
+			ChartArea area = new ChartArea();
+
+			area.AxisX.ScaleBreakStyle.LineColor = System.Drawing.Color.Silver;
+			area.AxisX.TitleForeColor = System.Drawing.Color.Silver;
+			area.AxisX.MajorGrid.LineColor = Color.Silver;
+			area.AxisX.MajorGrid.Interval = gridinterval;
+			area.AxisX.LabelStyle.ForeColor = Color.Silver;
+			area.AxisX.LabelStyle.Interval = gridinterval;
+			area.AxisX.Minimum = (int)min;
+			area.AxisX.Maximum = (int)max;
+
+			area.AxisX2.Enabled = AxisEnabled.False;
+
+			area.AxisY.ScaleBreakStyle.LineColor = System.Drawing.Color.Silver;
+			area.AxisY.LineColor = System.Drawing.Color.Silver;
+			area.AxisY.TitleForeColor = System.Drawing.Color.Silver;
+			area.AxisY.MajorGrid.LineColor = Color.Silver;
+			area.AxisY.MajorGrid.Interval = gridinterval;
+			area.AxisY.LabelStyle.ForeColor = Color.Silver;
+			area.AxisY.LabelStyle.Interval = gridinterval;
+			area.AxisY.Minimum = (int)min;
+			area.AxisY.Maximum = (int)max;
+
+			area.AxisY2.Enabled = AxisEnabled.False;
+
+			area.BackColor = System.Drawing.Color.FromArgb(0x22, 0x22, 0x22);
+			area.BorderColor = System.Drawing.Color.White;
+			area.BorderWidth = 1;
+			area.Name = "Area";
+			chart.ChartAreas.Add(area);
+			
+
+			// series for separator (for output neuron)
+			foreach (Neuron n in brain.Neurons[0])
+			{
+				Series lineserie = new Series();
+
+				lineserie.Name = n.GetName();
+				lineserie.ChartType = SeriesChartType.Line;
+				lineserie.BorderWidth = 5;
+				List<float> weights = new List<float>();
+				foreach (Synapse s in brain.Synapses[-1])
+					weights.Add((float)s.Weight);
+				weights.Add((float)brain.Neurons[0][0].Augment);
+				foreach (PointF p in GetLineTerminators(weights, (float)min, (float)max))
+				{
+					lineserie.Points.AddXY(p.X, p.Y);
+				}
+				chart.Series.Add(lineserie);
+			}
+
+		}
+
+		public List<PointF> GetLineTerminators(List<float> weights, float min, float max)
+		{
+			List<PointF> result = new List<PointF>();
+			result.Add(new PointF(min, (-weights[2] - weights[0]*min) / weights[1]));
+			result.Add(new PointF(max, (-weights[2] - weights[0] * max) / weights[1]));
+			return result;
 		}
 	}
 }
