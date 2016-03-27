@@ -232,7 +232,7 @@ namespace Neural
 
 		public void UpdateConfiguration(Configuration c)
 		{
-			// only weights, slopes and intercepts will be altered
+			// only weights and slopes will be altered
 
 			//assemble list of all neurons and then all synapses
 			List<Neuron> allneurons = new List<Neuron>();
@@ -249,8 +249,7 @@ namespace Neural
 			for (int i = 0; i < allneurons.Count; i++)
 			{
 				allneurons[i].Slope = c.SIAs[i].Item1;
-				allneurons[i].Intercept = c.SIAs[i].Item2;
-				allneurons[i].Augment = c.SIAs[i].Item3;
+				allneurons[i].Augment = c.SIAs[i].Item2;
 			}
 			for (int i = 0; i < allsynapses.Count; i++)
 			{

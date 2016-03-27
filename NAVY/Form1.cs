@@ -190,7 +190,6 @@ namespace NAVY
 							i,                                                                                  //index
 							functionlist[(String)row.Cells["columnFunction"].Value],                            //function //imho ok to get this from main gridview  
 							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnSlope"].Value),      //slope
-							/*Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnIntercept"].Value),  //intercept*/
 							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnAugment"].Value)     //augment
 							));
 					else // add brand new
@@ -200,7 +199,6 @@ namespace NAVY
 								i,                                                        //index
 								functionlist[(String)row.Cells["columnFunction"].Value],  //function
 								Neuron.GetDefaultSlope(),                                 //slope
-								/*Neuron.GetDefaultIntercept(),                             //intercept*/
 								Neuron.GetDefaultAugment()                                //augment
 								)
 						);
@@ -286,7 +284,6 @@ namespace NAVY
 					int rowindex = gridNeuralNeurons.Rows.Count - 1;
 					gridNeuralNeurons.Rows[rowindex].Cells["columnNeuron"].Value = n.GetName();
 					gridNeuralNeurons.Rows[rowindex].Cells["columnSlope"].Value = n.Slope;
-					gridNeuralNeurons.Rows[rowindex].Cells["columnIntercept"].Value = n.Intercept;
 					gridNeuralNeurons.Rows[rowindex].Cells["columnAugment"].Value = n.Augment;
 				}
 			}
@@ -400,7 +397,6 @@ namespace NAVY
 				foreach (Neuron n in layer)
 				{
 					n.Slope = Neuron.GetRandomSlope();
-					n.Intercept = Neuron.GetRandomIntercept();
 					n.Augment = Neuron.GetRandomAugment();
 				}
 			UpdateNeuronDataGrid();
@@ -414,7 +410,6 @@ namespace NAVY
 				foreach (Neuron n in layer)
 				{
 					n.Slope = Neuron.GetDefaultSlope();
-					n.Intercept = Neuron.GetDefaultIntercept();
 					n.Augment = Neuron.GetDefaultAugment();
 				}
 			UpdateNeuronDataGrid();

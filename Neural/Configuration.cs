@@ -11,7 +11,7 @@ namespace Neural
 		// describes neural network configuration
 
 		Brain model;
-		public List<Tuple<double, double, double>> SIAs { get; set; }
+		public List<Tuple<double, double>> SIAs { get; set; }
 		public List<double> Weights { get; set; }
 
 		private double? ge = null;
@@ -34,7 +34,7 @@ namespace Neural
 		public Configuration(Configuration template)
 		{
 			model = template.model;
-			SIAs = new List<Tuple<double, double, double>>();
+			SIAs = new List<Tuple<double, double>>();
 			SIAs.AddRange(template.SIAs);
 			Weights = new List<double>();
 			Weights.AddRange(template.Weights);
@@ -42,16 +42,16 @@ namespace Neural
 		public Configuration(Brain model, bool randomize = false)
 		{
 			this.model = model;
-			SIAs = new List<Tuple<double, double, double>>();
+			SIAs = new List<Tuple<double, double>>();
 			Weights = new List<double>();
 
 			//assemble list of all neurons and then all synapses
 			foreach (List<Neuron> nlist in this.model.Neurons.Values)
 				foreach (Neuron n in nlist)
 					if (randomize)
-						SIAs.Add(new Tuple<double, double, double>(Neuron.GetRandomSlope(), Neuron.GetRandomIntercept(), Neuron.GetRandomAugment()));
+						SIAs.Add(new Tuple<double, double>(Neuron.GetRandomSlope(), Neuron.GetRandomAugment()));
 					else
-						SIAs.Add(new Tuple<double, double, double>(n.Slope, n.Intercept, n.Augment));
+						SIAs.Add(new Tuple<double, double>(n.Slope, n.Augment));
 
 			foreach (List<Synapse> slist in this.model.Synapses.Values)
 				foreach (Synapse s in slist)
@@ -65,8 +65,8 @@ namespace Neural
 		{
 			Configuration result = new Configuration(this);
 			for (int i = 0; i < this.SIAs.Count; i++)
-				result.SIAs[i] = new Tuple<double, double, double>
-					(result.SIAs[i].Item1 - c.SIAs[i].Item1, result.SIAs[i].Item2 - c.SIAs[i].Item2, result.SIAs[i].Item3 - c.SIAs[i].Item3);
+				result.SIAs[i] = new Tuple<double, double>
+					(result.SIAs[i].Item1 - c.SIAs[i].Item1, result.SIAs[i].Item2 - c.SIAs[i].Item2);
 
 			for (int i = 0; i < this.Weights.Count; i++)
 				result.Weights[i] -= c.Weights[i];
@@ -79,14 +79,13 @@ namespace Neural
 			int prtcount = 0;
 			for (int i = 0; i < SIAs.Count; i++)
 			{
-				SIAs[i] = new Tuple<double, double, double>
+				SIAs[i] = new Tuple<double, double>
 					(
 						SIAs[i].Item1 + leaderdiff.SIAs[i].Item1 * step * stepsize * prt[prtcount],
-						SIAs[i].Item2 + leaderdiff.SIAs[i].Item2 * step * stepsize * prt[prtcount + 1],
-						SIAs[i].Item3 + leaderdiff.SIAs[i].Item3 * step * stepsize * prt[prtcount + 2]
+						SIAs[i].Item2 + leaderdiff.SIAs[i].Item2 * step * stepsize * prt[prtcount + 1]
 					);
 
-				prtcount += 3;
+				prtcount += 2; // must match tuple size!!!
 			}
 
 			for (int i = 0; i < Weights.Count; i++)
