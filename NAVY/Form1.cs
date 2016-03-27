@@ -12,6 +12,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Threading;
 
 namespace NAVY
 {
@@ -30,6 +31,7 @@ namespace NAVY
 
 		Dictionary<String, TransferFunction> functionlist;
 		Brain brain = new Brain();
+		Dictionary<int, double> ges = null;
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
@@ -45,9 +47,11 @@ namespace NAVY
 			//add default row
 			AddNewLayer();
 
-			//clear chart
-			chart.ChartAreas.Clear();
-			chart.Series.Clear();
+			//clear charts
+			chartLSP.ChartAreas.Clear();
+			chartLSP.Series.Clear();
+			chartStatus.Series.Clear();
+			chartStatus.ChartAreas.Clear();
 		}
 
 		private void gridNeural_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -78,69 +82,87 @@ namespace NAVY
 
 		private void btnNeuralRun_Click(object sender, EventArgs e)
 		{
+			ges = new Dictionary<int, double>();
 			barNeuralMatch.Value = 0;
 			if (txtNeuralInput.Lines.Count((s) => s.Trim() != "") != txtNeuralExpected.Lines.Count((s) => s.Trim() != ""))
 				return;
-
-			txtNeuralOutput.Text = "";
-
-			// update neuron
+			
+			// update NN
 			Update();
 
+			bool shouldloop = true;
+
 			//do the magic
-			switch (cmbNeuralAlgorithm.Text)
+			for (int i = 0; i < (int)numNeuralEpoch.Value; i++)
 			{
-				case "Compute": // basic computation
-					{
-						brain.Think();
-						break;
-					}
-				case "SOMA": // basic computation
-					{
-						List<Configuration> population = new List<Configuration>();
-						for (int i = 0; i < 50; i++)
-							population.Add(new Configuration(brain, true));
-						// also use actual configuration
-						population.Add(new Configuration(brain));
-
-						for (int i = 0; i < (int)numNeuralEpoch.Value; i++)
+				switch (cmbNeuralAlgorithm.Text)
+				{
+					case "Activate": // basic computation
 						{
-							population = new SOMA().Run(population);
-							barNeuralProgress.Value = (i + 1) * 100 / (int)numNeuralEpoch.Value;
+							brain.Think();
+							shouldloop = false; // no reason to repeat
+							break;
 						}
-
-						//use the best one
-						population.Sort((x, y) => x.GE.CompareTo(y.GE));
-						brain.UpdateConfiguration(population[0]);
-						brain.Think();
-						break;
-					}
-				case "Fixed Increments":
-					{
-						for (int i = 0; i < (int)numNeuralEpoch.Value; i++)
+					case "SOMA": // basic computation
+						{
+							List<Configuration> population = new List<Configuration>();
+							for (int j = 0; j < 50; j++)
+								population.Add(new Configuration(brain, true));
+							// also use actual configuration
+							population.Add(new Configuration(brain));
+							
+							population = new SOMA().Run(population);
+							
+							//use the best one
+							population.Sort((x, y) => x.GE.CompareTo(y.GE));
+							brain.UpdateConfiguration(population[0]);
+							brain.Think();
+							break;
+						}
+					case "Fixed Increments":
 						{
 							brain.Think(NeuralNetworkAlgorithm.FixedIncrement);
+
+							brain.Think(); // check again (no adaptation) to update values
+							break;
 						}
-						break;
-					}
-				default:
-					{
-						txtLog.AppendText(String.Format("'{0}' algorithm is not implemeneted.\r\n", cmbNeuralAlgorithm.Text));
-						break;
-					}
+					default:
+						{
+							txtLog.AppendText(String.Format("'{0}' algorithm is not implemented.\r\n", cmbNeuralAlgorithm.Text));
+							shouldloop = false;
+							break;
+						}
+				}
+
+				barNeuralProgress.Value = (i + 1) * 100 / (int)numNeuralEpoch.Value;
+
+				txtNeuralOutput.Text = brain.GetDataStr(brain.Outputs);
+				barNeuralMatch.Value = (int)(brain.ComputeMatch() * 100);
+
+				UpdateNeuronDataGrid();
+				txtNeuralSynapses.Text = brain.GetSynapsesStr();
+
+				UpdateChartLSP();
+				ges.Add(i+1, brain.GetGlobalError());
+				UpdateChartStatus();
+				InvalidateAll();
+
+				if (!shouldloop || brain.ComputeMatch() == 1)
+				{
+					double ge = brain.GetGlobalError();
+					for (int j = i+1; j < numNeuralEpoch.Value; j++)
+						ges.Add(j+1, ge);
+					barNeuralProgress.Value = barNeuralProgress.Maximum;
+					UpdateChartStatus();
+					break;
+				}
+				if (i != numNeuralEpoch.Value - 1)
+				{
+					int sleeptime = (numNeuralEpoch.Value > 10) ? (int)(3000 / numNeuralEpoch.Value) : 300;
+					Thread.Sleep(sleeptime);
+				}
 			}
-
-
-			txtNeuralOutput.Text += brain.GetDataStr(brain.Outputs);
-			barNeuralMatch.Value = (int)(brain.ComputeMatch() * 100);
-
-			UpdateNeuronDataGrid();
-			txtNeuralSynapses.Text = brain.GetSynapsesStr();
-
-			UpdateChart();
-
 		}
-
 
 		private new void Update()
 		{
@@ -168,7 +190,7 @@ namespace NAVY
 							i,                                                                                  //index
 							functionlist[(String)row.Cells["columnFunction"].Value],                            //function //imho ok to get this from main gridview  
 							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnSlope"].Value),      //slope
-							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnIntercept"].Value),  //intercept
+							/*Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnIntercept"].Value),  //intercept*/
 							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnAugment"].Value)     //augment
 							));
 					else // add brand new
@@ -178,7 +200,7 @@ namespace NAVY
 								i,                                                        //index
 								functionlist[(String)row.Cells["columnFunction"].Value],  //function
 								Neuron.GetDefaultSlope(),                                 //slope
-								Neuron.GetDefaultIntercept(),                             //intercept
+								/*Neuron.GetDefaultIntercept(),                             //intercept*/
 								Neuron.GetDefaultAugment()                                //augment
 								)
 						);
@@ -187,7 +209,6 @@ namespace NAVY
 				layercount++;
 			}
 			brain.UpdateStructure(neurons, txtNeuralSynapses.Text, txtNeuralInput.Text.Substring(0, txtNeuralInput.Text.IndexOf('\r')).Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Count());
-
 
 
 			// prepare inputs and expected results
@@ -218,12 +239,6 @@ namespace NAVY
 
 			brain.Inputs = inputs;
 			brain.Expected = expected;
-
-		}
-
-		private void button1_Click(object sender, EventArgs e)
-		{
-
 		}
 
 		private void btnNeuralInputLoad_Click(object sender, EventArgs e)
@@ -258,13 +273,7 @@ namespace NAVY
 					sw.Write(txtNeuralOutput.Text);
 		}
 
-		private void btnNeuralSynapsesSave_Click(object sender, EventArgs e)
-		{
-			/*saveFileDialog1.FileName = "synapses.txt";
-			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-				using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName))
-					sw.Write(txtNeuralSynapses.Text);*/
-		}
+
 
 		private void UpdateNeuronDataGrid()
 		{
@@ -309,7 +318,6 @@ namespace NAVY
 				stream.Close();
 
 				//show actual data
-				//txtNeuralOutput.Text = brain.GetDataStr(brain.Outputs);
 				txtNeuralInput.Text = brain.GetDataStr(brain.Inputs);
 				txtNeuralExpected.Text = brain.GetDataStr(brain.Expected);
 				gridNeuralLayers.Rows.Clear();
@@ -422,16 +430,68 @@ namespace NAVY
 			UpdateNeuronDataGrid();
 		}
 
-		public void UpdateChart()
+		public void UpdateChartStatus()
+		{
+			chartStatus.ChartAreas.Clear();
+			chartStatus.Series.Clear();
+
+			ChartArea area = new ChartArea();
+
+			area.AxisX.ScaleBreakStyle.LineColor = System.Drawing.Color.Silver;
+			area.AxisX.TitleForeColor = System.Drawing.Color.Silver;
+			area.AxisX.MajorGrid.LineColor = Color.Silver;
+			area.AxisX.MajorGrid.Interval = (double)Math.Ceiling(numNeuralEpoch.Value/10);
+			area.AxisX.LabelStyle.ForeColor = Color.Silver;
+			area.AxisX.LabelStyle.Interval = area.AxisX.MajorGrid.Interval*2;
+			area.AxisX.Minimum = 1;
+			area.AxisX.Maximum = (double)numNeuralEpoch.Value;
+			area.AxisX.LabelStyle.Format = "0";
+
+			area.AxisX2.Enabled = AxisEnabled.False;
+
+			double gemax = ges.Values.Max(); if (gemax == 0) gemax = 1;
+			area.AxisY.ScaleBreakStyle.LineColor = System.Drawing.Color.Silver;
+			area.AxisY.LineColor = System.Drawing.Color.Silver;
+			area.AxisY.TitleForeColor = System.Drawing.Color.Silver;
+			area.AxisY.MajorGrid.LineColor = Color.Silver;
+			area.AxisY.MajorGrid.Interval = gemax / 4;
+			area.AxisY.LabelStyle.ForeColor = Color.Silver;
+			area.AxisY.LabelStyle.Interval = gemax / 4;
+			area.AxisY.Minimum = 0;
+			area.AxisY.Maximum = gemax * 1.1;
+			area.AxisY.LabelStyle.Format = "0.000";
+
+			area.AxisY2.Enabled = AxisEnabled.False;
+
+			area.BackColor = System.Drawing.Color.FromArgb(0x22, 0x22, 0x22);
+			area.BorderColor = System.Drawing.Color.White;
+			area.BorderWidth = 1;
+			area.Name = "Area";
+			chartStatus.ChartAreas.Add(area);
+
+			// draw GE
+			Series s = new Series();
+			s.ChartType = SeriesChartType.Line;
+			s.Name = "Global Error";
+			s.BorderWidth = 5;
+			s.Color = Color.Lime;
+
+			foreach (KeyValuePair<int, double> val in ges)
+				s.Points.AddXY(val.Key, val.Value);
+			chartStatus.Series.Add(s);
+		}
+
+
+		public void UpdateChartLSP()
 		{
 
-			chart.ChartAreas.Clear();
-			chart.Series.Clear();
+			chartLSP.ChartAreas.Clear();
+			chartLSP.Series.Clear();
 
-			//not a 2D LSP with one expected output? don't do anything
-			if (brain.Synapses.Count != 1 || brain.Inputs[0].Count != 2 || brain.Expected[0].Count != 1)
+			//not a 2D LSP? don't do anything
+			if (brain.Synapses.Count != 1 || brain.Inputs[0].Count != 2)//|| brain.Expected[0].Count != 1)
 				return;
-			
+
 			// group inputs by expected result
 			double? min = null;
 			double? max = null;
@@ -439,25 +499,29 @@ namespace NAVY
 			Dictionary<string, Series> seriedict = new Dictionary<string, Series>();
 			for (int i = 0; i < brain.Inputs.Count; i++)
 			{
-				String group = String.Format("{0}", brain.Expected[i][0]);
+				String group = String.Format("{0}", brain.Expected[i].Select(x => x.ToString()).Aggregate((a, b) => a.ToString() + ';' + b.ToString()));
 				if (!seriedict.Keys.Contains(group))
 					seriedict.Add(group, new Series(group));
 				if (min == null || brain.Inputs[i][0] < min)
 					min = brain.Inputs[i][0];
 				if (max == null || brain.Inputs[i][0] > max)
 					max = brain.Inputs[i][0];
+
+				if (min == null || brain.Inputs[i][1] < min)
+					min = brain.Inputs[i][1];
+				if (max == null || brain.Inputs[i][1] > max)
+					max = brain.Inputs[i][1];
 				seriedict[group].Points.AddXY(brain.Inputs[i][0], brain.Inputs[i][1]);
 			}
 
-			double gridinterval = (double)((max-min)/4);
-			foreach (Series s in seriedict.Values)
-			{
-				s.ChartType = SeriesChartType.Point;
-				s.MarkerSize = 10;
-				chart.Series.Add(s);
-			}
-			// prepare area
+			double gridinterval = (double)((max - min) / 4);
 
+			double padding = Math.Abs((double)(max - min) / 3);
+			max += padding;
+			min -= padding;
+
+
+			// prepare area
 			ChartArea area = new ChartArea();
 
 			area.AxisX.ScaleBreakStyle.LineColor = System.Drawing.Color.Silver;
@@ -466,8 +530,9 @@ namespace NAVY
 			area.AxisX.MajorGrid.Interval = gridinterval;
 			area.AxisX.LabelStyle.ForeColor = Color.Silver;
 			area.AxisX.LabelStyle.Interval = gridinterval;
-			area.AxisX.Minimum = (int)min;
-			area.AxisX.Maximum = (int)max;
+			area.AxisX.Minimum = (double)min;
+			area.AxisX.Maximum = (double)max;
+			area.AxisX.LabelStyle.Format = "0.00";
 
 			area.AxisX2.Enabled = AxisEnabled.False;
 
@@ -478,8 +543,9 @@ namespace NAVY
 			area.AxisY.MajorGrid.Interval = gridinterval;
 			area.AxisY.LabelStyle.ForeColor = Color.Silver;
 			area.AxisY.LabelStyle.Interval = gridinterval;
-			area.AxisY.Minimum = (int)min;
-			area.AxisY.Maximum = (int)max;
+			area.AxisY.Minimum = (double)min;
+			area.AxisY.Maximum = (double)max;
+			area.AxisY.LabelStyle.Format = "0.00";
 
 			area.AxisY2.Enabled = AxisEnabled.False;
 
@@ -487,10 +553,17 @@ namespace NAVY
 			area.BorderColor = System.Drawing.Color.White;
 			area.BorderWidth = 1;
 			area.Name = "Area";
-			chart.ChartAreas.Add(area);
-			
+			chartLSP.ChartAreas.Add(area);
 
-			// series for separator (for output neuron)
+			// series for points
+			foreach (Series s in seriedict.Values)
+			{
+				s.ChartType = SeriesChartType.Point;
+				s.MarkerSize = 10;
+				chartLSP.Series.Add(s);
+			}
+
+			// series for separators (for output neurons)
 			foreach (Neuron n in brain.Neurons[0])
 			{
 				Series lineserie = new Series();
@@ -499,24 +572,49 @@ namespace NAVY
 				lineserie.ChartType = SeriesChartType.Line;
 				lineserie.BorderWidth = 5;
 				List<float> weights = new List<float>();
-				foreach (Synapse s in brain.Synapses[-1])
+
+				foreach (Synapse s in (from x in brain.Synapses[-1] where x.Target == n select x).Distinct().ToList<Synapse>())
 					weights.Add((float)s.Weight);
-				weights.Add((float)brain.Neurons[0][0].Augment);
+				weights.Add((float)n.Augment);
 				foreach (PointF p in GetLineTerminators(weights, (float)min, (float)max))
 				{
-					lineserie.Points.AddXY(p.X, p.Y);
-				}
-				chart.Series.Add(lineserie);
-			}
+					double y = p.Y;
+					if (p.Y == double.PositiveInfinity)
+						y = (double)max;
+					if (p.Y == double.NegativeInfinity)
+						y = (double)min;
 
+					lineserie.Points.AddXY(p.X, y);
+				}
+				chartLSP.Series.Add(lineserie);
+			}
 		}
+
+		public void InvalidateAll()
+		{
+			txtLog.Update();
+			txtNeuralOutput.Update();
+			txtNeuralSynapses.Update();
+			chartStatus.Update();
+			chartLSP.Update();
+			barNeuralMatch.Update();
+		}
+
 
 		public List<PointF> GetLineTerminators(List<float> weights, float min, float max)
 		{
 			List<PointF> result = new List<PointF>();
-			result.Add(new PointF(min, (-weights[2] - weights[0]*min) / weights[1]));
+			result.Add(new PointF(min, (-weights[2] - weights[0] * min) / weights[1]));
 			result.Add(new PointF(max, (-weights[2] - weights[0] * max) / weights[1]));
 			return result;
+		}
+
+		private void btnNeuralActivate_Click(object sender, EventArgs e)
+		{
+			String oldalgo = cmbNeuralAlgorithm.Text;
+			cmbNeuralAlgorithm.Text = "Activate";
+			btnNeuralRun_Click(sender, e);
+			cmbNeuralAlgorithm.Text = oldalgo;
 		}
 	}
 }

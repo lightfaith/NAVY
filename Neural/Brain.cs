@@ -74,7 +74,8 @@ namespace Neural
 					{
 						n.StartThinking();
 						n.FinishThinking(); // really here? fixed increments agree
-											//any learning necessary? (only neuron-related)
+						
+						//any learning necessary? (only neuron-related)
 						switch (algo)
 						{
 							case NeuralNetworkAlgorithm.FixedIncrement:
@@ -83,7 +84,7 @@ namespace Neural
 									if (layer + 1 != Neurons.Keys.Count - 1) // not in last layer?
 										break;
 									int c = 0;
-									int difference = (int)(n.Value - Expected[inputcounter][n.Index]);
+									double difference = (n.Value - Expected[inputcounter][n.Index]);
 									if (difference > 0) // value is greater, weights should be lowered
 										c = -1;
 									else if (difference < 0) // expected is greater, weights should be uppered
@@ -125,7 +126,7 @@ namespace Neural
 						sb.Append(";");
 					else
 						first = false;
-					if (d % 1 == 0)
+					if (Math.Round(d, 8) % 1 == 0)
 						sb.Append(String.Format("{0:0}", Convert.ToInt32(d)));
 					else
 						sb.Append(String.Format("{0:0.000}", d));

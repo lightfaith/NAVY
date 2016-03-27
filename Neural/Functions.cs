@@ -9,17 +9,17 @@ namespace Neural
 	[Serializable]
 	public abstract class TransferFunction
 	{
-		public abstract double Compute(double input, double slope, double intercept);
+		public abstract double Compute(double input, double slope/*, double intercept*/);
 
 	}
 
 	[Serializable]
 	public class Linear : TransferFunction
 	{
-		override public double Compute(double input, double slope, double intercept)
+		override public double Compute(double input, double slope/*, double intercept*/)
 		{
 			if(input>0)
-				return slope*input+intercept;
+				return slope*input/*+intercept*/;
 			return 0;
 		}
 
@@ -32,7 +32,7 @@ namespace Neural
 	[Serializable]
 	public class BinaryUnipolar : TransferFunction
 	{
-		override public double Compute(double input, double slope, double intercept)
+		override public double Compute(double input, double slope/*, double intercept*/)
 		{
 			if (input <= 0)
 				return 0;
@@ -47,7 +47,7 @@ namespace Neural
 	[Serializable]
 	public class BinaryBipolar : TransferFunction
 	{
-		override public double Compute(double input, double slope, double intercept)
+		override public double Compute(double input, double slope/*, double intercept*/)
 		{
 			if (input == 0)
 				return 1;
@@ -62,9 +62,10 @@ namespace Neural
 	[Serializable]
 	public class Logistic : TransferFunction
 	{
-		override public double Compute(double input, double slope, double intercept)
+		override public double Compute(double input, double slope/*, double intercept*/)
 		{
-			return 1 / (1+ Math.Pow(Math.E, -slope*input)) + intercept;
+			double result = 1 / (1+ Math.Pow(Math.E, -slope*input))/* + intercept*/;
+			return result;
 		}
 		public override string ToString()
 		{
@@ -75,9 +76,9 @@ namespace Neural
 	[Serializable]
 	public class HyperbolicTangent : TransferFunction
 	{
-		override public double Compute(double input, double slope, double intercept)
+		override public double Compute(double input, double slope/*, double intercept*/)
 		{
-			return (Math.Pow(Math.E, slope*input)-Math.Pow(Math.E, -slope * input))/(Math.Pow(Math.E, slope * input) + Math.Pow(Math.E, -slope * input)) + intercept;
+			return (Math.Pow(Math.E, slope*input)-Math.Pow(Math.E, -slope * input))/(Math.Pow(Math.E, slope * input) + Math.Pow(Math.E, -slope * input))/* + intercept*/;
 		}
 		public override string ToString()
 		{

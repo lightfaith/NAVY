@@ -14,7 +14,7 @@ namespace Neural
 			ps = new Dictionary<string, double>();
 			ps.Add("PathLength", 1.4f);
 			ps.Add("Step", 0.11f);
-			ps.Add("PRT", 0.8f);
+			ps.Add("PRT", 0.2f); // 0.8f
 			//ps.Add("Migrations", 10); //number of generations, per Step
 			ps.Add("MinDiv", -1);       //minimal difference between best and worst, <0 => ignored
 										//ps.Add("Migration", 10);

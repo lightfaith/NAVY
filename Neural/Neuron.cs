@@ -19,13 +19,13 @@ namespace Neural
 		public List<double> Inputs { get; set; }
 		public double Value { get; private set; }
 
-		public Neuron(int layer, int index, TransferFunction f, double? slope = null, double? intercept = null, double? augment = null)
+		public Neuron(int layer, int index, TransferFunction f, double? slope = null, /*double? intercept = null,*/ double? augment = null)
 		{
 			this.Layer = layer;
 			this.Index = index;
 			this.f = f;
 			this.Slope = (slope == null) ? Neuron.GetRandomSlope() : (double)slope;
-			this.Intercept = (intercept == null) ? Neuron.GetRandomIntercept() : (double)intercept;
+			//this.Intercept = (intercept == null) ? Neuron.GetRandomIntercept() : (double)intercept;
 			this.Augment = (augment == null) ? Neuron.GetRandomAugment() : (double)augment;
 			this.Value = 0;
 			this.Inputs = new List<double>();
@@ -53,7 +53,7 @@ namespace Neural
 
 		public void FinishThinking()
 		{
-			Value = f.Compute(Value, Slope, Intercept);
+			Value = f.Compute(Value, Slope/*, Intercept*/);
 		}
 
 		public String GetName()
