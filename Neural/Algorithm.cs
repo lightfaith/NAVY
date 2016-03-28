@@ -8,7 +8,7 @@ namespace Neural
 {
 	public enum NeuralNetworkAlgorithm
 	{
-		None, FixedIncrement
+		None, FixedIncrement, BackPropagation
 	}
 
 	class Algorithm

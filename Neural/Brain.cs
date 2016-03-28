@@ -40,73 +40,130 @@ namespace Neural
 			Expected = model.Expected;
 		}
 
-		public void Think(NeuralNetworkAlgorithm algo = NeuralNetworkAlgorithm.None)
+		public void ThinkOnce(int inputindex, NeuralNetworkAlgorithm algo = NeuralNetworkAlgorithm.None)
 		{
-			if (Inputs == null)
-				return;
-			Outputs = new List<List<double>>();
-			for (int inputcounter = 0; inputcounter < Inputs.Count; inputcounter++) // for every input set
+			if (Outputs == null)
+				Outputs = new List<List<double>>();
+
+			List<double> output = new List<double>();
+			bool firstlayer = true;
+			foreach (int layer in Synapses.Keys)
 			{
-				List<double> output = new List<double>();
-				bool firstlayer = true;
-				foreach (int layer in Synapses.Keys)
+				//transfer values through synapses
+				if (!firstlayer)
 				{
-					//transfer values through synapses
-					if (!firstlayer)
+					foreach (Synapse s in Synapses[layer])
+						s.Transfer();
+				}
+				else
+				{
+					List<Neuron> altered = new List<Neuron>();
+					//place inputs there
+					foreach (Synapse s in Synapses[layer])
 					{
-						foreach (Synapse s in Synapses[layer])
-							s.Transfer();
+
+						s.Transfer(Inputs[inputindex][s.InputIndex]);
+						firstlayer = false;
 					}
-					else
+
+				}
+				//make neurons think
+				foreach (Neuron n in Neurons[layer + 1])
+				{
+					n.StartThinking();
+					n.FinishThinking(); // really here? fixed increments agree
+
+					//any learning necessary? (only neuron-related)
+					switch (algo)
 					{
-						List<Neuron> altered = new List<Neuron>();
-						//place inputs there
-						foreach (Synapse s in Synapses[layer])
-						{
-
-							s.Transfer(Inputs[inputcounter][s.InputIndex]);
-							firstlayer = false;
-						}
-
-					}
-					//make neurons think
-					foreach (Neuron n in Neurons[layer + 1])
-					{
-						n.StartThinking();
-						n.FinishThinking(); // really here? fixed increments agree
-						
-						//any learning necessary? (only neuron-related)
-						switch (algo)
-						{
-							case NeuralNetworkAlgorithm.FixedIncrement:
-								{
-									// http://faculty.iiit.ac.in/~vikram/nn_intro.html
-									if (layer + 1 != Neurons.Keys.Count - 1) // not in last layer?
-										break;
-									int c = 0;
-									double difference = (n.Value - Expected[inputcounter][n.Index]);
-									if (difference > 0) // value is greater, weights should be lowered
-										c = -1;
-									else if (difference < 0) // expected is greater, weights should be uppered
-										c = 1;
-
-									List<Synapse> connected = (from s in Synapses[layer] where s.Target == n select s).ToList<Synapse>();
-									foreach (Synapse s in connected)
-										s.Weight += c * s.LastInput;
-									n.Augment += c;
+						case NeuralNetworkAlgorithm.FixedIncrement:
+							{
+								// http://faculty.iiit.ac.in/~vikram/nn_intro.html
+								if (layer + 1 != Neurons.Keys.Count - 1) // not in last layer?
 									break;
-								}
+								int c = 0;
+								double difference = (n.Output - Expected[inputindex][n.Index]);
+								if (difference > 0) // value is greater, weights should be lowered
+									c = -1;
+								else if (difference < 0) // expected is greater, weights should be uppered
+									c = 1;
+
+								List<Synapse> connected = (from s in Synapses[layer] where s.Target == n select s).ToList<Synapse>();
+								foreach (Synapse s in connected)
+									s.Weight += c * s.LastInput;
+								n.Augment += c;
+								break;
+							}
+					}
+					//n.FinishThinking();
+				}
+			}
+			//gather results
+			if (Neurons.Count != 0)
+				foreach (Neuron n in Neurons[Neurons.Count - 1])
+					output.Add(n.Output);
+
+			//store the results
+			Outputs.Add(output);
+		}
+
+		public Brain Think(NeuralNetworkAlgorithm algo = NeuralNetworkAlgorithm.None)
+		{
+			if (algo != NeuralNetworkAlgorithm.BackPropagation)
+			{
+				if (Inputs == null)
+					return this;
+				Outputs = new List<List<double>>();
+				for (int inputcounter = 0; inputcounter < Inputs.Count; inputcounter++) // for every input set
+				{
+					ThinkOnce(inputcounter, algo);
+				}
+				return this;
+			}
+			else // back propagation
+			{
+				// http://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/
+				double eta = 0.5;
+				Outputs = new List<List<double>>();
+				Brain newbrain = new Brain(this);
+				for (int inputcounter = 0; inputcounter < Inputs.Count; inputcounter++) // for every input set
+				{
+					ThinkOnce(inputcounter);
+					for (int j = Synapses.Count - 2; j >= -1; j--) // for each synapse layer (start from output)
+					{
+						List<Neuron> usedneurons = new List<Neuron>(); // list of used neurons (no duplicit bppart updates)
+						for (int k = 0; k < Synapses[j].Count; k++) // for each synapse
+						{
+							Synapse sold = Synapses[j][k];
+							Synapse snew = newbrain.Synapses[j][k];
+							Neuron n = sold.Target;
+							if (!usedneurons.Contains(n))
+							{
+								if (n.BPPart == null) // uninitialized=output neuron
+									n.BPPart = -(Expected[inputcounter][k] - Outputs[inputcounter][k]); // error->output
+
+								double o_i = n.f.ComputeDerivation(n.Output, n.Slope);
+								//double o_i = (n.Output * (1 - n.Output));                   // output->input, LOGISTIC ONLY!!!!!
+
+								n.BPPart *= o_i;
+								usedneurons.Add(n);
+							}
+							// BPPart * weight (summarized across all target neurons) will be used as BPPart in source neuron
+							if (sold.Source != null)
+							{
+								if (sold.Source.BPPart == null)
+									sold.Source.BPPart = 0;
+								sold.Source.BPPart += n.BPPart * sold.Weight;
+							}
+
+							//now add input->weight values
+							double input = (sold.Source == null) ? sold.LastInput : sold.Source.Output;
+							double weidiff = input * (double)n.BPPart;
+							snew.Weight -= eta * weidiff;
 						}
-						//n.FinishThinking();
 					}
 				}
-				//gather results
-				if (Neurons.Count != 0)
-					foreach (Neuron n in Neurons[Neurons.Count - 1])
-						output.Add(n.Value);
-
-				//store the results
-				Outputs.Add(output);
+				return newbrain;
 			}
 		}
 
@@ -126,24 +183,38 @@ namespace Neural
 						sb.Append(";");
 					else
 						first = false;
-					if (Math.Round(d, 8) % 1 == 0)
+					if (Math.Round(d, 7) % 1 == 0)
 						sb.Append(String.Format("{0:0}", Convert.ToInt32(d)));
 					else
-						sb.Append(String.Format("{0:0.000}", d));
+						sb.Append(String.Format("{0:0.#######}", d));
 				}
 				sb.Append("\r\n");
 			}
 			return sb.ToString();
 		}
 
-		public double GetGlobalError()
+		public double GetGlobalError(bool squared = false)
 		{
+			if (Outputs == null)
+				Think();
 			if (Outputs[0].Count != Expected[0].Count) // malformed expected
 				return Double.MaxValue;
 			double result = 0;
-			for (int i = 0; i < Outputs.Count; i++)
-				for (int j = 0; j < Outputs[i].Count; j++)
-					result += Math.Abs(Expected[i][j] - Outputs[i][j]);
+			if (squared)
+			{
+				for (int i = 0; i < Outputs.Count; i++)
+					for (int j = 0; j < Outputs[i].Count; j++)
+					{
+						double tmp = 0.5 * Math.Pow(Expected[i][j] - Outputs[i][j], 2);
+						result += tmp;
+					}
+			}
+			else // normal error
+			{
+				for (int i = 0; i < Outputs.Count; i++)
+					for (int j = 0; j < Outputs[i].Count; j++)
+						result += Math.Abs(Expected[i][j] - Outputs[i][j]);
+			}
 			return result;
 		}
 
@@ -224,9 +295,9 @@ namespace Neural
 			foreach (int layer in Synapses.Keys)
 				foreach (Synapse synapse in Synapses[layer])
 					if (synapse.Source == null) // input
-						sb.Append(String.Format("{0}:   {1:0.000}\r\n", synapse.GetName(), synapse.Weight));
+						sb.Append(String.Format("{0}:   {1:0.#######}\r\n", synapse.GetName(), synapse.Weight));
 					else
-						sb.Append(String.Format("{0}: {1:0.000}\r\n", synapse.GetName(), synapse.Weight));
+						sb.Append(String.Format("{0}: {1:0.#######}\r\n", synapse.GetName(), synapse.Weight));
 			return sb.ToString();
 		}
 

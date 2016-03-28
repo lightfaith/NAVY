@@ -86,7 +86,7 @@ namespace NAVY
 			barNeuralMatch.Value = 0;
 			if (txtNeuralInput.Lines.Count((s) => s.Trim() != "") != txtNeuralExpected.Lines.Count((s) => s.Trim() != ""))
 				return;
-			
+
 			// update NN
 			Update();
 
@@ -110,9 +110,9 @@ namespace NAVY
 								population.Add(new Configuration(brain, true));
 							// also use actual configuration
 							population.Add(new Configuration(brain));
-							
+
 							population = new SOMA().Run(population);
-							
+
 							//use the best one
 							population.Sort((x, y) => x.GE.CompareTo(y.GE));
 							brain.UpdateConfiguration(population[0]);
@@ -126,6 +126,12 @@ namespace NAVY
 							brain.Think(); // check again (no adaptation) to update values
 							break;
 						}
+					case "Back Propagation":
+						{
+							brain = brain.Think(NeuralNetworkAlgorithm.BackPropagation);
+							brain.Think(); // to compute final outputs
+							break;
+						}
 					default:
 						{
 							txtLog.AppendText(String.Format("'{0}' algorithm is not implemented.\r\n", cmbNeuralAlgorithm.Text));
@@ -134,7 +140,7 @@ namespace NAVY
 						}
 				}
 
-				barNeuralProgress.Value = (i + 1) * 100 / (int)numNeuralEpoch.Value;
+				barNeuralProgress.Value = (i + 1) * 10000 / (int)numNeuralEpoch.Value;
 
 				txtNeuralOutput.Text = brain.GetDataStr(brain.Outputs);
 				barNeuralMatch.Value = (int)(brain.ComputeMatch() * 100);
@@ -143,15 +149,15 @@ namespace NAVY
 				txtNeuralSynapses.Text = brain.GetSynapsesStr();
 
 				UpdateChartLSP();
-				ges.Add(i+1, brain.GetGlobalError());
+				ges.Add(i + 1, brain.GetGlobalError());
 				UpdateChartStatus();
 				InvalidateAll();
 
 				if (!shouldloop || brain.ComputeMatch() == 1)
 				{
 					double ge = brain.GetGlobalError();
-					for (int j = i+1; j < numNeuralEpoch.Value; j++)
-						ges.Add(j+1, ge);
+					for (int j = i + 1; j < numNeuralEpoch.Value; j++)
+						ges.Add(j + 1, ge);
 					barNeuralProgress.Value = barNeuralProgress.Maximum;
 					UpdateChartStatus();
 					break;
@@ -159,9 +165,11 @@ namespace NAVY
 				if (i != numNeuralEpoch.Value - 1)
 				{
 					int sleeptime = (numNeuralEpoch.Value > 10) ? (int)(3000 / numNeuralEpoch.Value) : 300;
-					Thread.Sleep(sleeptime);
+					if (sleeptime > 16)
+						Thread.Sleep(sleeptime);
 				}
 			}
+			txtLog.AppendText(String.Format("Finished with Global Error of {0}.\n", brain.GetGlobalError()));
 		}
 
 		private new void Update()
@@ -186,11 +194,11 @@ namespace NAVY
 					if (rowindex != -1) // add original
 						layer.Add(
 						new Neuron(
-							layercount,                                                                         //layer
-							i,                                                                                  //index
-							functionlist[(String)row.Cells["columnFunction"].Value],                            //function //imho ok to get this from main gridview  
-							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnSlope"].Value),      //slope
-							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnAugment"].Value)     //augment
+							layercount,                                                                                                     //layer
+							i,                                                                                                              //index
+							functionlist[(String)row.Cells["columnFunction"].Value],                                                        //function //imho ok to get this from main gridview  
+							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnSlope"].Value.ToString().Replace(".", ",")),     //slope
+							Convert.ToDouble(gridNeuralNeurons.Rows[rowindex].Cells["columnAugment"].Value.ToString().Replace(".", ","))    //augment
 							));
 					else // add brand new
 						layer.Add(
@@ -230,7 +238,7 @@ namespace NAVY
 				inputs.Add(inputline);
 				// get expected values
 				foreach (string value in expectedlinestr.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
-					expectedline.Add(Convert.ToDouble(value));
+					expectedline.Add(Convert.ToDouble(value.Replace(".", ",")));
 				expected.Add(expectedline);
 			} //end for each initial input line
 
@@ -435,10 +443,10 @@ namespace NAVY
 			area.AxisX.ScaleBreakStyle.LineColor = System.Drawing.Color.Silver;
 			area.AxisX.TitleForeColor = System.Drawing.Color.Silver;
 			area.AxisX.MajorGrid.LineColor = Color.Silver;
-			area.AxisX.MajorGrid.Interval = (double)Math.Ceiling(numNeuralEpoch.Value/10);
+			area.AxisX.MajorGrid.Interval = (double)Math.Ceiling(numNeuralEpoch.Value / 10);
 			area.AxisX.LabelStyle.ForeColor = Color.Silver;
-			area.AxisX.LabelStyle.Interval = area.AxisX.MajorGrid.Interval*2;
-			area.AxisX.Minimum = 1;
+			area.AxisX.LabelStyle.Interval = area.AxisX.MajorGrid.Interval * 2;
+			area.AxisX.Minimum = 0;
 			area.AxisX.Maximum = (double)numNeuralEpoch.Value;
 			area.AxisX.LabelStyle.Format = "0";
 
@@ -454,7 +462,7 @@ namespace NAVY
 			area.AxisY.LabelStyle.Interval = gemax / 4;
 			area.AxisY.Minimum = 0;
 			area.AxisY.Maximum = gemax * 1.1;
-			area.AxisY.LabelStyle.Format = "0.000";
+			area.AxisY.LabelStyle.Format = "0.0000000";
 
 			area.AxisY2.Enabled = AxisEnabled.False;
 

@@ -34,7 +34,7 @@ namespace Neural
 
 		public void Transfer() // for not an input neuron
 		{
-			Transfer(Source.Value);
+			Transfer(Source.Output);
 		}
 
 		public void Transfer(double value) // for input neuron

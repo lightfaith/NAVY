@@ -16,8 +16,10 @@ namespace Neural
 		public double Augment { get; set;}
 
 		public List<double> Inputs { get; set; }
-		public double Value { get; private set; }
+		public double Input { get; private set; }
+		public double Output { get; private set; }
 
+		public double? BPPart { get; set; } // neuron-related back propagation value
 		public Neuron(int layer, int index, TransferFunction f, double? slope = null, double? augment = null)
 		{
 			this.Layer = layer;
@@ -25,23 +27,27 @@ namespace Neural
 			this.f = f;
 			this.Slope = (slope == null) ? Neuron.GetRandomSlope() : (double)slope;
 			this.Augment = (augment == null) ? Neuron.GetRandomAugment() : (double)augment;
-			this.Value = 0;
+			this.Input = 0;
+			this.Output = 0;
 			this.Inputs = new List<double>();
+			this.BPPart = null;
 		}
 		
 
 		public void StartThinking()
 		{
-			Value = 0;
+			Input = 0;
+			Output = 0;
+			BPPart = null; //reset back propagation values
 			foreach (double i in Inputs)
-				Value += i;
+				Input += i;
 			Inputs.Clear();
-			Value += Augment;
+			Input += Augment;
 		}
 
 		public void FinishThinking()
 		{
-			Value = f.Compute(Value, Slope);
+			Output = f.Compute(Input, Slope);
 		}
 
 		public String GetName()
@@ -67,7 +73,7 @@ namespace Neural
 		}
 		public static double GetRandomSlope()
 		{
-			return Lib.r.NextDouble() * 20;
+			return Lib.r.NextDouble() * 3;
 		}
 		
 
