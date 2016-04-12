@@ -164,9 +164,8 @@ namespace NAVY
 				}
 				if (i != numNeuralEpoch.Value - 1)
 				{
-					int sleeptime = (numNeuralEpoch.Value > 10) ? (int)(3000 / numNeuralEpoch.Value) : 300;
-					if (sleeptime > 16)
-						Thread.Sleep(sleeptime);
+					int sleeptime = (numNeuralEpoch.Value > 10) ? (int)(1000 / numNeuralEpoch.Value) : 200;
+					if (sleeptime > 16)	Thread.Sleep(sleeptime);
 				}
 			}
 			txtLog.AppendText(String.Format("Finished with Global Error of {0}.\n", brain.GetGlobalError()));

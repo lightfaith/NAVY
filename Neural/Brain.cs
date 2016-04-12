@@ -123,45 +123,50 @@ namespace Neural
 			else // back propagation
 			{
 				// http://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/
-				double eta = 0.5;
-				Outputs = new List<List<double>>();
+				double eta = 0.2;
+				//Outputs = new List<List<double>>();
 				Brain newbrain = new Brain(this);
+
+				
 				for (int inputcounter = 0; inputcounter < Inputs.Count; inputcounter++) // for every input set
 				{
 					ThinkOnce(inputcounter);
-					for (int j = Synapses.Count - 2; j >= -1; j--) // for each synapse layer (start from output)
+					// compute neuron errors - from the top, not for input neurons...
+					for (int i = newbrain.Neurons.Count - 1; i >= 0; i--)
 					{
-						List<Neuron> usedneurons = new List<Neuron>(); // list of used neurons (no duplicit bppart updates)
-						for (int k = 0; k < Synapses[j].Count; k++) // for each synapse
+						for (int j = 0; j < newbrain.Neurons[i].Count; j++)
 						{
-							Synapse sold = Synapses[j][k];
-							Synapse snew = newbrain.Synapses[j][k];
-							Neuron n = sold.Target;
-							if (!usedneurons.Contains(n))
+							Neuron n = newbrain.Neurons[i][j];
+							if (i == newbrain.Neurons.Count - 1)
+								n.Error = Outputs[inputcounter][j] - Expected[inputcounter][j];
+							else
 							{
-								if (n.BPPart == null) // uninitialized=output neuron
-									n.BPPart = -(Expected[inputcounter][k] - Outputs[inputcounter][k]); // error->output
-
-								double o_i = n.f.ComputeDerivation(n.Output, n.Slope);
-								//double o_i = (n.Output * (1 - n.Output));                   // output->input, LOGISTIC ONLY!!!!!
-
-								n.BPPart *= o_i;
-								usedneurons.Add(n);
+								n.Error = 0;
+								foreach (Synapse s in newbrain.Synapses[i])
+								{
+									if (s.Source != n)
+										continue;
+									n.Error += s.Weight * s.Target.Error * n.f.ComputeDerivation(n.Input, n.Slope);
+								}
 							}
-							// BPPart * weight (summarized across all target neurons) will be used as BPPart in source neuron
-							if (sold.Source != null)
-							{
-								if (sold.Source.BPPart == null)
-									sold.Source.BPPart = 0;
-								sold.Source.BPPart += n.BPPart * sold.Weight;
-							}
-
-							//now add input->weight values
-							double input = (sold.Source == null) ? sold.LastInput : sold.Source.Output;
-							double weidiff = input * (double)n.BPPart;
-							snew.Weight -= eta * weidiff;
+							// and compute augments
+							double augdiff = eta * n.Error;
+							n.Augment -= augdiff;
 						}
 					}
+					// now update the weights
+					foreach (int i in newbrain.Synapses.Keys)
+					{
+						for (int j = 0; j < newbrain.Synapses[i].Count; j++)
+						{
+							Synapse s = newbrain.Synapses[i][j];
+							double weidiff = eta * s.Target.Error * s.LastInput;
+							weidiff+= s.LastDiff; // momentum-aware
+							s.LastDiff = weidiff;
+							s.Weight -= weidiff;
+						}
+					}
+
 				}
 				return newbrain;
 			}

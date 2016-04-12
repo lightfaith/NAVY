@@ -19,7 +19,10 @@ namespace Neural
 		public double Input { get; private set; }
 		public double Output { get; private set; }
 
-		public double? BPPart { get; set; } // neuron-related back propagation value
+		//public double? BPPart { get; set; } // neuron-related back propagation value
+		public double Error { get; set; }
+
+
 		public Neuron(int layer, int index, TransferFunction f, double? slope = null, double? augment = null)
 		{
 			this.Layer = layer;
@@ -30,7 +33,7 @@ namespace Neural
 			this.Input = 0;
 			this.Output = 0;
 			this.Inputs = new List<double>();
-			this.BPPart = null;
+			this.Error = 0;
 		}
 		
 
@@ -38,7 +41,7 @@ namespace Neural
 		{
 			Input = 0;
 			Output = 0;
-			BPPart = null; //reset back propagation values
+			//Error = 0; //reset back propagation values
 			foreach (double i in Inputs)
 				Input += i;
 			Inputs.Clear();

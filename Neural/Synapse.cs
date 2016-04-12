@@ -13,6 +13,7 @@ namespace Neural
 		public Neuron Target { get; private set; }
 		public int InputIndex { get; private set; } // an input-layer neuron index
 		public double LastInput { get; private set; }
+		public double LastDiff { get; set; }  // for BP
 
 		public double Weight { get; set; }
 
@@ -21,6 +22,7 @@ namespace Neural
 			this.Source = source;
 			this.Target = target;
 			this.Weight = weight;
+			this.LastDiff = 0;
 			InputIndex = -1;
 		}
 
@@ -29,6 +31,7 @@ namespace Neural
 			this.Source = null;
 			this.Target = target;
 			this.Weight = weight;
+			this.LastDiff = 0; 
 			this.InputIndex = inputindex;
 		}
 
