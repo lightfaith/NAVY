@@ -42,6 +42,7 @@ namespace NAVY
 			functionlist.Add("Binary Bipolar", new BinaryBipolar());
 			functionlist.Add("Logistic", new Logistic());
 			functionlist.Add("Hyperbolic Tangent", new HyperbolicTangent());
+			functionlist.Add("Gaussian", new Gaussian());
 			columnFunction.DataSource = functionlist.Keys.ToList<String>();
 
 			//add default row

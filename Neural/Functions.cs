@@ -105,4 +105,21 @@ namespace Neural
 			return "Hyperbolic Tangent";
 		}
 	}
+
+	[Serializable]
+	public class Gaussian : TransferFunction
+	{
+		override public double Compute(double input, double slope)
+		{
+			return Math.Exp(-slope*input* input);
+		}
+		override public double ComputeDerivation(double input, double slope)
+		{
+			return -2 * slope*input * Math.Exp(-slope*input*input);
+		}
+		public override string ToString()
+		{
+			return "Gaussian";
+		}
+	}
 }

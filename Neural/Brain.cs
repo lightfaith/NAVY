@@ -166,7 +166,6 @@ namespace Neural
 							s.Weight -= weidiff;
 						}
 					}
-
 				}
 				return newbrain;
 			}
