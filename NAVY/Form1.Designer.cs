@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel1 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel2 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel3 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel4 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabNeural = new System.Windows.Forms.TabPage();
 			this.btnNeuralActivate = new System.Windows.Forms.Button();
@@ -77,16 +77,27 @@
 			this.columnLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.columnNeurons = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.columnFunction = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.tabHopfield = new System.Windows.Forms.TabPage();
+			this.pciHopfieldClassify = new System.Windows.Forms.Button();
+			this.picHopfieldLearn = new System.Windows.Forms.Button();
+			this.btnHopfieldRandom = new System.Windows.Forms.Button();
+			this.cmbHopfieldValue = new System.Windows.Forms.ComboBox();
+			this.picHopfieldInput = new System.Windows.Forms.PictureBox();
 			this.txtLog = new System.Windows.Forms.TextBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.chartLSP = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.chartStatus = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			this.cmbHopfieldSymbols = new System.Windows.Forms.ComboBox();
+			this.btnHopfieldClear = new System.Windows.Forms.Button();
+			this.btnHopfieldNoise = new System.Windows.Forms.Button();
 			this.tabControl.SuspendLayout();
 			this.tabNeural.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numNeuralEpoch)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridNeuralNeurons)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridNeuralLayers)).BeginInit();
+			this.tabHopfield.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picHopfieldInput)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartLSP)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartStatus)).BeginInit();
 			this.SuspendLayout();
@@ -97,6 +108,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl.Controls.Add(this.tabNeural);
+			this.tabControl.Controls.Add(this.tabHopfield);
 			this.tabControl.Location = new System.Drawing.Point(12, 12);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
@@ -446,27 +458,27 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gridNeuralNeurons.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNeuralNeurons.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle5.BackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNeuralNeurons.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
 			this.gridNeuralNeurons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.gridNeuralNeurons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columnNeuron,
             this.columnSlope,
             this.columnAugment});
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Silver;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridNeuralNeurons.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Silver;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridNeuralNeurons.DefaultCellStyle = dataGridViewCellStyle6;
 			this.gridNeuralNeurons.Location = new System.Drawing.Point(275, 3);
 			this.gridNeuralNeurons.Name = "gridNeuralNeurons";
 			this.gridNeuralNeurons.RowTemplate.Height = 24;
@@ -556,27 +568,27 @@
 			this.gridNeuralLayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.gridNeuralLayers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNeuralLayers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle7.BackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNeuralLayers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
 			this.gridNeuralLayers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.gridNeuralLayers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columnLayer,
             this.columnNeurons,
             this.columnFunction});
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Silver;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridNeuralLayers.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Silver;
+			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridNeuralLayers.DefaultCellStyle = dataGridViewCellStyle8;
 			this.gridNeuralLayers.Location = new System.Drawing.Point(3, 47);
 			this.gridNeuralLayers.Name = "gridNeuralLayers";
 			this.gridNeuralLayers.RowTemplate.Height = 24;
@@ -608,6 +620,79 @@
 			this.columnFunction.Name = "columnFunction";
 			this.columnFunction.Width = 120;
 			// 
+			// tabHopfield
+			// 
+			this.tabHopfield.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.tabHopfield.Controls.Add(this.btnHopfieldNoise);
+			this.tabHopfield.Controls.Add(this.cmbHopfieldSymbols);
+			this.tabHopfield.Controls.Add(this.pciHopfieldClassify);
+			this.tabHopfield.Controls.Add(this.picHopfieldLearn);
+			this.tabHopfield.Controls.Add(this.btnHopfieldRandom);
+			this.tabHopfield.Controls.Add(this.cmbHopfieldValue);
+			this.tabHopfield.Controls.Add(this.btnHopfieldClear);
+			this.tabHopfield.Controls.Add(this.picHopfieldInput);
+			this.tabHopfield.Location = new System.Drawing.Point(4, 25);
+			this.tabHopfield.Name = "tabHopfield";
+			this.tabHopfield.Size = new System.Drawing.Size(1302, 372);
+			this.tabHopfield.TabIndex = 1;
+			this.tabHopfield.Text = "Hopfield";
+			// 
+			// pciHopfieldClassify
+			// 
+			this.pciHopfieldClassify.Location = new System.Drawing.Point(15, 290);
+			this.pciHopfieldClassify.Name = "pciHopfieldClassify";
+			this.pciHopfieldClassify.Size = new System.Drawing.Size(151, 23);
+			this.pciHopfieldClassify.TabIndex = 8;
+			this.pciHopfieldClassify.Text = "Classify";
+			this.pciHopfieldClassify.UseVisualStyleBackColor = true;
+			this.pciHopfieldClassify.Click += new System.EventHandler(this.pciHopfieldClassify_Click);
+			// 
+			// picHopfieldLearn
+			// 
+			this.picHopfieldLearn.Location = new System.Drawing.Point(15, 319);
+			this.picHopfieldLearn.Name = "picHopfieldLearn";
+			this.picHopfieldLearn.Size = new System.Drawing.Size(151, 23);
+			this.picHopfieldLearn.TabIndex = 7;
+			this.picHopfieldLearn.Text = "Train";
+			this.picHopfieldLearn.UseVisualStyleBackColor = true;
+			this.picHopfieldLearn.Click += new System.EventHandler(this.picHopfieldLearn_Click);
+			// 
+			// btnHopfieldRandom
+			// 
+			this.btnHopfieldRandom.Location = new System.Drawing.Point(68, 14);
+			this.btnHopfieldRandom.Name = "btnHopfieldRandom";
+			this.btnHopfieldRandom.Size = new System.Drawing.Size(43, 23);
+			this.btnHopfieldRandom.TabIndex = 6;
+			this.btnHopfieldRandom.Text = "BW";
+			this.btnHopfieldRandom.UseVisualStyleBackColor = true;
+			this.btnHopfieldRandom.Click += new System.EventHandler(this.btnHopfieldRandom_Click);
+			// 
+			// cmbHopfieldValue
+			// 
+			this.cmbHopfieldValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			this.cmbHopfieldValue.ForeColor = System.Drawing.Color.White;
+			this.cmbHopfieldValue.FormattingEnabled = true;
+			this.cmbHopfieldValue.Items.AddRange(new object[] {
+            "0",
+            "0.25",
+            "0.5",
+            "0.75",
+            "1"});
+			this.cmbHopfieldValue.Location = new System.Drawing.Point(15, 43);
+			this.cmbHopfieldValue.Name = "cmbHopfieldValue";
+			this.cmbHopfieldValue.Size = new System.Drawing.Size(70, 24);
+			this.cmbHopfieldValue.TabIndex = 4;
+			this.cmbHopfieldValue.Text = "1";
+			// 
+			// picHopfieldInput
+			// 
+			this.picHopfieldInput.Location = new System.Drawing.Point(15, 73);
+			this.picHopfieldInput.Name = "picHopfieldInput";
+			this.picHopfieldInput.Size = new System.Drawing.Size(151, 211);
+			this.picHopfieldInput.TabIndex = 0;
+			this.picHopfieldInput.TabStop = false;
+			this.picHopfieldInput.Click += new System.EventHandler(this.picHopfieldInput_Click);
+			// 
 			// txtLog
 			// 
 			this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -634,28 +719,28 @@
 			// 
 			this.chartLSP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartLSP.BackColor = System.Drawing.Color.Black;
-			chartArea1.AxisX.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea1.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea1.AxisY.TitleForeColor = System.Drawing.Color.Silver;
-			customLabel1.ForeColor = System.Drawing.Color.Lime;
-			chartArea1.AxisY2.CustomLabels.Add(customLabel1);
-			chartArea1.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea1.Name = "ChartArea1";
-			this.chartLSP.ChartAreas.Add(chartArea1);
-			legend1.BackColor = System.Drawing.Color.Black;
-			legend1.ForeColor = System.Drawing.Color.Silver;
-			legend1.Name = "Legend1";
-			this.chartLSP.Legends.Add(legend1);
+			chartArea3.AxisX.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea3.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea3.AxisY.TitleForeColor = System.Drawing.Color.Silver;
+			customLabel3.ForeColor = System.Drawing.Color.Lime;
+			chartArea3.AxisY2.CustomLabels.Add(customLabel3);
+			chartArea3.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea3.Name = "ChartArea1";
+			this.chartLSP.ChartAreas.Add(chartArea3);
+			legend3.BackColor = System.Drawing.Color.Black;
+			legend3.ForeColor = System.Drawing.Color.Silver;
+			legend3.Name = "Legend1";
+			this.chartLSP.Legends.Add(legend3);
 			this.chartLSP.Location = new System.Drawing.Point(928, 419);
 			this.chartLSP.Name = "chartLSP";
-			series1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			series1.ChartArea = "ChartArea1";
-			series1.Color = System.Drawing.Color.Lime;
-			series1.LabelBackColor = System.Drawing.Color.Green;
-			series1.LabelForeColor = System.Drawing.Color.Maroon;
-			series1.Legend = "Legend1";
-			series1.Name = "Series1";
-			this.chartLSP.Series.Add(series1);
+			series3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			series3.ChartArea = "ChartArea1";
+			series3.Color = System.Drawing.Color.Lime;
+			series3.LabelBackColor = System.Drawing.Color.Green;
+			series3.LabelForeColor = System.Drawing.Color.Maroon;
+			series3.Legend = "Legend1";
+			series3.Name = "Series1";
+			this.chartLSP.Series.Add(series3);
 			this.chartLSP.Size = new System.Drawing.Size(394, 259);
 			this.chartLSP.TabIndex = 3;
 			this.chartLSP.Text = "chart";
@@ -665,31 +750,63 @@
 			this.chartStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartStatus.BackColor = System.Drawing.Color.Black;
-			chartArea2.AxisX.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea2.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea2.AxisY.TitleForeColor = System.Drawing.Color.Silver;
-			customLabel2.ForeColor = System.Drawing.Color.Lime;
-			chartArea2.AxisY2.CustomLabels.Add(customLabel2);
-			chartArea2.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea2.Name = "ChartArea1";
-			this.chartStatus.ChartAreas.Add(chartArea2);
-			legend2.BackColor = System.Drawing.Color.Black;
-			legend2.ForeColor = System.Drawing.Color.Silver;
-			legend2.Name = "Legend1";
-			this.chartStatus.Legends.Add(legend2);
+			chartArea4.AxisX.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea4.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea4.AxisY.TitleForeColor = System.Drawing.Color.Silver;
+			customLabel4.ForeColor = System.Drawing.Color.Lime;
+			chartArea4.AxisY2.CustomLabels.Add(customLabel4);
+			chartArea4.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea4.Name = "ChartArea1";
+			this.chartStatus.ChartAreas.Add(chartArea4);
+			legend4.BackColor = System.Drawing.Color.Black;
+			legend4.ForeColor = System.Drawing.Color.Silver;
+			legend4.Name = "Legend1";
+			this.chartStatus.Legends.Add(legend4);
 			this.chartStatus.Location = new System.Drawing.Point(380, 419);
 			this.chartStatus.Name = "chartStatus";
-			series2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			series2.ChartArea = "ChartArea1";
-			series2.Color = System.Drawing.Color.Lime;
-			series2.LabelBackColor = System.Drawing.Color.Green;
-			series2.LabelForeColor = System.Drawing.Color.Maroon;
-			series2.Legend = "Legend1";
-			series2.Name = "Series1";
-			this.chartStatus.Series.Add(series2);
+			series4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			series4.ChartArea = "ChartArea1";
+			series4.Color = System.Drawing.Color.Lime;
+			series4.LabelBackColor = System.Drawing.Color.Green;
+			series4.LabelForeColor = System.Drawing.Color.Maroon;
+			series4.Legend = "Legend1";
+			series4.Name = "Series1";
+			this.chartStatus.Series.Add(series4);
 			this.chartStatus.Size = new System.Drawing.Size(535, 259);
 			this.chartStatus.TabIndex = 4;
 			this.chartStatus.Text = "chart";
+			// 
+			// cmbHopfieldSymbols
+			// 
+			this.cmbHopfieldSymbols.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			this.cmbHopfieldSymbols.ForeColor = System.Drawing.Color.White;
+			this.cmbHopfieldSymbols.FormattingEnabled = true;
+			this.cmbHopfieldSymbols.Location = new System.Drawing.Point(96, 43);
+			this.cmbHopfieldSymbols.Name = "cmbHopfieldSymbols";
+			this.cmbHopfieldSymbols.Size = new System.Drawing.Size(70, 24);
+			this.cmbHopfieldSymbols.TabIndex = 9;
+			this.cmbHopfieldSymbols.Text = "1";
+			this.cmbHopfieldSymbols.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+			// 
+			// btnHopfieldClear
+			// 
+			this.btnHopfieldClear.Location = new System.Drawing.Point(15, 14);
+			this.btnHopfieldClear.Name = "btnHopfieldClear";
+			this.btnHopfieldClear.Size = new System.Drawing.Size(47, 23);
+			this.btnHopfieldClear.TabIndex = 1;
+			this.btnHopfieldClear.Text = "Clear";
+			this.btnHopfieldClear.UseVisualStyleBackColor = true;
+			this.btnHopfieldClear.Click += new System.EventHandler(this.btnHopfieldClear_Click);
+			// 
+			// btnHopfieldNoise
+			// 
+			this.btnHopfieldNoise.Location = new System.Drawing.Point(117, 14);
+			this.btnHopfieldNoise.Name = "btnHopfieldNoise";
+			this.btnHopfieldNoise.Size = new System.Drawing.Size(49, 23);
+			this.btnHopfieldNoise.TabIndex = 10;
+			this.btnHopfieldNoise.Text = "Noise";
+			this.btnHopfieldNoise.UseVisualStyleBackColor = true;
+			this.btnHopfieldNoise.Click += new System.EventHandler(this.btnHopfieldNoise_Click);
 			// 
 			// Form1
 			// 
@@ -710,6 +827,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.numNeuralEpoch)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridNeuralNeurons)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridNeuralLayers)).EndInit();
+			this.tabHopfield.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.picHopfieldInput)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartLSP)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartStatus)).EndInit();
 			this.ResumeLayout(false);
@@ -761,6 +880,15 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn columnNeuron;
 		private System.Windows.Forms.DataGridViewTextBoxColumn columnSlope;
 		private System.Windows.Forms.DataGridViewTextBoxColumn columnAugment;
+		private System.Windows.Forms.TabPage tabHopfield;
+		private System.Windows.Forms.ComboBox cmbHopfieldValue;
+		private System.Windows.Forms.PictureBox picHopfieldInput;
+		private System.Windows.Forms.Button btnHopfieldRandom;
+		private System.Windows.Forms.Button picHopfieldLearn;
+		private System.Windows.Forms.Button pciHopfieldClassify;
+		private System.Windows.Forms.ComboBox cmbHopfieldSymbols;
+		private System.Windows.Forms.Button btnHopfieldClear;
+		private System.Windows.Forms.Button btnHopfieldNoise;
 	}
 }
 

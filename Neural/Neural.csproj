@@ -45,6 +45,7 @@
     <Compile Include="Brain.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Functions.cs" />
+    <Compile Include="Hopfield.cs" />
     <Compile Include="Lib.cs" />
     <Compile Include="Neuron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

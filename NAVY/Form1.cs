@@ -32,9 +32,17 @@ namespace NAVY
 		Dictionary<String, TransferFunction> functionlist;
 		Brain brain = new Brain();
 		Dictionary<int, double> ges = null;
+		
+		//
+		// -------------------------- HOPFIELD --------------------------------
+		//
+		
+		Hopfield hop = new Hopfield();
+		List<double> hopimage = new List<double>();
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+			tabControl.SelectedTab = tabControl.TabPages[1];
 
 			functionlist = new Dictionary<String, TransferFunction>();
 			functionlist.Add("Linear", new Linear());
@@ -53,6 +61,12 @@ namespace NAVY
 			chartLSP.Series.Clear();
 			chartStatus.Series.Clear();
 			chartStatus.ChartAreas.Clear();
+
+			for (int i = 0; i < Hopfield.Width * Hopfield.Height; i++)
+				hopimage.Add(0);
+
+			cmbHopfieldSymbols.DataSource = hop.Symbols.Keys.ToList<char>();
+			btnHopfieldClear_Click(sender, e);
 		}
 
 		private void gridNeural_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -166,7 +180,7 @@ namespace NAVY
 				if (i != numNeuralEpoch.Value - 1)
 				{
 					int sleeptime = (numNeuralEpoch.Value > 10) ? (int)(1000 / numNeuralEpoch.Value) : 200;
-					if (sleeptime > 16)	Thread.Sleep(sleeptime);
+					if (sleeptime > 16) Thread.Sleep(sleeptime);
 				}
 			}
 			txtLog.AppendText(String.Format("Finished with Global Error of {0}.\n", brain.GetGlobalError()));
@@ -618,6 +632,109 @@ namespace NAVY
 			cmbNeuralAlgorithm.Text = "Activate";
 			btnNeuralRun_Click(sender, e);
 			cmbNeuralAlgorithm.Text = oldalgo;
+		}
+
+
+		
+
+		private void RedrawImage()
+		{
+
+			Bitmap b = picHopfieldInput.Image != null ? new Bitmap(picHopfieldInput.Image) : new Bitmap(picHopfieldInput.Width, picHopfieldInput.Height);
+			using (Graphics g = Graphics.FromImage(b))
+			{
+				g.Clear(Color.White);
+				// draw squares
+				for (int i = 0; i < Hopfield.Height; i++)
+					for (int j = 0; j < Hopfield.Width; j++)
+					{
+						double value = hopimage[i * Hopfield.Width + j];
+						Brush color = new SolidBrush(Color.FromArgb(255, (int)(value * 255), (int)(value * 255), (int)(value * 255)));
+						g.FillRectangle(color, j * Hopfield.Unit, i * Hopfield.Unit, (j + 1) * Hopfield.Unit, (i + 1) * Hopfield.Unit);
+					}
+
+				for (int i = 0; i < Hopfield.Width + 1; i++) // cols
+					g.DrawLine(Pens.Gray, i * Hopfield.Unit, 0, i * Hopfield.Unit, b.Height);
+				for (int i = 0; i < Hopfield.Height + 1; i++) // rows
+					g.DrawLine(Pens.Gray, 0, i * Hopfield.Unit, b.Width, i * Hopfield.Unit);
+			}
+			picHopfieldInput.Image = b;
+
+		}
+		private void btnHopfieldClear_Click(object sender, EventArgs e)
+		{
+			for (int i = 0; i < Hopfield.Height; i++)
+				for (int j = 0; j < Hopfield.Width; j++)
+					hopimage[i*Hopfield.Width+ j] = 0;
+			RedrawImage();
+		}
+
+		private void btnHopfieldRandom_Click(object sender, EventArgs e)
+		{
+			Random r = new Random();
+			for (int i = 0; i < Hopfield.Height; i++)
+				for (int j = 0; j < Hopfield.Width; j++)
+				{
+					hopimage[i * Hopfield.Width + j] = (r.Next() % 2 == 0) ? 1 : 0;
+					/*hopimage[i * Hopfield.Width + j] = Math.Pow(r.NextDouble()-0.05, 3);
+					if (hopimage[i * Hopfield.Width + j] < 0)
+						hopimage[i * Hopfield.Width + j] = 0;*/
+				}
+			RedrawImage();
+		}
+
+		private void picHopfieldInput_Click(object sender, EventArgs e)
+		{
+			int x = ((MouseEventArgs)e).X;
+			int y = ((MouseEventArgs)e).Y;
+			hopimage[(int)(y / Hopfield.Unit)*Hopfield.Width+ (int)(x / Hopfield.Unit)] = Convert.ToDouble(cmbHopfieldValue.Text.Replace('.', ','));
+			RedrawImage();
+		}
+
+		private void picHopfieldLearn_Click(object sender, EventArgs e)
+		{
+			/*List<double> test = new List<double>();
+			test.Add(0);
+			test.Add(1);
+			test.Add(0);
+			test.Add(1);
+			hop.Train(test);
+			*/
+			hop.Train(hopimage);
+			
+		}
+
+		private void pciHopfieldClassify_Click(object sender, EventArgs e)
+		{
+			/*List<double> test = new List<double>();
+			test.Add(0);
+			test.Add(1);
+			test.Add(0);
+			test.Add(1);
+			hop.Classify(test);
+			test[3] = 0;
+			hop.Classify(test);*/
+			hopimage = (from x in hop.Classify(hopimage) select x).ToList<double>();
+			RedrawImage();
+		}
+
+		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			hopimage = hop.Symbols[cmbHopfieldSymbols.Text[0]].ToList<double>();
+			RedrawImage();
+		}
+
+		private void btnHopfieldNoise_Click(object sender, EventArgs e)
+		{
+			Random r = new Random();
+			for (int i = 0; i < Hopfield.Height; i++)
+				for (int j = 0; j < Hopfield.Width; j++)
+				{
+					hopimage[i * Hopfield.Width + j] = Math.Pow(r.NextDouble(), 3);
+					if (hopimage[i * Hopfield.Width + j] < 0)
+						hopimage[i * Hopfield.Width + j] = 0;
+				}
+			RedrawImage();
 		}
 	}
 }
