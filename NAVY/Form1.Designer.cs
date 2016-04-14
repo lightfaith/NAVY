@@ -28,18 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel1 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel2 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel3 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel4 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabNeural = new System.Windows.Forms.TabPage();
 			this.btnNeuralActivate = new System.Windows.Forms.Button();
@@ -78,19 +80,32 @@
 			this.columnNeurons = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.columnFunction = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.tabHopfield = new System.Windows.Forms.TabPage();
+			this.btnHopfieldNoise = new System.Windows.Forms.Button();
+			this.cmbHopfieldSymbols = new System.Windows.Forms.ComboBox();
 			this.pciHopfieldClassify = new System.Windows.Forms.Button();
 			this.picHopfieldLearn = new System.Windows.Forms.Button();
 			this.btnHopfieldRandom = new System.Windows.Forms.Button();
 			this.cmbHopfieldValue = new System.Windows.Forms.ComboBox();
+			this.btnHopfieldClear = new System.Windows.Forms.Button();
 			this.picHopfieldInput = new System.Windows.Forms.PictureBox();
+			this.tabFractals = new System.Windows.Forms.TabPage();
+			this.cmbFractalExamples = new System.Windows.Forms.ComboBox();
+			this.btnFractalsDraw = new System.Windows.Forms.Button();
+			this.picFractalsPicture = new System.Windows.Forms.PictureBox();
 			this.txtLog = new System.Windows.Forms.TextBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.chartLSP = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.chartStatus = new System.Windows.Forms.DataVisualization.Charting.Chart();
-			this.cmbHopfieldSymbols = new System.Windows.Forms.ComboBox();
-			this.btnHopfieldClear = new System.Windows.Forms.Button();
-			this.btnHopfieldNoise = new System.Windows.Forms.Button();
+			this.gridFractalsParameters = new System.Windows.Forms.DataGridView();
+			this.columnA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.columnB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.columnC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.columnD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.columnE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.columnF = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.columnProbability = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.numFractalsIterations = new System.Windows.Forms.NumericUpDown();
 			this.tabControl.SuspendLayout();
 			this.tabNeural.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numNeuralEpoch)).BeginInit();
@@ -98,8 +113,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.gridNeuralLayers)).BeginInit();
 			this.tabHopfield.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picHopfieldInput)).BeginInit();
+			this.tabFractals.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picFractalsPicture)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartLSP)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartStatus)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridFractalsParameters)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsIterations)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl
@@ -109,6 +128,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabControl.Controls.Add(this.tabNeural);
 			this.tabControl.Controls.Add(this.tabHopfield);
+			this.tabControl.Controls.Add(this.tabFractals);
 			this.tabControl.Location = new System.Drawing.Point(12, 12);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
@@ -458,27 +478,27 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gridNeuralNeurons.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle5.BackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNeuralNeurons.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNeuralNeurons.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this.gridNeuralNeurons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.gridNeuralNeurons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columnNeuron,
             this.columnSlope,
             this.columnAugment});
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Silver;
-			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridNeuralNeurons.DefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Silver;
+			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridNeuralNeurons.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridNeuralNeurons.Location = new System.Drawing.Point(275, 3);
 			this.gridNeuralNeurons.Name = "gridNeuralNeurons";
 			this.gridNeuralNeurons.RowTemplate.Height = 24;
@@ -568,27 +588,27 @@
 			this.gridNeuralLayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.gridNeuralLayers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle7.BackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNeuralLayers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNeuralLayers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.gridNeuralLayers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.gridNeuralLayers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columnLayer,
             this.columnNeurons,
             this.columnFunction});
-			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Silver;
-			dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridNeuralLayers.DefaultCellStyle = dataGridViewCellStyle8;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Silver;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridNeuralLayers.DefaultCellStyle = dataGridViewCellStyle4;
 			this.gridNeuralLayers.Location = new System.Drawing.Point(3, 47);
 			this.gridNeuralLayers.Name = "gridNeuralLayers";
 			this.gridNeuralLayers.RowTemplate.Height = 24;
@@ -637,8 +657,34 @@
 			this.tabHopfield.TabIndex = 1;
 			this.tabHopfield.Text = "Hopfield";
 			// 
+			// btnHopfieldNoise
+			// 
+			this.btnHopfieldNoise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnHopfieldNoise.ForeColor = System.Drawing.Color.White;
+			this.btnHopfieldNoise.Location = new System.Drawing.Point(117, 14);
+			this.btnHopfieldNoise.Name = "btnHopfieldNoise";
+			this.btnHopfieldNoise.Size = new System.Drawing.Size(49, 23);
+			this.btnHopfieldNoise.TabIndex = 10;
+			this.btnHopfieldNoise.Text = "Noise";
+			this.btnHopfieldNoise.UseVisualStyleBackColor = true;
+			this.btnHopfieldNoise.Click += new System.EventHandler(this.btnHopfieldNoise_Click);
+			// 
+			// cmbHopfieldSymbols
+			// 
+			this.cmbHopfieldSymbols.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			this.cmbHopfieldSymbols.ForeColor = System.Drawing.Color.White;
+			this.cmbHopfieldSymbols.FormattingEnabled = true;
+			this.cmbHopfieldSymbols.Location = new System.Drawing.Point(96, 43);
+			this.cmbHopfieldSymbols.Name = "cmbHopfieldSymbols";
+			this.cmbHopfieldSymbols.Size = new System.Drawing.Size(70, 24);
+			this.cmbHopfieldSymbols.TabIndex = 9;
+			this.cmbHopfieldSymbols.Text = "1";
+			this.cmbHopfieldSymbols.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+			// 
 			// pciHopfieldClassify
 			// 
+			this.pciHopfieldClassify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.pciHopfieldClassify.ForeColor = System.Drawing.Color.White;
 			this.pciHopfieldClassify.Location = new System.Drawing.Point(15, 290);
 			this.pciHopfieldClassify.Name = "pciHopfieldClassify";
 			this.pciHopfieldClassify.Size = new System.Drawing.Size(151, 23);
@@ -649,6 +695,8 @@
 			// 
 			// picHopfieldLearn
 			// 
+			this.picHopfieldLearn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.picHopfieldLearn.ForeColor = System.Drawing.Color.White;
 			this.picHopfieldLearn.Location = new System.Drawing.Point(15, 319);
 			this.picHopfieldLearn.Name = "picHopfieldLearn";
 			this.picHopfieldLearn.Size = new System.Drawing.Size(151, 23);
@@ -659,6 +707,8 @@
 			// 
 			// btnHopfieldRandom
 			// 
+			this.btnHopfieldRandom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnHopfieldRandom.ForeColor = System.Drawing.Color.White;
 			this.btnHopfieldRandom.Location = new System.Drawing.Point(68, 14);
 			this.btnHopfieldRandom.Name = "btnHopfieldRandom";
 			this.btnHopfieldRandom.Size = new System.Drawing.Size(43, 23);
@@ -684,6 +734,18 @@
 			this.cmbHopfieldValue.TabIndex = 4;
 			this.cmbHopfieldValue.Text = "1";
 			// 
+			// btnHopfieldClear
+			// 
+			this.btnHopfieldClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnHopfieldClear.ForeColor = System.Drawing.Color.White;
+			this.btnHopfieldClear.Location = new System.Drawing.Point(15, 14);
+			this.btnHopfieldClear.Name = "btnHopfieldClear";
+			this.btnHopfieldClear.Size = new System.Drawing.Size(47, 23);
+			this.btnHopfieldClear.TabIndex = 1;
+			this.btnHopfieldClear.Text = "Clear";
+			this.btnHopfieldClear.UseVisualStyleBackColor = true;
+			this.btnHopfieldClear.Click += new System.EventHandler(this.btnHopfieldClear_Click);
+			// 
 			// picHopfieldInput
 			// 
 			this.picHopfieldInput.Location = new System.Drawing.Point(15, 73);
@@ -692,6 +754,49 @@
 			this.picHopfieldInput.TabIndex = 0;
 			this.picHopfieldInput.TabStop = false;
 			this.picHopfieldInput.Click += new System.EventHandler(this.picHopfieldInput_Click);
+			// 
+			// tabFractals
+			// 
+			this.tabFractals.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.tabFractals.Controls.Add(this.numFractalsIterations);
+			this.tabFractals.Controls.Add(this.gridFractalsParameters);
+			this.tabFractals.Controls.Add(this.cmbFractalExamples);
+			this.tabFractals.Controls.Add(this.btnFractalsDraw);
+			this.tabFractals.Controls.Add(this.picFractalsPicture);
+			this.tabFractals.ForeColor = System.Drawing.Color.White;
+			this.tabFractals.Location = new System.Drawing.Point(4, 25);
+			this.tabFractals.Name = "tabFractals";
+			this.tabFractals.Size = new System.Drawing.Size(1302, 372);
+			this.tabFractals.TabIndex = 2;
+			this.tabFractals.Text = "Fractals";
+			// 
+			// cmbFractalExamples
+			// 
+			this.cmbFractalExamples.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.cmbFractalExamples.ForeColor = System.Drawing.Color.White;
+			this.cmbFractalExamples.FormattingEnabled = true;
+			this.cmbFractalExamples.Location = new System.Drawing.Point(376, 3);
+			this.cmbFractalExamples.Name = "cmbFractalExamples";
+			this.cmbFractalExamples.Size = new System.Drawing.Size(218, 24);
+			this.cmbFractalExamples.TabIndex = 14;
+			// 
+			// btnFractalsDraw
+			// 
+			this.btnFractalsDraw.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnFractalsDraw.Location = new System.Drawing.Point(705, 3);
+			this.btnFractalsDraw.Name = "btnFractalsDraw";
+			this.btnFractalsDraw.Size = new System.Drawing.Size(120, 22);
+			this.btnFractalsDraw.TabIndex = 13;
+			this.btnFractalsDraw.Text = "Draw";
+			this.btnFractalsDraw.UseVisualStyleBackColor = true;
+			// 
+			// picFractalsPicture
+			// 
+			this.picFractalsPicture.Location = new System.Drawing.Point(3, 3);
+			this.picFractalsPicture.Name = "picFractalsPicture";
+			this.picFractalsPicture.Size = new System.Drawing.Size(366, 366);
+			this.picFractalsPicture.TabIndex = 0;
+			this.picFractalsPicture.TabStop = false;
 			// 
 			// txtLog
 			// 
@@ -719,28 +824,28 @@
 			// 
 			this.chartLSP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartLSP.BackColor = System.Drawing.Color.Black;
-			chartArea3.AxisX.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea3.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea3.AxisY.TitleForeColor = System.Drawing.Color.Silver;
-			customLabel3.ForeColor = System.Drawing.Color.Lime;
-			chartArea3.AxisY2.CustomLabels.Add(customLabel3);
-			chartArea3.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea3.Name = "ChartArea1";
-			this.chartLSP.ChartAreas.Add(chartArea3);
-			legend3.BackColor = System.Drawing.Color.Black;
-			legend3.ForeColor = System.Drawing.Color.Silver;
-			legend3.Name = "Legend1";
-			this.chartLSP.Legends.Add(legend3);
+			chartArea1.AxisX.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea1.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea1.AxisY.TitleForeColor = System.Drawing.Color.Silver;
+			customLabel1.ForeColor = System.Drawing.Color.Lime;
+			chartArea1.AxisY2.CustomLabels.Add(customLabel1);
+			chartArea1.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea1.Name = "ChartArea1";
+			this.chartLSP.ChartAreas.Add(chartArea1);
+			legend1.BackColor = System.Drawing.Color.Black;
+			legend1.ForeColor = System.Drawing.Color.Silver;
+			legend1.Name = "Legend1";
+			this.chartLSP.Legends.Add(legend1);
 			this.chartLSP.Location = new System.Drawing.Point(928, 419);
 			this.chartLSP.Name = "chartLSP";
-			series3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			series3.ChartArea = "ChartArea1";
-			series3.Color = System.Drawing.Color.Lime;
-			series3.LabelBackColor = System.Drawing.Color.Green;
-			series3.LabelForeColor = System.Drawing.Color.Maroon;
-			series3.Legend = "Legend1";
-			series3.Name = "Series1";
-			this.chartLSP.Series.Add(series3);
+			series1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			series1.ChartArea = "ChartArea1";
+			series1.Color = System.Drawing.Color.Lime;
+			series1.LabelBackColor = System.Drawing.Color.Green;
+			series1.LabelForeColor = System.Drawing.Color.Maroon;
+			series1.Legend = "Legend1";
+			series1.Name = "Series1";
+			this.chartLSP.Series.Add(series1);
 			this.chartLSP.Size = new System.Drawing.Size(394, 259);
 			this.chartLSP.TabIndex = 3;
 			this.chartLSP.Text = "chart";
@@ -750,63 +855,125 @@
 			this.chartStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartStatus.BackColor = System.Drawing.Color.Black;
-			chartArea4.AxisX.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea4.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea4.AxisY.TitleForeColor = System.Drawing.Color.Silver;
-			customLabel4.ForeColor = System.Drawing.Color.Lime;
-			chartArea4.AxisY2.CustomLabels.Add(customLabel4);
-			chartArea4.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea4.Name = "ChartArea1";
-			this.chartStatus.ChartAreas.Add(chartArea4);
-			legend4.BackColor = System.Drawing.Color.Black;
-			legend4.ForeColor = System.Drawing.Color.Silver;
-			legend4.Name = "Legend1";
-			this.chartStatus.Legends.Add(legend4);
+			chartArea2.AxisX.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea2.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea2.AxisY.TitleForeColor = System.Drawing.Color.Silver;
+			customLabel2.ForeColor = System.Drawing.Color.Lime;
+			chartArea2.AxisY2.CustomLabels.Add(customLabel2);
+			chartArea2.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea2.Name = "ChartArea1";
+			this.chartStatus.ChartAreas.Add(chartArea2);
+			legend2.BackColor = System.Drawing.Color.Black;
+			legend2.ForeColor = System.Drawing.Color.Silver;
+			legend2.Name = "Legend1";
+			this.chartStatus.Legends.Add(legend2);
 			this.chartStatus.Location = new System.Drawing.Point(380, 419);
 			this.chartStatus.Name = "chartStatus";
-			series4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			series4.ChartArea = "ChartArea1";
-			series4.Color = System.Drawing.Color.Lime;
-			series4.LabelBackColor = System.Drawing.Color.Green;
-			series4.LabelForeColor = System.Drawing.Color.Maroon;
-			series4.Legend = "Legend1";
-			series4.Name = "Series1";
-			this.chartStatus.Series.Add(series4);
+			series2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			series2.ChartArea = "ChartArea1";
+			series2.Color = System.Drawing.Color.Lime;
+			series2.LabelBackColor = System.Drawing.Color.Green;
+			series2.LabelForeColor = System.Drawing.Color.Maroon;
+			series2.Legend = "Legend1";
+			series2.Name = "Series1";
+			this.chartStatus.Series.Add(series2);
 			this.chartStatus.Size = new System.Drawing.Size(535, 259);
 			this.chartStatus.TabIndex = 4;
 			this.chartStatus.Text = "chart";
 			// 
-			// cmbHopfieldSymbols
+			// gridFractalsParameters
 			// 
-			this.cmbHopfieldSymbols.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			this.cmbHopfieldSymbols.ForeColor = System.Drawing.Color.White;
-			this.cmbHopfieldSymbols.FormattingEnabled = true;
-			this.cmbHopfieldSymbols.Location = new System.Drawing.Point(96, 43);
-			this.cmbHopfieldSymbols.Name = "cmbHopfieldSymbols";
-			this.cmbHopfieldSymbols.Size = new System.Drawing.Size(70, 24);
-			this.cmbHopfieldSymbols.TabIndex = 9;
-			this.cmbHopfieldSymbols.Text = "1";
-			this.cmbHopfieldSymbols.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+			this.gridFractalsParameters.AllowDrop = true;
+			this.gridFractalsParameters.AllowUserToAddRows = false;
+			this.gridFractalsParameters.AllowUserToDeleteRows = false;
+			this.gridFractalsParameters.AllowUserToOrderColumns = true;
+			this.gridFractalsParameters.AllowUserToResizeRows = false;
+			this.gridFractalsParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridFractalsParameters.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle5.BackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridFractalsParameters.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+			this.gridFractalsParameters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+			this.gridFractalsParameters.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.columnA,
+            this.columnB,
+            this.columnC,
+            this.columnD,
+            this.columnE,
+            this.columnF,
+            this.columnProbability});
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridFractalsParameters.DefaultCellStyle = dataGridViewCellStyle6;
+			this.gridFractalsParameters.Location = new System.Drawing.Point(376, 31);
+			this.gridFractalsParameters.Name = "gridFractalsParameters";
+			this.gridFractalsParameters.RowTemplate.Height = 24;
+			this.gridFractalsParameters.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+			this.gridFractalsParameters.ShowEditingIcon = false;
+			this.gridFractalsParameters.Size = new System.Drawing.Size(449, 338);
+			this.gridFractalsParameters.TabIndex = 34;
 			// 
-			// btnHopfieldClear
+			// columnA
 			// 
-			this.btnHopfieldClear.Location = new System.Drawing.Point(15, 14);
-			this.btnHopfieldClear.Name = "btnHopfieldClear";
-			this.btnHopfieldClear.Size = new System.Drawing.Size(47, 23);
-			this.btnHopfieldClear.TabIndex = 1;
-			this.btnHopfieldClear.Text = "Clear";
-			this.btnHopfieldClear.UseVisualStyleBackColor = true;
-			this.btnHopfieldClear.Click += new System.EventHandler(this.btnHopfieldClear_Click);
+			this.columnA.HeaderText = "A";
+			this.columnA.Name = "columnA";
+			this.columnA.Width = 50;
 			// 
-			// btnHopfieldNoise
+			// columnB
 			// 
-			this.btnHopfieldNoise.Location = new System.Drawing.Point(117, 14);
-			this.btnHopfieldNoise.Name = "btnHopfieldNoise";
-			this.btnHopfieldNoise.Size = new System.Drawing.Size(49, 23);
-			this.btnHopfieldNoise.TabIndex = 10;
-			this.btnHopfieldNoise.Text = "Noise";
-			this.btnHopfieldNoise.UseVisualStyleBackColor = true;
-			this.btnHopfieldNoise.Click += new System.EventHandler(this.btnHopfieldNoise_Click);
+			this.columnB.HeaderText = "B";
+			this.columnB.Name = "columnB";
+			this.columnB.Width = 50;
+			// 
+			// columnC
+			// 
+			this.columnC.HeaderText = "C";
+			this.columnC.Name = "columnC";
+			this.columnC.Width = 50;
+			// 
+			// columnD
+			// 
+			this.columnD.HeaderText = "D";
+			this.columnD.Name = "columnD";
+			this.columnD.Width = 50;
+			// 
+			// columnE
+			// 
+			this.columnE.HeaderText = "E";
+			this.columnE.Name = "columnE";
+			this.columnE.Width = 50;
+			// 
+			// columnF
+			// 
+			this.columnF.HeaderText = "F";
+			this.columnF.Name = "columnF";
+			this.columnF.Width = 50;
+			// 
+			// columnProbability
+			// 
+			this.columnProbability.HeaderText = "Probability";
+			this.columnProbability.Name = "columnProbability";
+			// 
+			// numFractalsIterations
+			// 
+			this.numFractalsIterations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.numFractalsIterations.ForeColor = System.Drawing.Color.White;
+			this.numFractalsIterations.Location = new System.Drawing.Point(600, 3);
+			this.numFractalsIterations.Name = "numFractalsIterations";
+			this.numFractalsIterations.Size = new System.Drawing.Size(99, 22);
+			this.numFractalsIterations.TabIndex = 35;
 			// 
 			// Form1
 			// 
@@ -829,8 +996,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.gridNeuralLayers)).EndInit();
 			this.tabHopfield.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picHopfieldInput)).EndInit();
+			this.tabFractals.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.picFractalsPicture)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartLSP)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartStatus)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridFractalsParameters)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsIterations)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -889,6 +1060,19 @@
 		private System.Windows.Forms.ComboBox cmbHopfieldSymbols;
 		private System.Windows.Forms.Button btnHopfieldClear;
 		private System.Windows.Forms.Button btnHopfieldNoise;
+		private System.Windows.Forms.TabPage tabFractals;
+		private System.Windows.Forms.PictureBox picFractalsPicture;
+		private System.Windows.Forms.Button btnFractalsDraw;
+		private System.Windows.Forms.ComboBox cmbFractalExamples;
+		private System.Windows.Forms.NumericUpDown numFractalsIterations;
+		private System.Windows.Forms.DataGridView gridFractalsParameters;
+		private System.Windows.Forms.DataGridViewTextBoxColumn columnA;
+		private System.Windows.Forms.DataGridViewTextBoxColumn columnB;
+		private System.Windows.Forms.DataGridViewTextBoxColumn columnC;
+		private System.Windows.Forms.DataGridViewTextBoxColumn columnD;
+		private System.Windows.Forms.DataGridViewTextBoxColumn columnE;
+		private System.Windows.Forms.DataGridViewTextBoxColumn columnF;
+		private System.Windows.Forms.DataGridViewTextBoxColumn columnProbability;
 	}
 }
 

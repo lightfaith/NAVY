@@ -90,6 +90,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fractals\Fractals.csproj">
+      <Project>{c8974ddf-11da-4dfa-a2cb-ac9726dafbe2}</Project>
+      <Name>Fractals</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Neural\Neural.csproj">
       <Project>{9e4b8623-44da-416f-aff8-33808dbab0cb}</Project>
       <Name>Neural</Name>

@@ -10,3 +10,5 @@ V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.csproj.GenerateResource
 V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.exe
 V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.pdb
 V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.NeuralSchema.resources
+V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\Fractals.dll
+V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\Fractals.pdb

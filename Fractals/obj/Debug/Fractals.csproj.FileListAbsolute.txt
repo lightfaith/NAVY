@@ -1,0 +1,5 @@
+V:\syncthing\share\navy\project\NAVY\Fractals\bin\Debug\Fractals.dll
+V:\syncthing\share\navy\project\NAVY\Fractals\bin\Debug\Fractals.pdb
+V:\syncthing\share\navy\project\NAVY\Fractals\obj\Debug\Fractals.dll
+V:\syncthing\share\navy\project\NAVY\Fractals\obj\Debug\Fractals.pdb
+V:\syncthing\share\navy\project\NAVY\Fractals\obj\Debug\Fractals.csprojResolveAssemblyReference.cache

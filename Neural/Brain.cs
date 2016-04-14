@@ -71,7 +71,7 @@ namespace Neural
 				foreach (Neuron n in Neurons[layer + 1])
 				{
 					n.StartThinking();
-					n.FinishThinking(); // really here? fixed increments agree
+					n.FinishThinking();
 
 					//any learning necessary? (only neuron-related)
 					switch (algo)
@@ -95,7 +95,6 @@ namespace Neural
 								break;
 							}
 					}
-					//n.FinishThinking();
 				}
 			}
 			//gather results
