@@ -33,14 +33,23 @@ namespace NAVY
 		Dictionary<String, TransferFunction> functionlist;
 		Brain brain = new Brain();
 		Dictionary<int, double> ges = null;
-		
+
 		//
 		// -------------------------- HOPFIELD --------------------------------
 		//
-		
+
 		Hopfield hop = new Hopfield(5, 7, 30);
 		List<double> hopimage = new List<double>();
 
+		//
+		// -------------------------- FRACTALS ---------------------------------
+		//
+
+		Fractal fractal;
+
+		//
+		// -------------------------- LOAD -------------------------------------
+		//
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
@@ -73,6 +82,10 @@ namespace NAVY
 
 			// fractal stuff
 			cmbFractalExamples.DataSource = Fractal.Examples.Keys.ToList<String>();
+			cmbFractalExamples.SelectedIndex = 1;
+			fractal = new Fractal(Fractals.Configuration.IFSTree(Fractal.Width, Fractal.Height));
+			DrawFractal(picFractalsPicture, fractal);
+			UpdateFractalGrid();
 		}
 
 		private void gridNeural_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -641,9 +654,9 @@ namespace NAVY
 		}
 
 
-		
 
-		private void RedrawImage()
+
+		private void RedrawHopfieldImage()
 		{
 
 			Bitmap b = picHopfieldInput.Image != null ? new Bitmap(picHopfieldInput.Image) : new Bitmap(picHopfieldInput.Width, picHopfieldInput.Height);
@@ -671,8 +684,8 @@ namespace NAVY
 		{
 			for (int i = 0; i < hop.Height; i++)
 				for (int j = 0; j < hop.Width; j++)
-					hopimage[i* hop.Width+ j] = 0;
-			RedrawImage();
+					hopimage[i * hop.Width + j] = 0;
+			RedrawHopfieldImage();
 		}
 
 		private void btnHopfieldRandom_Click(object sender, EventArgs e)
@@ -683,33 +696,33 @@ namespace NAVY
 				{
 					hopimage[i * hop.Width + j] = (r.Next() % 2 == 0) ? 1 : 0;
 				}
-			RedrawImage();
+			RedrawHopfieldImage();
 		}
 
 		private void picHopfieldInput_Click(object sender, EventArgs e)
 		{
 			int x = ((MouseEventArgs)e).X;
 			int y = ((MouseEventArgs)e).Y;
-			hopimage[(int)(y / hop.Unit)* hop.Width+ (int)(x / hop.Unit)] = Convert.ToDouble(cmbHopfieldValue.Text.Replace('.', ','));
-			RedrawImage();
+			hopimage[(int)(y / hop.Unit) * hop.Width + (int)(x / hop.Unit)] = Convert.ToDouble(cmbHopfieldValue.Text.Replace('.', ','));
+			RedrawHopfieldImage();
 		}
 
 		private void picHopfieldLearn_Click(object sender, EventArgs e)
 		{
 			hop.Train(hopimage);
-			
+
 		}
 
 		private void pciHopfieldClassify_Click(object sender, EventArgs e)
 		{
 			hopimage = (from x in hop.Classify(hopimage) select x).ToList<double>();
-			RedrawImage();
+			RedrawHopfieldImage();
 		}
 
 		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			hopimage = Hopfield.Symbols[cmbHopfieldSymbols.Text[0]].ToList<double>();
-			RedrawImage();
+			RedrawHopfieldImage();
 		}
 
 		private void btnHopfieldNoise_Click(object sender, EventArgs e)
@@ -722,7 +735,91 @@ namespace NAVY
 					if (hopimage[i * hop.Width + j] < 0)
 						hopimage[i * hop.Width + j] = 0;
 				}
-			RedrawImage();
+			RedrawHopfieldImage();
+		}
+
+		private void DrawFractal(PictureBox pic, Fractal f)
+		{
+			if (pic.Image == null)
+				pic.Image = new Bitmap(pic.Width, pic.Height);
+
+			Random r = new Random();
+			using (Graphics g = Graphics.FromImage(pic.Image))
+			{
+				g.Clear(Color.Black);
+				List<List<Brush>> brushes = (new List<Brush>[] { (new Brush[] { Brushes.DarkBlue, Brushes.CornflowerBlue, }).ToList<Brush>(),
+																 (new Brush[] { Brushes.DarkRed, Brushes.Orange, }).ToList<Brush>(),
+																 (new Brush[] { Brushes.Green, Brushes.LimeGreen, }).ToList<Brush>(),
+																} ).ToList<List<Brush>>();
+				int brushlist = r.Next() % brushes.Count;
+				foreach (double[] p in f.Points)
+					g.FillRectangle(brushes[brushlist][r.Next()%brushes[brushlist].Count], (float)p[0], (float)p[1], 1, 1);
+			}
+			pic.Invalidate();
+		}
+
+		private void btnFractalsDraw_Click(object sender, EventArgs e)
+		{
+			UpdateFractalConfiguration();
+			for (int i = 0; i < numFractalsIterations.Value; i++)
+			{
+				fractal.Iterate();
+			}
+			picFractalsPicture.Invalidate();
+			DrawFractal(picFractalsPicture, fractal);
+		}
+
+		private void cmbFractalExamples_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			fractal = new Fractal(Fractal.Examples[cmbFractalExamples.Text]);
+			DrawFractal(picFractalsPicture, fractal);
+			UpdateFractalGrid();
+		}
+
+		private void UpdateFractalGrid()
+		{
+			gridFractalsParameters.Rows.Clear();
+			gridFractalsParameters.Columns.Clear();
+			foreach (String title in fractal.Config.Values.Keys)
+				gridFractalsParameters.Columns.Add(title.Replace(" ", ""), title);
+			for (int i = 0; i < fractal.Config.Values["Probability"].Count; i++) // for each row
+			{
+				gridFractalsParameters.Rows.Add();
+				for (int j = 0; j < fractal.Config.Values.Count; j++)
+					gridFractalsParameters.Rows[i].Cells[j].Value = fractal.Config.Values[gridFractalsParameters.Columns[j].Name][i];
+			}
+		}
+
+		private void UpdateFractalConfiguration()
+		{
+			foreach (DataGridViewColumn col in gridFractalsParameters.Columns)
+			{
+				fractal.Config.Values[col.Name] = new List<double>();
+				for (int i = 0; i < gridFractalsParameters.Rows.Count; i++)
+					fractal.Config.Values[col.Name].Add(Convert.ToDouble(gridFractalsParameters.Rows[i].Cells[col.Name].Value.ToString().Replace(".", ",")));
+			}
+		}
+
+		private void btnFractalsAttractorAdd_Click(object sender, EventArgs e)
+		{
+			gridFractalsParameters.Rows.Add();
+		}
+
+		private void btnFractalsAttractorDelete_Click(object sender, EventArgs e)
+		{
+			//delete all selected
+			foreach (DataGridViewCell oneCell in gridFractalsParameters.SelectedCells)
+			{
+				if (oneCell.Selected)
+					gridFractalsParameters.Rows.RemoveAt(oneCell.RowIndex);
+			}
+		}
+
+		private void btnFractalsReset_Click(object sender, EventArgs e)
+		{
+			fractal.Points.Clear();
+			fractal.Points.AddRange(fractal.Config.InitPoints);
+			DrawFractal(picFractalsPicture, fractal);
 		}
 	}
 }
