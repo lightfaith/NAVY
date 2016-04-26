@@ -85,7 +85,8 @@ namespace NAVY
 			// fractal stuff
 			/*cmbFractalExamples.DataSource = Fractal.Examples.Keys.ToList<String>();
 			cmbFractalExamples.SelectedIndex = 1;
-			*/fractal = new Fractal(/*Fractals.Configuration.IFSTree(Fractal.Width, Fractal.Height)*/);
+			*/
+			fractal = new Fractal(/*Fractals.Configuration.IFSTree(Fractal.Width, Fractal.Height)*/);
 			DrawFractal(picFractalsPicture, fractal);
 			UpdateFractalGrid();
 		}
@@ -638,7 +639,7 @@ namespace NAVY
 			barNeuralMatch.Update();
 		}
 
-		
+
 		public List<PointF> GetLineTerminators(List<float> weights, float min, float max)
 		{
 			List<PointF> result = new List<PointF>();
@@ -746,7 +747,7 @@ namespace NAVY
 				pic.Image = new Bitmap(pic.Width, pic.Height);
 
 			Random r = new Random();
-			
+
 			pic.Image = fractal.Picture;
 			pic.Invalidate();
 		}
@@ -761,7 +762,7 @@ namespace NAVY
 			}
 			for (int i = 0; i < numFractalsIterations.Value; i++)
 			{
-				fractal.Iterate(i*1000, (int)(numFractalsScale.Value/100));
+				fractal.Iterate(i * 1000, (int)(numFractalsScale.Value / 100));
 			}
 			picFractalsPicture.Invalidate();
 			DrawFractal(picFractalsPicture, fractal);
@@ -841,7 +842,7 @@ namespace NAVY
 			List<double> randvalues = new List<double>();
 			for (int i = 0; i < rowcount - 1; i++)
 			{
-				randvalues.Add(Math.Round(r.NextDouble() * (probpool - (rowcount - i) * 0.01)/(rowcount-i), 3));
+				randvalues.Add(Math.Round(r.NextDouble() * (probpool - (rowcount - i) * 0.01) / (rowcount - i), 3));
 				probpool -= randvalues.Last<double>();
 			}
 			randvalues.Add(probpool);
@@ -867,7 +868,7 @@ namespace NAVY
 		private void btnFractalsSave_Click(object sender, EventArgs e)
 		{
 			UpdateFractalConfiguration();
-			
+
 			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
 			{
 				using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false))
@@ -922,6 +923,39 @@ namespace NAVY
 				}
 				UpdateFractalConfiguration();
 			}
+		}
+
+		private void btnFractalsGOCDraw_Click(object sender, EventArgs e)
+		{
+			Random r = new Random();
+			PointF center = new PointF(Fractal.Width / 2, Fractal.Height / 2);
+			float distance = 0.85F * new float[] { Fractal.Width / 2, Fractal.Height / 2 }.Min();
+			int n = (int)numFractalsGOCCount.Value;
+			List<PointF> anchors = new List<PointF>();
+			for (int i = 0; i < n; i++)
+			{
+				anchors.Add(new PointF((float)(center.X + distance * Math.Sin(2 * Math.PI * i / n)), (float)(center.Y - distance * (float)Math.Cos(2 * Math.PI * i / n))));
+			}
+
+			Bitmap b = new Bitmap(picFractalsPicture.Width, picFractalsPicture.Height);
+			double koef = (double)numFractalsGOCKoef.Value;
+			using (Graphics g = Graphics.FromImage(b))
+			{
+				g.Clear(Color.Black);
+				//foreach (PointF p in anchors)
+				//	g.FillEllipse(Brushes.White, p.X - 10, p.Y - 10, 20, 20);
+				double[] newpoint = new double[] { r.NextDouble() * Fractal.Width, r.NextDouble() * Fractal.Height };
+				double[] lastpoint = new double[] { 0, 0 };
+				for (int i = 0; i < 5000; i++)
+				{
+					lastpoint = newpoint;
+					int toanchor = r.Next() % n;
+					newpoint[0] = lastpoint[0] + (anchors[toanchor].X-lastpoint[0]) * koef;
+					newpoint[1] = lastpoint[1] + (anchors[toanchor].Y - lastpoint[1]) * koef;
+					g.FillRectangle(Brushes.White, (float)newpoint[0], (float)newpoint[1], 1, 1);
+				}
+			}
+			picFractalsPicture.Image = b;
 		}
 	}
 }
