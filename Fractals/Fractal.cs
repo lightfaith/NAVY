@@ -10,31 +10,22 @@ namespace Fractals
 	public class Fractal
 	{
 		// http://www.frontiernet.net/~jacobc87/fractalIFS.html
+		// http://cs.lmu.edu/~ray/notes/ifs/
+		// 
 
 		public static int Width = 366;
 		public static int Height = 366;
-		public static readonly Dictionary<String, Configuration> Examples = new Dictionary<string, Configuration>
-		{
-			//{"IFS - Triangles" , Configuration.IFSTriangles },
-			{ "IFS - Empty" , Configuration.IFSEmpty(Fractal.Width, Fractal.Height) },
-			{ "IFS - Tree" ,  Configuration.IFSTree(Fractal.Width, Fractal.Height)  },
-			{ "IFS - Fern" ,  Configuration.IFSFern(Fractal.Width, Fractal.Height)  },
-			{ "IFS - Triangle" ,  Configuration.IFSTriangle(Fractal.Width, Fractal.Height)  },
-		};
+		
+		public Bitmap Picture;
 
-		public List<double[]> Points { get; set; }
 		public Configuration Config { get; set; }
 		private Random r;
 
 		public Fractal(Configuration config = null)
 		{
 			r = new Random();
-			Config = (config == null || !config.IsOK()) ? Configuration.IFSEmpty(Fractal.Width, Fractal.Height) : config;
-			Points = new List<double[]>();
-			Points.AddRange(Config.InitPoints);
-
-			//Points.Add(new double[] { 0.8*Fractal.Width, 0.8*Fractal.Height });
-			//Points.Add(new double[] { 60, 90 });
+			Config = (config == null || !config.IsOK()) ? Configuration.IFSEmpty() : config;
+			Picture = new Bitmap(Width, Height);
 
 		}
 
@@ -45,15 +36,22 @@ namespace Fractals
 			return false;
 		}
 
-		public void Iterate()
+		public void ClearPicture()
 		{
+			using (Graphics g = Graphics.FromImage(Picture))
+				g.Clear(Color.Black);
+		}
 
-
-			if (!Config.IsOK() || Points.Count > Math.Pow(2, 20)) // no need...
-				return;
-
+		public void Iterate(int n, int scale)
+		{
+			ClearPicture();
 			List<double[]> newpoints = new List<double[]>();
-			foreach (double[] p in Points)
+
+			double[] lastpoint = new double[] { 0, 0};
+
+
+
+			for (int count = 0; count < n; count++)
 			{
 				// which transformation to choose?
 				double rnd = Math.Round(r.NextDouble(), 3);
@@ -65,22 +63,40 @@ namespace Fractals
 					rnd -= Config.Values["Probability"][i];
 					transformation++;
 				}
-				// prepare constants
-				double modifier = 1;
-				double a = Config.Values["A"][transformation] * modifier;
-				double b = Config.Values["B"][transformation] * modifier;
-				double c = Config.Values["C"][transformation] * modifier;
-				double d = Config.Values["D"][transformation] * modifier;
-				double e = Config.Values["E"][transformation] * modifier;
-				double f = Config.Values["F"][transformation] * modifier;
-				// generate new point
-				double[] newpoint = new double[] {(int)( a* (float)p[0] + b * p[1] + e),
-										   (int)(c * (float)p[0] + d * p[1] + f)};
+				if (transformation >= Config.Values["Probability"].Count)
+					transformation = Config.Values["Probability"].Count - 1;
 
-				if (IsInRange(newpoint))
-					newpoints.Add(newpoint);
+				{
+					// prepare constants
+					double modifier = 1;
+					double a = Config.Values["A"][transformation] * modifier;
+					double b = Config.Values["B"][transformation] * modifier;
+					double c = Config.Values["C"][transformation] * modifier;
+					double d = Config.Values["D"][transformation] * modifier;
+					double e = Config.Values["E"][transformation] * modifier;
+					double f = Config.Values["F"][transformation] * modifier;
+					// generate new point
+					double[] newpoint = new double[] {(a * (double)lastpoint[0] + b * (double)lastpoint[1] +e),
+										   (c * (double)lastpoint[0] + d * (double)lastpoint[1] + f)};
+
+
+					
+
+					lastpoint[0] = newpoint[0];
+					lastpoint[1] = newpoint[1];
+
+					newpoint[0] = newpoint[0] * scale + Width / 4;
+					newpoint[1] = newpoint[1] * -scale + Height;
+					if (IsInRange(newpoint))
+					{
+						using (Graphics g = Graphics.FromImage(Picture))
+							g.FillRectangle(Brushes.White, (float)newpoint[0], (float)newpoint[1], 1, 1);
+					}
+
+				
+				}
 			}
-			Points.AddRange(newpoints);
 		}
 	}
 }
+

@@ -14,6 +14,8 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace NAVY
 {
@@ -81,9 +83,9 @@ namespace NAVY
 			btnHopfieldClear_Click(sender, e);
 
 			// fractal stuff
-			cmbFractalExamples.DataSource = Fractal.Examples.Keys.ToList<String>();
+			/*cmbFractalExamples.DataSource = Fractal.Examples.Keys.ToList<String>();
 			cmbFractalExamples.SelectedIndex = 1;
-			fractal = new Fractal(Fractals.Configuration.IFSTree(Fractal.Width, Fractal.Height));
+			*/fractal = new Fractal(/*Fractals.Configuration.IFSTree(Fractal.Width, Fractal.Height)*/);
 			DrawFractal(picFractalsPicture, fractal);
 			UpdateFractalGrid();
 		}
@@ -636,7 +638,7 @@ namespace NAVY
 			barNeuralMatch.Update();
 		}
 
-
+		
 		public List<PointF> GetLineTerminators(List<float> weights, float min, float max)
 		{
 			List<PointF> result = new List<PointF>();
@@ -744,26 +746,22 @@ namespace NAVY
 				pic.Image = new Bitmap(pic.Width, pic.Height);
 
 			Random r = new Random();
-			using (Graphics g = Graphics.FromImage(pic.Image))
-			{
-				g.Clear(Color.Black);
-				List<List<Brush>> brushes = (new List<Brush>[] { (new Brush[] { Brushes.DarkBlue, Brushes.CornflowerBlue, }).ToList<Brush>(),
-																 (new Brush[] { Brushes.DarkRed, Brushes.Orange, }).ToList<Brush>(),
-																 (new Brush[] { Brushes.Green, Brushes.LimeGreen, }).ToList<Brush>(),
-																} ).ToList<List<Brush>>();
-				int brushlist = r.Next() % brushes.Count;
-				foreach (double[] p in f.Points)
-					g.FillRectangle(brushes[brushlist][r.Next()%brushes[brushlist].Count], (float)p[0], (float)p[1], 1, 1);
-			}
+			
+			pic.Image = fractal.Picture;
 			pic.Invalidate();
 		}
 
 		private void btnFractalsDraw_Click(object sender, EventArgs e)
 		{
 			UpdateFractalConfiguration();
+			if (!fractal.Config.IsOK())
+			{
+				txtLog.AppendText("[-] Fractal onfiguration is wrong!\n");
+				return;
+			}
 			for (int i = 0; i < numFractalsIterations.Value; i++)
 			{
-				fractal.Iterate();
+				fractal.Iterate(i*1000, (int)(numFractalsScale.Value/100));
 			}
 			picFractalsPicture.Invalidate();
 			DrawFractal(picFractalsPicture, fractal);
@@ -771,9 +769,9 @@ namespace NAVY
 
 		private void cmbFractalExamples_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			fractal = new Fractal(Fractal.Examples[cmbFractalExamples.Text]);
+			/*fractal = new Fractal(Fractal.Examples[cmbFractalExamples.Text]);
 			DrawFractal(picFractalsPicture, fractal);
-			UpdateFractalGrid();
+			UpdateFractalGrid();*/
 		}
 
 		private void UpdateFractalGrid()
@@ -796,13 +794,20 @@ namespace NAVY
 			{
 				fractal.Config.Values[col.Name] = new List<double>();
 				for (int i = 0; i < gridFractalsParameters.Rows.Count; i++)
+				{
+					if (gridFractalsParameters.Rows[i].Cells[col.Name].Value == null)
+						gridFractalsParameters.Rows[i].Cells[col.Name].Value = 0;
 					fractal.Config.Values[col.Name].Add(Convert.ToDouble(gridFractalsParameters.Rows[i].Cells[col.Name].Value.ToString().Replace(".", ",")));
+				}
 			}
 		}
 
 		private void btnFractalsAttractorAdd_Click(object sender, EventArgs e)
 		{
 			gridFractalsParameters.Rows.Add();
+			foreach (DataGridViewCell cell in gridFractalsParameters.Rows[gridFractalsParameters.Rows.Count - 1].Cells)
+				cell.Value = 0;
+
 		}
 
 		private void btnFractalsAttractorDelete_Click(object sender, EventArgs e)
@@ -817,9 +822,106 @@ namespace NAVY
 
 		private void btnFractalsReset_Click(object sender, EventArgs e)
 		{
-			fractal.Points.Clear();
-			fractal.Points.AddRange(fractal.Config.InitPoints);
+			fractal.ClearPicture();
+			/*fractal.Points.Clear();
+			fractal.Points.AddRange(fractal.Config.InitPoints);*/
 			DrawFractal(picFractalsPicture, fractal);
+		}
+
+		private void btnFractalsRandomize_Click(object sender, EventArgs e)
+		{
+			fractal.ClearPicture();
+			/*fractal.Points.Clear();
+			fractal.Points.AddRange(fractal.Config.InitPoints);
+			*/
+			Random r = new Random();
+			// generate random probabilities with sum of 1
+			double probpool = 1;
+			int rowcount = gridFractalsParameters.Rows.Count;
+			List<double> randvalues = new List<double>();
+			for (int i = 0; i < rowcount - 1; i++)
+			{
+				randvalues.Add(Math.Round(r.NextDouble() * (probpool - (rowcount - i) * 0.01)/(rowcount-i), 3));
+				probpool -= randvalues.Last<double>();
+			}
+			randvalues.Add(probpool);
+
+			foreach (DataGridViewRow row in gridFractalsParameters.Rows)
+			{
+				foreach (DataGridViewColumn column in gridFractalsParameters.Columns)
+				{
+					DataGridViewCell cell = row.Cells[column.Name];
+					if (column.Name == "Probability")
+					{
+						int probindex = r.Next(0, randvalues.Count);
+						cell.Value = randvalues[probindex];
+						randvalues.RemoveAt(probindex);
+					}
+					else
+						cell.Value = Math.Round(r.NextDouble() * 3 - 1.5, 3);
+				}
+			}
+
+		}
+
+		private void btnFractalsSave_Click(object sender, EventArgs e)
+		{
+			UpdateFractalConfiguration();
+			
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				using (StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false))
+				{
+					StringBuilder sb = new StringBuilder();
+					foreach (String column in fractal.Config.Values.Keys)
+						sb.AppendFormat("{0};", column);
+					sb.Remove(sb.Length - 1, 1);
+					sw.WriteLine(sb.ToString());
+					sb.Clear();
+					for (int row = 0; row < fractal.Config.Values["Probability"].Count; row++)
+					{
+						foreach (String column in fractal.Config.Values.Keys)
+							sb.AppendFormat("{0:0.000};", fractal.Config.Values[column][row]);
+						sb.Remove(sb.Length - 1, 1);
+						sw.WriteLine(sb.ToString());
+						sb.Clear();
+					}
+
+				}
+			}
+		}
+
+		private void btnFractalsLoad_Click(object sender, EventArgs e)
+		{
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				fractal.ClearPicture();
+				/*
+				fractal.Points.Clear();
+				fractal.Points.AddRange(fractal.Config.InitPoints);*/
+
+				gridFractalsParameters.Rows.Clear();
+				gridFractalsParameters.Columns.Clear();
+				String data = "";
+				using (StreamReader sr = new StreamReader(openFileDialog1.FileName))
+					data = sr.ReadToEnd();
+
+				String[] rows = data.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+				// set columns
+				foreach (String colname in rows[0].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+					gridFractalsParameters.Columns.Add(colname.Replace(" ", ""), colname);
+
+				for (int row = 1; row < rows.Length; row++)
+				{
+					String[] values = rows[row].Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+					gridFractalsParameters.Rows.Add();
+					for (int value = 0; value < values.Length; value++)
+					{
+						gridFractalsParameters.Rows[row - 1].Cells[gridFractalsParameters.Columns[value].Name].Value = values[value];
+					}
+				}
+				UpdateFractalConfiguration();
+			}
 		}
 	}
 }
