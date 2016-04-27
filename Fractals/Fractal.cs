@@ -15,7 +15,7 @@ namespace Fractals
 
 		public static int Width = 366;
 		public static int Height = 366;
-		
+
 		public Bitmap Picture;
 
 		public Configuration Config { get; set; }
@@ -42,12 +42,12 @@ namespace Fractals
 				g.Clear(Color.Black);
 		}
 
-		public void Iterate(int n, int scale)
+		public void Iterate(int n, int scale, int xoffset, int yoffset)
 		{
 			ClearPicture();
 			List<double[]> newpoints = new List<double[]>();
 
-			double[] lastpoint = new double[] { 0, 0};
+			double[] lastpoint = new double[] { 0, 0 };
 
 
 
@@ -76,24 +76,25 @@ namespace Fractals
 					double e = Config.Values["E"][transformation] * modifier;
 					double f = Config.Values["F"][transformation] * modifier;
 					// generate new point
-					double[] newpoint = new double[] {(a * (double)lastpoint[0] + b * (double)lastpoint[1] +e),
-										   (c * (double)lastpoint[0] + d * (double)lastpoint[1] + f)};
+					double[] newpoint = new double[] {(a * (double)lastpoint[0] + b * (double)lastpoint[1] + e),
+													  (c * (double)lastpoint[0] + d * (double)lastpoint[1] + f)};
 
 
-					
+
 
 					lastpoint[0] = newpoint[0];
 					lastpoint[1] = newpoint[1];
 
-					newpoint[0] = newpoint[0] * scale + Width / 4;
-					newpoint[1] = newpoint[1] * -scale + Height;
+					newpoint[0] = newpoint[0] * scale + xoffset;
+					newpoint[1] = newpoint[1] * -scale + yoffset;
+
 					if (IsInRange(newpoint))
 					{
 						using (Graphics g = Graphics.FromImage(Picture))
 							g.FillRectangle(Brushes.White, (float)newpoint[0], (float)newpoint[1], 1, 1);
 					}
 
-				
+
 				}
 			}
 		}

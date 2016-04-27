@@ -89,8 +89,14 @@
 			this.btnHopfieldClear = new System.Windows.Forms.Button();
 			this.picHopfieldInput = new System.Windows.Forms.PictureBox();
 			this.tabFractals = new System.Windows.Forms.TabPage();
-			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabControlFractals = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.numFractalsYOffset = new System.Windows.Forms.NumericUpDown();
+			this.numFractalsXOffset = new System.Windows.Forms.NumericUpDown();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.numFractalsScale = new System.Windows.Forms.NumericUpDown();
 			this.btnFractalsLoad = new System.Windows.Forms.Button();
 			this.btnFractalsReset = new System.Windows.Forms.Button();
@@ -109,16 +115,17 @@
 			this.btnFractalsAttractorDelete = new System.Windows.Forms.Button();
 			this.btnFractalsAttractorAdd = new System.Windows.Forms.Button();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.numFractalsGOCKoef = new System.Windows.Forms.NumericUpDown();
 			this.btnFractalsGOCDraw = new System.Windows.Forms.Button();
 			this.numFractalsGOCCount = new System.Windows.Forms.NumericUpDown();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.btnFractalsTEAReset = new System.Windows.Forms.Button();
 			this.picFractalsPicture = new System.Windows.Forms.PictureBox();
 			this.txtLog = new System.Windows.Forms.TextBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.chartLSP = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.chartStatus = new System.Windows.Forms.DataVisualization.Charting.Chart();
-			this.numFractalsGOCKoef = new System.Windows.Forms.NumericUpDown();
 			this.tabControl.SuspendLayout();
 			this.tabNeural.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numNeuralEpoch)).BeginInit();
@@ -127,17 +134,20 @@
 			this.tabHopfield.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picHopfieldInput)).BeginInit();
 			this.tabFractals.SuspendLayout();
-			this.tabControl1.SuspendLayout();
+			this.tabControlFractals.SuspendLayout();
 			this.tabPage1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsYOffset)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsXOffset)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numFractalsScale)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numFractalsIterations)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridFractalsParameters)).BeginInit();
 			this.tabPage2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsGOCKoef)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numFractalsGOCCount)).BeginInit();
+			this.tabPage3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picFractalsPicture)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartLSP)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartStatus)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numFractalsGOCKoef)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl
@@ -777,7 +787,7 @@
 			// tabFractals
 			// 
 			this.tabFractals.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-			this.tabFractals.Controls.Add(this.tabControl1);
+			this.tabFractals.Controls.Add(this.tabControlFractals);
 			this.tabFractals.Controls.Add(this.picFractalsPicture);
 			this.tabFractals.ForeColor = System.Drawing.Color.White;
 			this.tabFractals.Location = new System.Drawing.Point(4, 25);
@@ -786,20 +796,26 @@
 			this.tabFractals.TabIndex = 2;
 			this.tabFractals.Text = "Fractals";
 			// 
-			// tabControl1
+			// tabControlFractals
 			// 
-			this.tabControl1.Controls.Add(this.tabPage1);
-			this.tabControl1.Controls.Add(this.tabPage2);
-			this.tabControl1.Controls.Add(this.tabPage3);
-			this.tabControl1.Location = new System.Drawing.Point(375, 5);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(468, 364);
-			this.tabControl1.TabIndex = 43;
+			this.tabControlFractals.Controls.Add(this.tabPage1);
+			this.tabControlFractals.Controls.Add(this.tabPage2);
+			this.tabControlFractals.Controls.Add(this.tabPage3);
+			this.tabControlFractals.Location = new System.Drawing.Point(375, 5);
+			this.tabControlFractals.Name = "tabControlFractals";
+			this.tabControlFractals.SelectedIndex = 0;
+			this.tabControlFractals.Size = new System.Drawing.Size(468, 364);
+			this.tabControlFractals.TabIndex = 43;
 			// 
 			// tabPage1
 			// 
 			this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.tabPage1.Controls.Add(this.numFractalsYOffset);
+			this.tabPage1.Controls.Add(this.numFractalsXOffset);
+			this.tabPage1.Controls.Add(this.label4);
+			this.tabPage1.Controls.Add(this.label3);
+			this.tabPage1.Controls.Add(this.label2);
+			this.tabPage1.Controls.Add(this.label1);
 			this.tabPage1.Controls.Add(this.numFractalsScale);
 			this.tabPage1.Controls.Add(this.btnFractalsLoad);
 			this.tabPage1.Controls.Add(this.btnFractalsReset);
@@ -817,13 +833,98 @@
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "IFS";
 			// 
+			// numFractalsYOffset
+			// 
+			this.numFractalsYOffset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.numFractalsYOffset.ForeColor = System.Drawing.Color.White;
+			this.numFractalsYOffset.Location = new System.Drawing.Point(381, 279);
+			this.numFractalsYOffset.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.numFractalsYOffset.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+			this.numFractalsYOffset.Name = "numFractalsYOffset";
+			this.numFractalsYOffset.Size = new System.Drawing.Size(75, 22);
+			this.numFractalsYOffset.TabIndex = 57;
+			this.numFractalsYOffset.Value = new decimal(new int[] {
+            230,
+            0,
+            0,
+            0});
+			// 
+			// numFractalsXOffset
+			// 
+			this.numFractalsXOffset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.numFractalsXOffset.ForeColor = System.Drawing.Color.White;
+			this.numFractalsXOffset.Location = new System.Drawing.Point(233, 279);
+			this.numFractalsXOffset.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.numFractalsXOffset.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+			this.numFractalsXOffset.Name = "numFractalsXOffset";
+			this.numFractalsXOffset.Size = new System.Drawing.Size(75, 22);
+			this.numFractalsXOffset.TabIndex = 56;
+			this.numFractalsXOffset.Value = new decimal(new int[] {
+            170,
+            0,
+            0,
+            0});
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(314, 281);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(61, 17);
+			this.label4.TabIndex = 55;
+			this.label4.Text = "Y-offset:";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(167, 281);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(61, 17);
+			this.label3.TabIndex = 54;
+			this.label3.Text = "X-offset:";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(6, 281);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(47, 17);
+			this.label2.TabIndex = 53;
+			this.label2.Text = "Scale:";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(138, 9);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(70, 17);
+			this.label1.TabIndex = 52;
+			this.label1.Text = "Iterations:";
+			// 
 			// numFractalsScale
 			// 
 			this.numFractalsScale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.numFractalsScale.DecimalPlaces = 2;
 			this.numFractalsScale.ForeColor = System.Drawing.Color.White;
-			this.numFractalsScale.Location = new System.Drawing.Point(249, 7);
+			this.numFractalsScale.Location = new System.Drawing.Point(59, 279);
 			this.numFractalsScale.Maximum = new decimal(new int[] {
-            100000,
+            1000,
             0,
             0,
             0});
@@ -831,12 +932,12 @@
             1,
             0,
             0,
-            0});
+            131072});
 			this.numFractalsScale.Name = "numFractalsScale";
-			this.numFractalsScale.Size = new System.Drawing.Size(55, 22);
+			this.numFractalsScale.Size = new System.Drawing.Size(75, 22);
 			this.numFractalsScale.TabIndex = 51;
 			this.numFractalsScale.Value = new decimal(new int[] {
-            5000,
+            50,
             0,
             0,
             0});
@@ -846,7 +947,7 @@
 			this.btnFractalsLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnFractalsLoad.Location = new System.Drawing.Point(6, 6);
 			this.btnFractalsLoad.Name = "btnFractalsLoad";
-			this.btnFractalsLoad.Size = new System.Drawing.Size(98, 22);
+			this.btnFractalsLoad.Size = new System.Drawing.Size(126, 22);
 			this.btnFractalsLoad.TabIndex = 50;
 			this.btnFractalsLoad.Text = "Load";
 			this.btnFractalsLoad.UseVisualStyleBackColor = true;
@@ -855,7 +956,7 @@
 			// btnFractalsReset
 			// 
 			this.btnFractalsReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnFractalsReset.Location = new System.Drawing.Point(381, 5);
+			this.btnFractalsReset.Location = new System.Drawing.Point(380, 6);
 			this.btnFractalsReset.Name = "btnFractalsReset";
 			this.btnFractalsReset.Size = new System.Drawing.Size(74, 22);
 			this.btnFractalsReset.TabIndex = 49;
@@ -867,22 +968,27 @@
 			// 
 			this.numFractalsIterations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
 			this.numFractalsIterations.ForeColor = System.Drawing.Color.White;
-			this.numFractalsIterations.Location = new System.Drawing.Point(110, 7);
+			this.numFractalsIterations.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.numFractalsIterations.Location = new System.Drawing.Point(214, 6);
 			this.numFractalsIterations.Maximum = new decimal(new int[] {
-            50,
+            80000,
             0,
             0,
             0});
 			this.numFractalsIterations.Minimum = new decimal(new int[] {
-            1,
+            1000,
             0,
             0,
             0});
 			this.numFractalsIterations.Name = "numFractalsIterations";
-			this.numFractalsIterations.Size = new System.Drawing.Size(55, 22);
+			this.numFractalsIterations.Size = new System.Drawing.Size(67, 22);
 			this.numFractalsIterations.TabIndex = 48;
 			this.numFractalsIterations.Value = new decimal(new int[] {
-            20,
+            20000,
             0,
             0,
             0});
@@ -890,9 +996,9 @@
 			// btnFractalsDraw
 			// 
 			this.btnFractalsDraw.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnFractalsDraw.Location = new System.Drawing.Point(309, 5);
+			this.btnFractalsDraw.Location = new System.Drawing.Point(367, 307);
 			this.btnFractalsDraw.Name = "btnFractalsDraw";
-			this.btnFractalsDraw.Size = new System.Drawing.Size(66, 22);
+			this.btnFractalsDraw.Size = new System.Drawing.Size(87, 22);
 			this.btnFractalsDraw.TabIndex = 47;
 			this.btnFractalsDraw.Text = "Draw";
 			this.btnFractalsDraw.UseVisualStyleBackColor = true;
@@ -940,7 +1046,7 @@
 			this.gridFractalsParameters.RowTemplate.Height = 24;
 			this.gridFractalsParameters.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridFractalsParameters.ShowEditingIcon = false;
-			this.gridFractalsParameters.Size = new System.Drawing.Size(449, 268);
+			this.gridFractalsParameters.Size = new System.Drawing.Size(449, 240);
 			this.gridFractalsParameters.TabIndex = 46;
 			// 
 			// columnA
@@ -981,7 +1087,7 @@
 			// btnFractalsSave
 			// 
 			this.btnFractalsSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnFractalsSave.Location = new System.Drawing.Point(367, 307);
+			this.btnFractalsSave.Location = new System.Drawing.Point(286, 6);
 			this.btnFractalsSave.Name = "btnFractalsSave";
 			this.btnFractalsSave.Size = new System.Drawing.Size(88, 22);
 			this.btnFractalsSave.TabIndex = 45;
@@ -1035,6 +1141,31 @@
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "GOC";
 			// 
+			// numFractalsGOCKoef
+			// 
+			this.numFractalsGOCKoef.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.numFractalsGOCKoef.DecimalPlaces = 2;
+			this.numFractalsGOCKoef.ForeColor = System.Drawing.Color.White;
+			this.numFractalsGOCKoef.Location = new System.Drawing.Point(67, 6);
+			this.numFractalsGOCKoef.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            65536});
+			this.numFractalsGOCKoef.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+			this.numFractalsGOCKoef.Name = "numFractalsGOCKoef";
+			this.numFractalsGOCKoef.Size = new System.Drawing.Size(55, 22);
+			this.numFractalsGOCKoef.TabIndex = 53;
+			this.numFractalsGOCKoef.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+			// 
 			// btnFractalsGOCDraw
 			// 
 			this.btnFractalsGOCDraw.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1073,12 +1204,24 @@
 			// tabPage3
 			// 
 			this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.tabPage3.Controls.Add(this.btnFractalsTEAReset);
 			this.tabPage3.Location = new System.Drawing.Point(4, 25);
 			this.tabPage3.Name = "tabPage3";
 			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPage3.Size = new System.Drawing.Size(460, 335);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "TEA";
+			// 
+			// btnFractalsTEAReset
+			// 
+			this.btnFractalsTEAReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnFractalsTEAReset.Location = new System.Drawing.Point(6, 6);
+			this.btnFractalsTEAReset.Name = "btnFractalsTEAReset";
+			this.btnFractalsTEAReset.Size = new System.Drawing.Size(116, 22);
+			this.btnFractalsTEAReset.TabIndex = 53;
+			this.btnFractalsTEAReset.Text = "Draw";
+			this.btnFractalsTEAReset.UseVisualStyleBackColor = true;
+			this.btnFractalsTEAReset.Click += new System.EventHandler(this.btnFractalsTEAReset_Click);
 			// 
 			// picFractalsPicture
 			// 
@@ -1167,31 +1310,6 @@
 			this.chartStatus.TabIndex = 4;
 			this.chartStatus.Text = "chart";
 			// 
-			// numFractalsGOCKoef
-			// 
-			this.numFractalsGOCKoef.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-			this.numFractalsGOCKoef.DecimalPlaces = 2;
-			this.numFractalsGOCKoef.ForeColor = System.Drawing.Color.White;
-			this.numFractalsGOCKoef.Location = new System.Drawing.Point(67, 6);
-			this.numFractalsGOCKoef.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            65536});
-			this.numFractalsGOCKoef.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-			this.numFractalsGOCKoef.Name = "numFractalsGOCKoef";
-			this.numFractalsGOCKoef.Size = new System.Drawing.Size(55, 22);
-			this.numFractalsGOCKoef.TabIndex = 53;
-			this.numFractalsGOCKoef.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-			// 
 			// Form1
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1214,25 +1332,31 @@
 			this.tabHopfield.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picHopfieldInput)).EndInit();
 			this.tabFractals.ResumeLayout(false);
-			this.tabControl1.ResumeLayout(false);
+			this.tabControlFractals.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
+			this.tabPage1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsYOffset)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsXOffset)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numFractalsScale)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numFractalsIterations)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridFractalsParameters)).EndInit();
 			this.tabPage2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsGOCKoef)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numFractalsGOCCount)).EndInit();
+			this.tabPage3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picFractalsPicture)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartLSP)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartStatus)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numFractalsGOCKoef)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
         }
+		
 
-        #endregion
 
-        private System.Windows.Forms.TabControl tabControl;
+		#endregion
+
+		private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabNeural;
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.DataGridView gridNeuralLayers;
@@ -1285,7 +1409,7 @@
 		private System.Windows.Forms.Button btnHopfieldNoise;
 		private System.Windows.Forms.TabPage tabFractals;
 		private System.Windows.Forms.PictureBox picFractalsPicture;
-		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabControl tabControlFractals;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.NumericUpDown numFractalsScale;
 		private System.Windows.Forms.Button btnFractalsLoad;
@@ -1309,6 +1433,13 @@
 		private System.Windows.Forms.Button btnFractalsGOCDraw;
 		private System.Windows.Forms.NumericUpDown numFractalsGOCCount;
 		private System.Windows.Forms.NumericUpDown numFractalsGOCKoef;
+		private System.Windows.Forms.Button btnFractalsTEAReset;
+		private System.Windows.Forms.NumericUpDown numFractalsYOffset;
+		private System.Windows.Forms.NumericUpDown numFractalsXOffset;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label1;
 	}
 }
 

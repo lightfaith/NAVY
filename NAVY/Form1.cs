@@ -26,9 +26,10 @@ namespace NAVY
 			InitializeComponent();
 			//GroupBoxRenderer.RenderMatchingApplicationState = false;
 			//grpNeuralInterval.ForeColor = Color.Silver;
-
+			picFractalsPicture.MouseWheel += PicFractalsPicture_MouseWheel;
 
 		}
+		
 
 		// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
@@ -55,7 +56,8 @@ namespace NAVY
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			tabControl.SelectedTab = tabControl.TabPages[1];
+			tabControl.SelectedTab = tabControl.TabPages[2];
+			tabControlFractals.SelectedTab = tabControlFractals.TabPages[0];
 
 			functionlist = new Dictionary<String, TransferFunction>();
 			functionlist.Add("Linear", new Linear());
@@ -119,7 +121,7 @@ namespace NAVY
 
 		private void btnNeuralRun_Click(object sender, EventArgs e)
 		{
-			ges = new Dictionary<int, double>();
+			ges = new Dictionary<int, double>(); // Global Errors
 			barNeuralMatch.Value = 0;
 			if (txtNeuralInput.Lines.Count((s) => s.Trim() != "") != txtNeuralExpected.Lines.Count((s) => s.Trim() != ""))
 				return;
@@ -757,24 +759,18 @@ namespace NAVY
 			UpdateFractalConfiguration();
 			if (!fractal.Config.IsOK())
 			{
-				txtLog.AppendText("[-] Fractal onfiguration is wrong!\n");
+				txtLog.AppendText("[-] Fractal configuration is wrong!\n");
 				return;
 			}
-			for (int i = 0; i < numFractalsIterations.Value; i++)
+			for (int i = 0; i < numFractalsIterations.Value/1000; i++)
 			{
-				fractal.Iterate(i * 1000, (int)(numFractalsScale.Value / 100));
+				fractal.Iterate(i*1000, (int)(numFractalsScale.Value), (int) numFractalsXOffset.Value, (int)numFractalsYOffset.Value);
 			}
 			picFractalsPicture.Invalidate();
 			DrawFractal(picFractalsPicture, fractal);
 		}
 
-		private void cmbFractalExamples_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			/*fractal = new Fractal(Fractal.Examples[cmbFractalExamples.Text]);
-			DrawFractal(picFractalsPicture, fractal);
-			UpdateFractalGrid();*/
-		}
-
+		
 		private void UpdateFractalGrid()
 		{
 			gridFractalsParameters.Rows.Clear();
@@ -824,17 +820,12 @@ namespace NAVY
 		private void btnFractalsReset_Click(object sender, EventArgs e)
 		{
 			fractal.ClearPicture();
-			/*fractal.Points.Clear();
-			fractal.Points.AddRange(fractal.Config.InitPoints);*/
 			DrawFractal(picFractalsPicture, fractal);
 		}
 
 		private void btnFractalsRandomize_Click(object sender, EventArgs e)
 		{
 			fractal.ClearPicture();
-			/*fractal.Points.Clear();
-			fractal.Points.AddRange(fractal.Config.InitPoints);
-			*/
 			Random r = new Random();
 			// generate random probabilities with sum of 1
 			double probpool = 1;
@@ -956,6 +947,34 @@ namespace NAVY
 				}
 			}
 			picFractalsPicture.Image = b;
+		}
+
+		// - - - - - - - - - - - - - - - - - - - - - -
+		// TEA
+		// - - - - - - - - - - - - - - - - - - - - - - 
+		
+		Mandelbrot mandelbrot = new Mandelbrot(Fractal.Width, Fractal.Height);
+
+		private void btnFractalsTEAReset_Click(object sender, EventArgs e)
+		{
+			mandelbrot = new Mandelbrot(Fractal.Width, Fractal.Height);
+			mandelbrot.Recompute();
+			picFractalsPicture.Image = mandelbrot.Picture;
+		}
+
+		
+
+		private void PicFractalsPicture_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (picFractalsPicture.Image == mandelbrot.Picture)
+			{
+				if (e.Delta > 0)
+					mandelbrot.ZoomIn(e.X, e.Y);
+				else
+					mandelbrot.ZoomOut(e.X, e.Y);
+				mandelbrot.Recompute();
+				picFractalsPicture.Invalidate();
+			}
 		}
 	}
 }
