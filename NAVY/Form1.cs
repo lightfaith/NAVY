@@ -29,7 +29,7 @@ namespace NAVY
 			picFractalsPicture.MouseWheel += PicFractalsPicture_MouseWheel;
 
 		}
-		
+
 
 		// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 
@@ -337,10 +337,12 @@ namespace NAVY
 
 		private void btnNeuralSaveConfiguration_Click(object sender, EventArgs e)
 		{
+			saveFileDialog1.Filter = "ANN file|*.ann";
+			saveFileDialog1.AddExtension = true;
 			Update();
 
 			saveFileDialog1.FileName = "network";
-			saveFileDialog1.DefaultExt = "ann";
+			//saveFileDialog1.DefaultExt = "ann";
 			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
 			{
 				IFormatter formatter = new BinaryFormatter();
@@ -762,15 +764,15 @@ namespace NAVY
 				txtLog.AppendText("[-] Fractal configuration is wrong!\n");
 				return;
 			}
-			for (int i = 0; i < numFractalsIterations.Value/1000; i++)
+			for (int i = 0; i < numFractalsIterations.Value / 1000; i++)
 			{
-				fractal.Iterate(i*1000, (int)(numFractalsScale.Value), (int) numFractalsXOffset.Value, (int)numFractalsYOffset.Value);
+				fractal.Iterate(i * 1000, (int)(numFractalsScale.Value), (int)numFractalsXOffset.Value, (int)numFractalsYOffset.Value);
 			}
 			picFractalsPicture.Invalidate();
 			DrawFractal(picFractalsPicture, fractal);
 		}
 
-		
+
 		private void UpdateFractalGrid()
 		{
 			gridFractalsParameters.Rows.Clear();
@@ -858,6 +860,10 @@ namespace NAVY
 
 		private void btnFractalsSave_Click(object sender, EventArgs e)
 		{
+			saveFileDialog1.Filter = "CSV format|*.ifs";
+			saveFileDialog1.FileName = "fractal";
+			saveFileDialog1.AddExtension = true;
+
 			UpdateFractalConfiguration();
 
 			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -922,7 +928,7 @@ namespace NAVY
 			PointF center = new PointF(Fractal.Width / 2, Fractal.Height / 2);
 			float distance = 0.85F * new float[] { Fractal.Width / 2, Fractal.Height / 2 }.Min();
 			int n = (int)numFractalsGOCCount.Value;
-			List<PointF> anchors = new List<PointF>();
+			List<PointF> anchors = new List<PointF>(); // lead points
 			for (int i = 0; i < n; i++)
 			{
 				anchors.Add(new PointF((float)(center.X + distance * Math.Sin(2 * Math.PI * i / n)), (float)(center.Y - distance * (float)Math.Cos(2 * Math.PI * i / n))));
@@ -941,7 +947,7 @@ namespace NAVY
 				{
 					lastpoint = newpoint;
 					int toanchor = r.Next() % n;
-					newpoint[0] = lastpoint[0] + (anchors[toanchor].X-lastpoint[0]) * koef;
+					newpoint[0] = lastpoint[0] + (anchors[toanchor].X - lastpoint[0]) * koef;
 					newpoint[1] = lastpoint[1] + (anchors[toanchor].Y - lastpoint[1]) * koef;
 					g.FillRectangle(Brushes.White, (float)newpoint[0], (float)newpoint[1], 1, 1);
 				}
@@ -952,17 +958,19 @@ namespace NAVY
 		// - - - - - - - - - - - - - - - - - - - - - -
 		// TEA
 		// - - - - - - - - - - - - - - - - - - - - - - 
-		
+
 		Mandelbrot mandelbrot = new Mandelbrot(Fractal.Width, Fractal.Height);
 
 		private void btnFractalsTEAReset_Click(object sender, EventArgs e)
 		{
 			mandelbrot = new Mandelbrot(Fractal.Width, Fractal.Height);
-			mandelbrot.Recompute();
+			double? cre = (checkFractalsTEAConstant.Checked) ? (double?)(numFractalsTEACre.Value) : null;
+			double? cim = (checkFractalsTEAConstant.Checked) ? (double?)(numFractalsTEACim.Value) : null;
+			mandelbrot.Recompute(cmbFractalsTEAColor.Text, cre, cim);
 			picFractalsPicture.Image = mandelbrot.Picture;
 		}
 
-		
+
 
 		private void PicFractalsPicture_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
@@ -972,9 +980,52 @@ namespace NAVY
 					mandelbrot.ZoomIn(e.X, e.Y);
 				else
 					mandelbrot.ZoomOut(e.X, e.Y);
-				mandelbrot.Recompute();
+				double? cre = (checkFractalsTEAConstant.Checked) ? (double?)(numFractalsTEACre.Value) : null;
+				double? cim = (checkFractalsTEAConstant.Checked) ? (double?)(numFractalsTEACim.Value) : null;
+				mandelbrot.Recompute(cmbFractalsTEAColor.Text, cre, cim);
 				picFractalsPicture.Invalidate();
 			}
+		}
+
+		private void btnFractalsTeaSave_Click(object sender, EventArgs e)
+		{
+			saveFileDialog1.Filter = "PNG|*.png|GIF|*.gif|BMP|*.bmp|JPEG|*.jpg;*.jpeg";
+			saveFileDialog1.FileName = "fractal";
+			saveFileDialog1.AddExtension = true;
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				String ext = Path.GetExtension(saveFileDialog1.FileName).ToLower();
+				switch (ext)
+				{
+					case ".bmp":
+						{
+							picFractalsPicture.Image.Save(saveFileDialog1.FileName, ImageFormat.Bmp);
+							break;
+						}
+					case ".png":
+						{
+							picFractalsPicture.Image.Save(saveFileDialog1.FileName, ImageFormat.Png);
+							break;
+						}
+					case ".jpeg":
+					case ".jpg":
+						{
+							picFractalsPicture.Image.Save(saveFileDialog1.FileName, ImageFormat.Jpeg);
+							break;
+						}
+					case ".gif":
+						{
+							picFractalsPicture.Image.Save(saveFileDialog1.FileName, ImageFormat.Gif);
+							break;
+						}
+				}
+			}
+		}
+
+		private void checkFractalsTEAConstant_CheckedChanged(object sender, EventArgs e)
+		{
+			numFractalsTEACre.Enabled = checkFractalsTEAConstant.Checked;
+			numFractalsTEACim.Enabled = checkFractalsTEAConstant.Checked;
 		}
 	}
 }

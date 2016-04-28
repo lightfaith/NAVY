@@ -15,10 +15,11 @@ namespace Fractals
 		private double MaxRe;
 		private double MinIm;
 		private double MaxIm;
-		private int MaxIterations = 200;
+		private int MaxIterations = 256;
 		private double zoomratio = 0.8;
-		
+
 		public Bitmap Picture;
+
 
 		public Mandelbrot(int width, int height)
 		{
@@ -83,9 +84,9 @@ namespace Fractals
 		{
 			Zoom(x, y, 1 / zoomratio);
 		}
-	
 
-		public void Recompute()
+
+		public void Recompute(string colormode, double? cre = null, double? cim = null)
 		{
 			double Re_factor = (MaxRe - MinRe) / (Fractal.Width - 1);
 			double Im_factor = (MaxIm - MinIm) / (Fractal.Height - 1);
@@ -95,20 +96,29 @@ namespace Fractals
 				g.Clear(Color.Black);
 				for (int y = 0; y < Height; ++y) // for every row
 				{
-					double c_im = MaxIm - y * Im_factor;
+
 					for (int x = 0; x < Width; ++x) // for every pixel
 					{
-						double c_re = MinRe + x * Re_factor;
-						double Z_re = c_re, Z_im = c_im;
+						double Z_re = MinRe + x * Re_factor;
+						double Z_im = MaxIm - y * Im_factor;
+						double c_re = (cre != null) ? (double)cre : Z_re;
+						double c_im = (cim != null) ? (double)cim : Z_im;
 
-						for (int n = 0; n < MaxIterations; ++n) // for number of iterations
+						Color c = Color.FromArgb(0xff, 0, 0, 0);
+						for (int n = 0; n < MaxIterations; n++) // for number of iterations
 						{
 							double Z_re2 = Z_re * Z_re, Z_im2 = Z_im * Z_im;
 
 							if (Z_re2 + Z_im2 > 4) // out? color it
 							{
-								int color = n * (255 / MaxIterations);
-								g.FillRectangle(new SolidBrush(Color.FromArgb(0xff, color, color, color)), x, y, 1, 1);
+								switch (colormode)
+								{
+									case "BlackWhite": { c = Color.FromArgb(0xff, n * (256 / MaxIterations), n * (256 / MaxIterations), n * (256 / MaxIterations)); break; }
+									case "Ultra Fractal": { c = Colors.UltraFractal[n % Colors.UltraFractal.Length]; break; }
+									case "Blue": { c = Color.FromArgb(0xff, 0, 0, n*(256/MaxIterations)); break; }
+								}
+
+								g.FillRectangle(new SolidBrush(c), x, y, 1, 1);
 								break;
 							}
 

@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel1 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel2 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel11 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.CustomLabel customLabel12 = new System.Windows.Forms.DataVisualization.Charting.CustomLabel();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabNeural = new System.Windows.Forms.TabPage();
 			this.btnNeuralActivate = new System.Windows.Forms.Button();
@@ -126,6 +126,14 @@
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.chartLSP = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.chartStatus = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.btnFractalsSaveImage = new System.Windows.Forms.Button();
+			this.checkFractalsTEAConstant = new System.Windows.Forms.CheckBox();
+			this.numFractalsTEACre = new System.Windows.Forms.NumericUpDown();
+			this.numFractalsTEACim = new System.Windows.Forms.NumericUpDown();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.cmbFractalsTEAColor = new System.Windows.Forms.ComboBox();
 			this.tabControl.SuspendLayout();
 			this.tabNeural.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numNeuralEpoch)).BeginInit();
@@ -148,6 +156,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.picFractalsPicture)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartLSP)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartStatus)).BeginInit();
+			this.tabPage4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsTEACre)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsTEACim)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl
@@ -507,27 +518,27 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gridNeuralNeurons.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNeuralNeurons.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle31.BackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle31.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNeuralNeurons.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle31;
 			this.gridNeuralNeurons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.gridNeuralNeurons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columnNeuron,
             this.columnSlope,
             this.columnAugment});
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Silver;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridNeuralNeurons.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			dataGridViewCellStyle32.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle32.ForeColor = System.Drawing.Color.Silver;
+			dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridNeuralNeurons.DefaultCellStyle = dataGridViewCellStyle32;
 			this.gridNeuralNeurons.Location = new System.Drawing.Point(275, 3);
 			this.gridNeuralNeurons.Name = "gridNeuralNeurons";
 			this.gridNeuralNeurons.RowTemplate.Height = 24;
@@ -617,27 +628,27 @@
 			this.gridNeuralLayers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.gridNeuralLayers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNeuralLayers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle33.BackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle33.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle33.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNeuralLayers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle33;
 			this.gridNeuralLayers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.gridNeuralLayers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columnLayer,
             this.columnNeurons,
             this.columnFunction});
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Silver;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridNeuralLayers.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle34.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			dataGridViewCellStyle34.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle34.ForeColor = System.Drawing.Color.Silver;
+			dataGridViewCellStyle34.SelectionBackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridNeuralLayers.DefaultCellStyle = dataGridViewCellStyle34;
 			this.gridNeuralLayers.Location = new System.Drawing.Point(3, 47);
 			this.gridNeuralLayers.Name = "gridNeuralLayers";
 			this.gridNeuralLayers.RowTemplate.Height = 24;
@@ -801,6 +812,7 @@
 			this.tabControlFractals.Controls.Add(this.tabPage1);
 			this.tabControlFractals.Controls.Add(this.tabPage2);
 			this.tabControlFractals.Controls.Add(this.tabPage3);
+			this.tabControlFractals.Controls.Add(this.tabPage4);
 			this.tabControlFractals.Location = new System.Drawing.Point(375, 5);
 			this.tabControlFractals.Name = "tabControlFractals";
 			this.tabControlFractals.SelectedIndex = 0;
@@ -1016,14 +1028,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gridFractalsParameters.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.gridFractalsParameters.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle5.BackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridFractalsParameters.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle35.BackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridFractalsParameters.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle35;
 			this.gridFractalsParameters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.gridFractalsParameters.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columnA,
@@ -1033,14 +1045,14 @@
             this.columnE,
             this.columnF,
             this.columnProbability});
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-			dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridFractalsParameters.DefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			dataGridViewCellStyle36.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			dataGridViewCellStyle36.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle36.SelectionBackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle36.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle36.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridFractalsParameters.DefaultCellStyle = dataGridViewCellStyle36;
 			this.gridFractalsParameters.Location = new System.Drawing.Point(5, 33);
 			this.gridFractalsParameters.Name = "gridFractalsParameters";
 			this.gridFractalsParameters.RowTemplate.Height = 24;
@@ -1169,7 +1181,7 @@
 			// btnFractalsGOCDraw
 			// 
 			this.btnFractalsGOCDraw.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnFractalsGOCDraw.Location = new System.Drawing.Point(6, 33);
+			this.btnFractalsGOCDraw.Location = new System.Drawing.Point(6, 34);
 			this.btnFractalsGOCDraw.Name = "btnFractalsGOCDraw";
 			this.btnFractalsGOCDraw.Size = new System.Drawing.Size(116, 22);
 			this.btnFractalsGOCDraw.TabIndex = 52;
@@ -1204,6 +1216,12 @@
 			// tabPage3
 			// 
 			this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.tabPage3.Controls.Add(this.cmbFractalsTEAColor);
+			this.tabPage3.Controls.Add(this.label6);
+			this.tabPage3.Controls.Add(this.label5);
+			this.tabPage3.Controls.Add(this.numFractalsTEACim);
+			this.tabPage3.Controls.Add(this.numFractalsTEACre);
+			this.tabPage3.Controls.Add(this.checkFractalsTEAConstant);
 			this.tabPage3.Controls.Add(this.btnFractalsTEAReset);
 			this.tabPage3.Location = new System.Drawing.Point(4, 25);
 			this.tabPage3.Name = "tabPage3";
@@ -1215,7 +1233,7 @@
 			// btnFractalsTEAReset
 			// 
 			this.btnFractalsTEAReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnFractalsTEAReset.Location = new System.Drawing.Point(6, 6);
+			this.btnFractalsTEAReset.Location = new System.Drawing.Point(6, 122);
 			this.btnFractalsTEAReset.Name = "btnFractalsTEAReset";
 			this.btnFractalsTEAReset.Size = new System.Drawing.Size(116, 22);
 			this.btnFractalsTEAReset.TabIndex = 53;
@@ -1253,28 +1271,28 @@
 			// 
 			this.chartLSP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartLSP.BackColor = System.Drawing.Color.Black;
-			chartArea1.AxisX.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea1.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea1.AxisY.TitleForeColor = System.Drawing.Color.Silver;
-			customLabel1.ForeColor = System.Drawing.Color.Lime;
-			chartArea1.AxisY2.CustomLabels.Add(customLabel1);
-			chartArea1.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea1.Name = "ChartArea1";
-			this.chartLSP.ChartAreas.Add(chartArea1);
-			legend1.BackColor = System.Drawing.Color.Black;
-			legend1.ForeColor = System.Drawing.Color.Silver;
-			legend1.Name = "Legend1";
-			this.chartLSP.Legends.Add(legend1);
+			chartArea11.AxisX.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea11.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea11.AxisY.TitleForeColor = System.Drawing.Color.Silver;
+			customLabel11.ForeColor = System.Drawing.Color.Lime;
+			chartArea11.AxisY2.CustomLabels.Add(customLabel11);
+			chartArea11.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea11.Name = "ChartArea1";
+			this.chartLSP.ChartAreas.Add(chartArea11);
+			legend11.BackColor = System.Drawing.Color.Black;
+			legend11.ForeColor = System.Drawing.Color.Silver;
+			legend11.Name = "Legend1";
+			this.chartLSP.Legends.Add(legend11);
 			this.chartLSP.Location = new System.Drawing.Point(928, 419);
 			this.chartLSP.Name = "chartLSP";
-			series1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			series1.ChartArea = "ChartArea1";
-			series1.Color = System.Drawing.Color.Lime;
-			series1.LabelBackColor = System.Drawing.Color.Green;
-			series1.LabelForeColor = System.Drawing.Color.Maroon;
-			series1.Legend = "Legend1";
-			series1.Name = "Series1";
-			this.chartLSP.Series.Add(series1);
+			series11.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			series11.ChartArea = "ChartArea1";
+			series11.Color = System.Drawing.Color.Lime;
+			series11.LabelBackColor = System.Drawing.Color.Green;
+			series11.LabelForeColor = System.Drawing.Color.Maroon;
+			series11.Legend = "Legend1";
+			series11.Name = "Series1";
+			this.chartLSP.Series.Add(series11);
 			this.chartLSP.Size = new System.Drawing.Size(394, 259);
 			this.chartLSP.TabIndex = 3;
 			this.chartLSP.Text = "chart";
@@ -1284,31 +1302,149 @@
 			this.chartStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartStatus.BackColor = System.Drawing.Color.Black;
-			chartArea2.AxisX.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea2.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea2.AxisY.TitleForeColor = System.Drawing.Color.Silver;
-			customLabel2.ForeColor = System.Drawing.Color.Lime;
-			chartArea2.AxisY2.CustomLabels.Add(customLabel2);
-			chartArea2.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
-			chartArea2.Name = "ChartArea1";
-			this.chartStatus.ChartAreas.Add(chartArea2);
-			legend2.BackColor = System.Drawing.Color.Black;
-			legend2.ForeColor = System.Drawing.Color.Silver;
-			legend2.Name = "Legend1";
-			this.chartStatus.Legends.Add(legend2);
+			chartArea12.AxisX.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea12.AxisX2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea12.AxisY.TitleForeColor = System.Drawing.Color.Silver;
+			customLabel12.ForeColor = System.Drawing.Color.Lime;
+			chartArea12.AxisY2.CustomLabels.Add(customLabel12);
+			chartArea12.AxisY2.TitleForeColor = System.Drawing.Color.Silver;
+			chartArea12.Name = "ChartArea1";
+			this.chartStatus.ChartAreas.Add(chartArea12);
+			legend12.BackColor = System.Drawing.Color.Black;
+			legend12.ForeColor = System.Drawing.Color.Silver;
+			legend12.Name = "Legend1";
+			this.chartStatus.Legends.Add(legend12);
 			this.chartStatus.Location = new System.Drawing.Point(380, 419);
 			this.chartStatus.Name = "chartStatus";
-			series2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			series2.ChartArea = "ChartArea1";
-			series2.Color = System.Drawing.Color.Lime;
-			series2.LabelBackColor = System.Drawing.Color.Green;
-			series2.LabelForeColor = System.Drawing.Color.Maroon;
-			series2.Legend = "Legend1";
-			series2.Name = "Series1";
-			this.chartStatus.Series.Add(series2);
+			series12.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			series12.ChartArea = "ChartArea1";
+			series12.Color = System.Drawing.Color.Lime;
+			series12.LabelBackColor = System.Drawing.Color.Green;
+			series12.LabelForeColor = System.Drawing.Color.Maroon;
+			series12.Legend = "Legend1";
+			series12.Name = "Series1";
+			this.chartStatus.Series.Add(series12);
 			this.chartStatus.Size = new System.Drawing.Size(535, 259);
 			this.chartStatus.TabIndex = 4;
 			this.chartStatus.Text = "chart";
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.tabPage4.Controls.Add(this.btnFractalsSaveImage);
+			this.tabPage4.Location = new System.Drawing.Point(4, 25);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage4.Size = new System.Drawing.Size(460, 335);
+			this.tabPage4.TabIndex = 3;
+			this.tabPage4.Text = "General";
+			// 
+			// btnFractalsSaveImage
+			// 
+			this.btnFractalsSaveImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnFractalsSaveImage.Location = new System.Drawing.Point(6, 6);
+			this.btnFractalsSaveImage.Name = "btnFractalsSaveImage";
+			this.btnFractalsSaveImage.Size = new System.Drawing.Size(116, 22);
+			this.btnFractalsSaveImage.TabIndex = 55;
+			this.btnFractalsSaveImage.Text = "Save";
+			this.btnFractalsSaveImage.UseVisualStyleBackColor = true;
+			this.btnFractalsSaveImage.Click += new System.EventHandler(this.btnFractalsTeaSave_Click);
+			// 
+			// checkFractalsTEAConstant
+			// 
+			this.checkFractalsTEAConstant.AutoSize = true;
+			this.checkFractalsTEAConstant.Location = new System.Drawing.Point(6, 6);
+			this.checkFractalsTEAConstant.Name = "checkFractalsTEAConstant";
+			this.checkFractalsTEAConstant.Size = new System.Drawing.Size(86, 21);
+			this.checkFractalsTEAConstant.TabIndex = 54;
+			this.checkFractalsTEAConstant.Text = "Constant";
+			this.checkFractalsTEAConstant.UseVisualStyleBackColor = true;
+			this.checkFractalsTEAConstant.CheckedChanged += new System.EventHandler(this.checkFractalsTEAConstant_CheckedChanged);
+			// 
+			// numFractalsTEACre
+			// 
+			this.numFractalsTEACre.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.numFractalsTEACre.DecimalPlaces = 4;
+			this.numFractalsTEACre.Enabled = false;
+			this.numFractalsTEACre.ForeColor = System.Drawing.Color.White;
+			this.numFractalsTEACre.Location = new System.Drawing.Point(39, 33);
+			this.numFractalsTEACre.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.numFractalsTEACre.Minimum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            -2147483648});
+			this.numFractalsTEACre.Name = "numFractalsTEACre";
+			this.numFractalsTEACre.Size = new System.Drawing.Size(83, 22);
+			this.numFractalsTEACre.TabIndex = 55;
+			this.numFractalsTEACre.Value = new decimal(new int[] {
+            285,
+            0,
+            0,
+            196608});
+			// 
+			// numFractalsTEACim
+			// 
+			this.numFractalsTEACim.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+			this.numFractalsTEACim.DecimalPlaces = 4;
+			this.numFractalsTEACim.Enabled = false;
+			this.numFractalsTEACim.ForeColor = System.Drawing.Color.White;
+			this.numFractalsTEACim.Location = new System.Drawing.Point(39, 62);
+			this.numFractalsTEACim.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.numFractalsTEACim.Minimum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            -2147483648});
+			this.numFractalsTEACim.Name = "numFractalsTEACim";
+			this.numFractalsTEACim.Size = new System.Drawing.Size(83, 22);
+			this.numFractalsTEACim.TabIndex = 56;
+			this.numFractalsTEACim.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(7, 35);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(30, 17);
+			this.label5.TabIndex = 57;
+			this.label5.Text = "Re:";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(7, 62);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(26, 17);
+			this.label6.TabIndex = 58;
+			this.label6.Text = "Im:";
+			// 
+			// cmbFractalsTEAColor
+			// 
+			this.cmbFractalsTEAColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+			this.cmbFractalsTEAColor.ForeColor = System.Drawing.Color.White;
+			this.cmbFractalsTEAColor.FormattingEnabled = true;
+			this.cmbFractalsTEAColor.Items.AddRange(new object[] {
+            "BlackWhite",
+            "Ultra Fractal",
+            "Blue"});
+			this.cmbFractalsTEAColor.Location = new System.Drawing.Point(6, 92);
+			this.cmbFractalsTEAColor.Name = "cmbFractalsTEAColor";
+			this.cmbFractalsTEAColor.Size = new System.Drawing.Size(116, 24);
+			this.cmbFractalsTEAColor.TabIndex = 59;
+			this.cmbFractalsTEAColor.Text = "BlackWhite";
 			// 
 			// Form1
 			// 
@@ -1344,9 +1480,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.numFractalsGOCKoef)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numFractalsGOCCount)).EndInit();
 			this.tabPage3.ResumeLayout(false);
+			this.tabPage3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picFractalsPicture)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartLSP)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartStatus)).EndInit();
+			this.tabPage4.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsTEACre)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numFractalsTEACim)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1440,6 +1580,14 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TabPage tabPage4;
+		private System.Windows.Forms.Button btnFractalsSaveImage;
+		private System.Windows.Forms.NumericUpDown numFractalsTEACre;
+		private System.Windows.Forms.CheckBox checkFractalsTEAConstant;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.NumericUpDown numFractalsTEACim;
+		private System.Windows.Forms.ComboBox cmbFractalsTEAColor;
 	}
 }
 
