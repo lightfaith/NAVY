@@ -90,6 +90,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CellularAutomata\CellularAutomata.csproj">
+      <Project>{6c91fbdb-39f4-44bf-8a2f-6d3814c96db6}</Project>
+      <Name>CellularAutomata</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fractals\Fractals.csproj">
       <Project>{c8974ddf-11da-4dfa-a2cb-ac9726dafbe2}</Project>
       <Name>Fractals</Name>

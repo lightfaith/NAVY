@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Neural;
-using Fractals;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -16,6 +14,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Threading;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using Neural;
+using Fractals;
+using CellularAutomata;
 
 namespace NAVY
 {
@@ -49,7 +50,12 @@ namespace NAVY
 		//
 
 		Fractal fractal;
+		//
+		// -------------------------- FRACTALS ---------------------------------
+		//
 
+		GOL gol;
+		List<Tuple<int, int>> cellstochange;
 		//
 		// -------------------------- LOAD -------------------------------------
 		//
@@ -91,6 +97,13 @@ namespace NAVY
 			fractal = new Fractal(/*Fractals.Configuration.IFSTree(Fractal.Width, Fractal.Height)*/);
 			DrawFractal(picFractalsPicture, fractal);
 			UpdateFractalGrid();
+
+			// CA stuff
+			gol = new GOL(picCAWorld.Width, picCAWorld.Height, (int)numCAPixel.Value);
+			picCAWorld.Image = new Bitmap(picCAWorld.Width, picCAWorld.Height);
+			using (Graphics g = Graphics.FromImage(picCAWorld.Image))
+				g.Clear(Color.Black);
+			cellstochange = new List<Tuple<int, int>>();
 		}
 
 		private void gridNeural_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -1026,6 +1039,108 @@ namespace NAVY
 		{
 			numFractalsTEACre.Enabled = checkFractalsTEAConstant.Checked;
 			numFractalsTEACim.Enabled = checkFractalsTEAConstant.Checked;
+		}
+
+		private void picCAWorld_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+				cellstochange.Add(new Tuple<int, int>(e.X, e.Y));
+		}
+
+		private void btnCARun_Click(object sender, EventArgs e)
+		{	
+			if (timerCA.Tag.ToString() == "off")
+			{
+				gol.SurvivePattern = (from c in txtCASurvive.Text.ToCharArray() select Convert.ToInt32(c)-0x30).ToArray<int>();
+				gol.BirthPattern = (from c in txtCABirth.Text.ToCharArray() select Convert.ToInt32(c)-0x30).ToArray<int>();
+				timerCA.Interval = Convert.ToInt32(numCADelay.Value);
+				timerCA.Tag = "on";
+				btnCARun.Text = "Stop";
+				timerCA.Start();
+			}
+			else
+			{
+				timerCA.Stop();
+				timerCA.Tag = "off";
+				btnCARun.Text = "Start";
+			}
+		}
+
+		private void btnCAStop_Click(object sender, EventArgs e)
+		{
+			timerCA.Stop();
+			btnCARun.Text = "Start";
+		}
+
+		private void timerCA_Tick(object sender, EventArgs e)
+		{
+			gol.Iterate();
+			picCAWorld.Image = gol.GetBitmap();
+			picCAWorld.Invalidate();
+		}
+
+		private void numCAPixel_ValueChanged(object sender, EventArgs e)
+		{
+			gol = new GOL(picCAWorld.Width, picCAWorld.Height, (int)numCAPixel.Value);
+		}
+
+		private void btnCAClear_Click(object sender, EventArgs e)
+		{
+			gol.Clear();
+			picCAWorld.Image = gol.GetBitmap();
+			picCAWorld.Invalidate();
+		
+		}
+
+		private void picCAWorld_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				foreach(Tuple<int, int> t in cellstochange)
+					gol.InvertCell(t.Item1, t.Item2);
+				picCAWorld.Image = gol.GetBitmap();
+				cellstochange = new List<Tuple<int, int>>();
+			}
+		}
+
+		private void btnCASave_Click(object sender, EventArgs e)
+		{
+			saveFileDialog1.Filter = "Cellular Automata|*.ca";
+			saveFileDialog1.FileName = "ca";
+			saveFileDialog1.AddExtension = true;
+
+			UpdateFractalConfiguration();
+
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				IFormatter formatter = new BinaryFormatter();
+				Stream stream = new FileStream(saveFileDialog1.FileName, FileMode.Create, FileAccess.Write, FileShare.None);
+				formatter.Serialize(stream, gol);
+				stream.Close();
+			}
+		}
+
+		private void btnCARandom_Click(object sender, EventArgs e)
+		{
+			gol.Random();
+			picCAWorld.Image = gol.GetBitmap();
+			picCAWorld.Invalidate();
+		}
+
+		private void btnCALoad_Click(object sender, EventArgs e)
+		{
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				IFormatter formatter = new BinaryFormatter();
+				Stream stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+				gol = (GOL)formatter.Deserialize(stream);
+				stream.Close();
+
+				picCAWorld.Image = gol.GetBitmap();
+				picCAWorld.Invalidate();
+				timerCA.Tag = "on";
+				btnCARun_Click(sender, e);
+			}
 		}
 	}
 }

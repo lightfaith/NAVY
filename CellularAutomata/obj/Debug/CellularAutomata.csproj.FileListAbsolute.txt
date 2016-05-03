@@ -1,0 +1,5 @@
+V:\syncthing\share\navy\project\NAVY\CellularAutomata\bin\Debug\CellularAutomata.dll
+V:\syncthing\share\navy\project\NAVY\CellularAutomata\bin\Debug\CellularAutomata.pdb
+V:\syncthing\share\navy\project\NAVY\CellularAutomata\obj\Debug\CellularAutomata.csprojResolveAssemblyReference.cache
+V:\syncthing\share\navy\project\NAVY\CellularAutomata\obj\Debug\CellularAutomata.dll
+V:\syncthing\share\navy\project\NAVY\CellularAutomata\obj\Debug\CellularAutomata.pdb

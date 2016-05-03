@@ -12,3 +12,5 @@ V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.pdb
 V:\syncthing\share\navy\project\NAVY\NAVY\obj\Debug\NAVY.NeuralSchema.resources
 V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\Fractals.dll
 V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\Fractals.pdb
+V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\CellularAutomata.dll
+V:\syncthing\share\navy\project\NAVY\NAVY\bin\Debug\CellularAutomata.pdb

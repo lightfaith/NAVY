@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neural", "Neural\Neural.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fractals", "Fractals\Fractals.csproj", "{C8974DDF-11DA-4DFA-A2CB-AC9726DAFBE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CellularAutomata", "CellularAutomata\CellularAutomata.csproj", "{6C91FBDB-39F4-44BF-8A2F-6D3814C96DB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C8974DDF-11DA-4DFA-A2CB-AC9726DAFBE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8974DDF-11DA-4DFA-A2CB-AC9726DAFBE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8974DDF-11DA-4DFA-A2CB-AC9726DAFBE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C91FBDB-39F4-44BF-8A2F-6D3814C96DB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C91FBDB-39F4-44BF-8A2F-6D3814C96DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C91FBDB-39F4-44BF-8A2F-6D3814C96DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C91FBDB-39F4-44BF-8A2F-6D3814C96DB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
